@@ -1,0 +1,20 @@
+{% load static %}
+<aside x-show="mobileSidebarOpen" x-cloak class="md:!block border col-span-full  md:col-span-1 lg:mr-[20%] order-1 md:order-2"
+    x-transition:enter="duration-300 ease-out" x-transition:enter-start="opacity-0 -mt-96"
+    x-transition:enter-end="opacity-100 mt-0">
+    <section class="card p-4">
+        <h2>Categories</h2>
+        <ul class="hoverlist space-y-5">
+            {% for category in categories %}
+            <li class="{% if category.slug == tag.slug %}highlight {% endif %} flex w-40">
+                <a class="flex flex-col m-auto" href="{% url 'category-product-list' category.cid %}">
+                    <img class="w-8 h-8 object-cover mr-2" src="{{ category.image.url }}">
+                    <span class="font-bold text-sm">{{ category.title }}</span>
+                    <span class="font-bold text-sm">{{ category.category.count }} Product{{category.category.count|pluralize }}</span>
+                </a>
+            </li>
+            <li>
+                {% endfor %}
+        </ul>
+    </section>
+</aside>

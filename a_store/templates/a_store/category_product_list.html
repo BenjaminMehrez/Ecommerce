@@ -1,0 +1,36 @@
+{% extends 'layouts/blank.html' %}
+
+{% block content %}
+<div class="flex flex-col gap-10 max-w-6xl mx-auto px-8 py-24">
+    <h1 class="bg-gray-300 p-10 w-full">{{ category.title }}</h1>
+
+    <span>Nosotros encontramos {{ products.count }} product{{ products.count|pluralize }}</span>
+
+    <div class="flex gap-5">
+        {% for product in products %}
+        <article class="max-w-60 bg-zinc-200 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+            <img class="w-full h-50 object-cover" src="{% if product.image %}{{ product.image.url }}{% endif %}" alt="{{ product.title }}">
+            <div class="px-6 py-4">
+                <h3 class="font-bold text-gray-800 text-xl mb-2">{{ product.title }}</h3>
+                <span class="font-bold text-gray-800 text-sm mb-2">{{ product.category }}</span>
+                <span class="font-bold text-gray-800 text-sm mb-2">{{ product.vendor }}</span>
+            </div>
+            <div class="flex justify-between px-4 pt-4 pb-10">
+                <div>
+                    <span class="inline-block bg-gray-200 rounded-full py-1 text-m font-semibold text-gray-700 mr-2 mb-2">$ {{ product.price }}</span>
+                    <span class="inline-block bg-gray-200 line-through rounded-full py-1 text-m font-semibold text-gray-500 mr-2 mb-2">$ {{ product.old_price }}</span>    
+                    <span class="inline-block bg-gray-200 line-through rounded-full py-1 text-m font-semibold text-red-500 mr-2 mb-2">-{{ product.get_precentage|floatformat:0 }}%</span>    
+                </div>
+                <a href="">
+                    <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                        Ver
+                    </button>
+                </a>
+            </div>
+        </article>
+    {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
