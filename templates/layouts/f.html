@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block layout %}
+<content class="block mt-20 mb-32 max-w-6xl mx-auto md:p-12">
+    <div class="bg-white rounded-xl md:drop-shadow-2xl shadow-black w-full p-8 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+
+    {% block content %} 
+    {% endblock %}
+
+    </div>
+</content>
+{% endblock %}

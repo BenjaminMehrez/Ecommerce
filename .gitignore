@@ -1,0 +1,9 @@
+venv/
+node/
+media/
+static/
+migrations/
+__pycache__/
+db.sqlite3
+.env
+.DS_Store

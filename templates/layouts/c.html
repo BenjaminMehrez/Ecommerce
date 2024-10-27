@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+
+{% block layout %}
+
+
+<content class="sm:flex justify-center max-w-7xl mx-auto mt-20" x-data="{ mobileSidebarOpen: false }">
+    <main class="flex flex-wrap justify-center gap-10 mt-10 mb-40">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</content>
+
+{% endblock %}
