@@ -3,7 +3,7 @@
 {% block content %}
 <div class="flex max-w-6xl gap-10 mx-auto px-8 py-24">
     <div class="flex flex-col">
-        <h2>{{ categories.count }} Categories</h2>
+        <h2>{{ categories.count }} Categorias</h2>
         <div class="flex gap-10">
             {% for item in categories %}
             <a href="{% url 'category-product-list' item.cid %}">
@@ -12,10 +12,10 @@
                         alt="{{ item.title }}">
                     <div class="px-6 py-4">
                         <h3 class="font-bold text-gray-800 text-xl mb-2">{{ item.title }}</h3>
-                        <span class="font-bold text-gray-800 text-sm mb-2">{{ item.category.count }} Product{{item.category.count|pluralize }}</span>
+                        <span class="font-bold text-gray-800 text-sm mb-2">{{ item.category.count }} Producto{{item.category.count|pluralize }}</span>
                     </div>
                     <div class="flex justify-between px-4 pt-4 pb-10">
-                        <a href="">
+                        <a href="{% url 'category-product-list' item.cid %}">
                             <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                                 Ver
                             </button>

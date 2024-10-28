@@ -1,0 +1,49 @@
+{% extends 'layouts/blank.html' %}
+{% load pluralize_es %}
+
+{% block content %}
+<div class="flex max-w-6xl gap-10 mx-auto px-8 py-24">
+
+    <div class="flex flex-col">
+
+        <div class="bg-gray-300 p-10 w-full">
+            <img class="w-8" src="{{ vendor.image.url }}" alt="">
+            <h1 class="">{{ vendor.title }}</h1>
+            <p>Desde: {{ vendor.date|date:"Y" }}</p>
+            <p>Descripcion: {{ vendor.description }}</p>
+            <p>Direccion: {{ vendor.address }}</p>
+            <p>Contacto: {{ vendor.contact }}</p>
+        </div>
+
+
+        <div class="flex gap-10">
+            <a href="">
+                {% for product in products %}
+                <article class="max-w-96 bg-zinc-200 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+                    <img class="w-auto object-cover" src="{{ product.image.url }}">
+                    <div class="px-6 py-4">
+                        <h3 class="font-bold text-gray-800 text-xl mb-2">{{ product.title }}</h3>
+                        <p class="">{{ product.description }}</p>
+                        <p class="">$ {{ product.price }}</p>
+                    </div>
+                    <div class="flex justify-between px-4 pt-4 pb-10">
+                        <a href="">
+                            <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                Visit Store
+                            </button>
+                        </a>
+                    </div>
+                </article>
+                {% endfor %}
+            </a>
+        </div>
+    </div>
+
+
+    {% include 'includes/sidebar.html' %}
+
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'layouts/blank.html' %}
+{% load pluralize_es %}
+
+{% block content %}
+<div class="flex flex-col gap-10 max-w-6xl mx-auto px-8 py-24">
+
+        <h1 class="bg-gray-300 p-10 w-full">Lista de Vendedores</h1>
+
+        <span>Nosotros tenemos {{ vendors.count }} {{ vendors.count|pluralize_es:"vendedor,vendedores" }} ahora</span>
+
+
+
+        <div class="flex gap-10">
+            {% for vendor in vendors %}
+            <a href="">
+                <article class="max-w-96 bg-zinc-200 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+                    <img class="w-auto object-cover" src="{{ vendor.image.url }}">
+                    <div class="px-6 py-4">
+                        <h3 class="font-bold text-gray-800 text-xl mb-2">{{ vendor.product.all.count }} Products</h3>
+                        <span class="">Desde {{ vendor.date|date:"Y" }}</span>
+                        <p class="">{{ vendor.title }}</p>
+                        <p class="">Direccion: {{ vendor.address }}</p>
+                        <p class="">Contacto: {{ vendor.contact }}</p>
+                    </div>
+                    <div class="flex justify-between px-4 pt-4 pb-10">
+                        <a href="{% url 'vendor-detail' vendor.vid %}">
+                            <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                                Visit Store
+                            </button>
+                        </a>
+                    </div>
+                </article>
+            </a>
+            {% endfor %}
+        </div>
+
+
+</div>
+
+
+
+{% endblock %}

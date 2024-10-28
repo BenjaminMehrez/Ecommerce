@@ -58,6 +58,7 @@ class Vendor(models.Model):
     
     title = models.CharField(max_length=100, default='Nestify')
     image = models.ImageField(upload_to=user_directory_path, default='vendor.jpg')
+    cover_image = models.ImageField(upload_to=user_directory_path, default='vendor.jpg')
     description = models.TextField(null=True, blank=True, default='I am an Amazing Vendor')
     
     address = models.CharField(max_length=100, default='9 de julio, Mendoza')
@@ -69,7 +70,7 @@ class Vendor(models.Model):
     warranty_period = models.CharField(max_length=100, default='100')
     
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     
     class Meta:
         verbose_name_plural = 'Vendors'
@@ -89,7 +90,7 @@ class Product(models.Model):
     
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='category')
-    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True)
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, related_name='product')
     
     title = models.CharField(max_length=100, default='Nike Air Force 1')
     image = models.ImageField(upload_to=user_directory_path, default='product.jpg')
