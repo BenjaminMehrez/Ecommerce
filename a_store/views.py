@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import *
 # Create your views here.
 
@@ -64,3 +64,18 @@ def vendor_detail_view(request, vid):
         'products': products
     }
     return render(request, 'a_store/vendor_detail.html', context)
+
+
+
+def product_detail_view(request, pid):
+    product = get_object_or_404(Product, pid=pid)
+    products = Product.objects.filter(category=product.category).exclude(pid=pid)
+    p_images = product.p_images.all
+    
+    context = {
+        'product': product,
+        'p_images': p_images,
+        'products': products,
+    }
+    
+    return render(request, 'a_store/product_detail.html', context)

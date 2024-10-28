@@ -20,7 +20,7 @@
                     <span class="inline-block bg-gray-200 rounded-full py-1 text-m font-semibold text-gray-700 mr-2 mb-2">$ {{ product.price }}</span>
                     {% if product.old_price %}
                     <span class="inline-block bg-gray-200 line-through rounded-full py-1 text-m font-semibold text-gray-500 mr-2 mb-2">$ {{ product.old_price }}</span>    
-                    <span class="inline-block bg-gray-200 line-through rounded-full py-1 text-m font-semibold text-red-500 mr-2 mb-2">-{{ product.get_precentage|floatformat:0 }}%</span>    
+                    <span class="inline-block bg-gray-200 rounded-full py-1 text-m font-semibold text-red-500 mr-2 mb-2">-{{ product.get_precentage|floatformat:0 }}%</span>    
                     {% endif %}
                 </div>
                 <a href="">

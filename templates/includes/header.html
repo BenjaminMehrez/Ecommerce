@@ -6,7 +6,8 @@
             <span class="text-lg font-bold">Ecommerce</span>
         </a>
     </div>
-    <nav class="block relative">
+    <nav class="flex items-center gap-5">
+        <a href="{% url 'home' %}">Home</a>
         <ul class="navitems flex items-center justify-center h-full">
             <li x-data="{ dropdownOpen: false }" class="relative">
                 <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false"
@@ -30,19 +31,20 @@
                 </div>
             </li>
         </ul>
-    </nav>
-    <div class="hidden sm:block border-2 rounded-xl px-4 mx-2">
-        <div class="flex">
-            <img class="w-6" src="{% static 'images/search-black.svg' %}" alt="">
-            <Input type="search" placeholder="Buscar productos..." class="outline-0  py-2" />
-            <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
+        <a href="{% url 'product-list' %}">Productos</a>
+        <div class="hidden sm:block border-2 rounded-xl px-4 mx-2">
+            <div class="flex">
+                <img class="w-6" src="{% static 'images/search-black.svg' %}" alt="">
+                <Input type="search" placeholder="Buscar productos..." class="outline-0  py-2" />
+                <Search class="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
+            </div>
         </div>
-    </div>
-    <div class="flex gap-5">
-        <a href=""><img class="w-7" src="{% static 'images/cart.png' %}" alt=""></a>
-        <a href=""><img class="w-7" src="{% static 'images/heart-black.svg' %}" alt=""></a>
-    </div>
-    <nav class="block relative">
+    </nav>
+    <nav class="flex items-center">
+        <div class="flex gap-5">
+            <a href=""><img class="w-7" src="{% static 'images/cart.png' %}" alt=""></a>
+            <a href=""><img class="w-7" src="{% static 'images/heart-black.svg' %}" alt=""></a>
+        </div>
         <ul class="navitems flex items-center justify-center h-full">
             {% if request.user.is_authenticated %}
             <li x-data="{ dropdownOpen: false }" class="relative">

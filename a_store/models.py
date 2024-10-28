@@ -102,6 +102,7 @@ class Product(models.Model):
     specifications = models.TextField(null=True, blank=True)
     # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
     product_status = models.CharField(choices=STATUS, max_length=10, default='in_review')
+    stock = models.PositiveIntegerField(default='8')
 
     status = models.BooleanField(default=True)
     in_stock = models.BooleanField(default=True)
@@ -132,7 +133,7 @@ class Product(models.Model):
     
 class ProductImages(models.Model):
     images = models.ImageField(upload_to="product-images", default='product.jpg')
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, related_name="p_images", on_delete=models.SET_NULL, null=True)
     date = models.DateTimeField(auto_now_add=True)
     
     
