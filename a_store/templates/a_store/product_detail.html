@@ -31,6 +31,12 @@
                 <p class="text-gray-600">{{ product.sku }}</p>
                 <p class="text-gray-600">Stock: {{ product.stock }}</p>
                 <p class="text-gray-600">{{ product.description }}</p>
+                <ul class="flex gap-2">
+                    Etiqueta:
+                    {% for tag in product.tags.all %}
+                    <li><a class="text-blue-600" href="{% url 'tags' tag.slug %}">#{{ tag.name }}</a></li>
+                    {% endfor %}
+                </ul>
                 <div class="text-2xl font-bold">${{ product.price }}</div>
                 {% if product.old_price %}
                 <span class="inline-block bg-gray-200 line-through rounded-full py-1 text-m font-semibold text-gray-500 mr-2 mb-2">$ {{ product.old_price }}</span>    

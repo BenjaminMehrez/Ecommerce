@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     "django_htmx",
     'django.contrib.humanize',
+    'taggit',
     'a_store',
     'a_users',
 ]
