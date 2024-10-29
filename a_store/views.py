@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.db.models import Avg
 from taggit.models import Tag
 from .models import *
+
+
 # Create your views here.
 
 
@@ -43,14 +45,13 @@ def category_product_list_view(request, cid):
         'category': category,
         'products': products
     }
-    
-    return render(request, 'a_store/category_product_list.html', context)
 
+    return render(request, 'a_store/category_product_list.html', context)
 
 
 def vendor_list_view(request):
     vendors = Vendor.objects.all()
-    
+
     context = {
         'vendors': vendors
     }
@@ -60,7 +61,7 @@ def vendor_list_view(request):
 def vendor_detail_view(request, vid):
     vendor = Vendor.objects.get(vid=vid)
     products = Product.objects.filter(vendor=vendor, product_status='published')
-    
+
     context = {
         'vendor': vendor,
         'products': products
@@ -73,13 +74,12 @@ def product_detail_view(request, pid):
     product = get_object_or_404(Product, pid=pid)
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
     p_images = product.p_images.all
-    
+
     # Getting all review related to a product
     reviews = ProductReview.objects.filter(product=product).order_by('-date')
 
     # Getting overage review
     average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
-    
     
     context = {
         'product': product,
@@ -88,7 +88,7 @@ def product_detail_view(request, pid):
         'reviews': reviews,
         'products': products,
     }
-    
+
     return render(request, 'a_store/product_detail.html', context)
 
 
@@ -101,6 +101,6 @@ def tag_list_view(request, tag_slug=None):
     
     context = {
         'products': products,
-        'tag':tag
+        'tag': tag,
     }
     return render(request, 'a_store/tag.html', context)

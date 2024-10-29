@@ -47,7 +47,7 @@
         {% if request.user.is_authenticated %}
           <div x-data="{ open: false }" class="ml-3 relative">
             <div>
-              <button @click="open = !open" @click.away="open = false" class="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
+              <button @click="open = !open" @click.away="open = false" class="bg-transparent flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
                 <img class="h-8 w-8 rounded-full" src="{% static 'images/usericon.svg' %}" alt="">
               </button>
             </div>
