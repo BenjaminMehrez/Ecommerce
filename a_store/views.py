@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.db.models import Avg
 from taggit.models import Tag
 from .models import *
 # Create your views here.
@@ -73,9 +74,18 @@ def product_detail_view(request, pid):
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
     p_images = product.p_images.all
     
+    # Getting all review related to a product
+    reviews = ProductReview.objects.filter(product=product).order_by('-date')
+
+    # Getting overage review
+    average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+    
+    
     context = {
         'product': product,
         'p_images': p_images,
+        'average_rating': average_rating,
+        'reviews': reviews,
         'products': products,
     }
     
