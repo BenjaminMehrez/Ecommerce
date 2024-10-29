@@ -1,42 +1,42 @@
 {% extends 'layouts/blank.html' %}
+{% load static %}
 {% load pluralize_es %}
 
 {% block content %}
-<div class="flex flex-col gap-10 max-w-6xl mx-auto px-8 py-24">
+<div class="container mx-auto px-4 py-8 md:py-16">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 p-6 bg-gray-100 rounded-lg shadow-md">
+        Lista de Vendedores
+    </h1>
 
-        <h1 class="bg-gray-300 p-10 w-full">Lista de Vendedores</h1>
+    <p class="text-lg text-gray-600 mb-8">
+        Actualmente tenemos {{ vendors.count }} {{ vendors.count|pluralize_es:"vendedor,vendedores" }}
+    </p>
 
-        <span>Nosotros tenemos {{ vendors.count }} {{ vendors.count|pluralize_es:"vendedor,vendedores" }} ahora</span>
-
-
-
-        <div class="flex gap-10">
-            {% for vendor in vendors %}
-            <a href="">
-                <article class="max-w-96 bg-zinc-200 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
-                    <img class="w-auto object-cover" src="{{ vendor.image.url }}">
-                    <div class="px-6 py-4">
-                        <h3 class="font-bold text-gray-800 text-xl mb-2">{{ vendor.product.all.count }} Products</h3>
-                        <span class="">Desde {{ vendor.date|date:"Y" }}</span>
-                        <p class="">{{ vendor.title }}</p>
-                        <p class="">Direccion: {{ vendor.address }}</p>
-                        <p class="">Contacto: {{ vendor.contact }}</p>
-                    </div>
-                    <div class="flex justify-between px-4 pt-4 pb-10">
-                        <a href="{% url 'vendor-detail' vendor.vid %}">
-                            <button class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                Visit Store
-                            </button>
-                        </a>
-                    </div>
-                </article>
-            </a>
-            {% endfor %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for vendor in vendors %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out transform hover:scale-105"
+             x-data="{ show: false }" 
+             x-init="setTimeout(() => show = true, 100)"
+             :class="{ 'opacity-0': !show, 'opacity-100': show }">
+            <img class="w-full h-48 object-cover" src="{{ vendor.image.url }}" alt="{{ vendor.title }}">
+            <div class="p-6">
+                <h3 class="font-bold text-xl text-gray-800 mb-2">{{ vendor.product.all.count }} Productos</h3>
+                <p class="text-gray-600 mb-2">Desde {{ vendor.date|date:"Y" }}</p>
+                <h2 class="font-semibold text-lg text-gray-800 mb-2">{{ vendor.title }}</h2>
+                <p class="text-gray-600 mb-1">Dirección: {{ vendor.address }}</p>
+                <p class="text-gray-600 mb-4">Contacto: {{ vendor.contact }}</p>
+                <a href="{% url 'vendor-detail' vendor.vid %}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                    Visitar Tienda
+                </a>
+            </div>
         </div>
-
-
+        {% empty %}
+        <p class="col-span-full text-center text-gray-500 text-lg">No hay vendedores disponibles en este momento.</p>
+        {% endfor %}
+    </div>
 </div>
+{% endblock %}
 
-
-
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 {% endblock %}
