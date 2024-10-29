@@ -26,7 +26,6 @@ urlpatterns = [
     path('',  include('a_store.urls')),
     path('profile/', include('a_users.urls')),
     path('@<username>/', profile_view, name='profile'),
-    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 

@@ -56,8 +56,6 @@ INSTALLED_APPS = [
     "django_htmx",
     'django.contrib.humanize',
     'taggit',
-    'ckeditor',
-    'ckeditor_uploader',
     'a_store',
     'a_users',
 ]
@@ -164,19 +162,3 @@ JAZZMIN_SETTINGS = {
     'copyright': 'benjaminmehrez'
 }
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        'skin': 'moono',
-        'codeSnippet_theme': 'monokai',
-        'toolbar': 'all',
-        'extraPlugins': ','.join(
-            [
-                'codesnippet',
-                'widget',
-                'dialog'
-            ]
-        ),
-    },
-}
