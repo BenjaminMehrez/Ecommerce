@@ -3,121 +3,132 @@
     priceMin: 0,
     priceMax: 1000,
     selectedTags: ['Milk', 'Broccoli', 'Smoothie', 'Fruit', 'Salad', 'Appetizer'],
-    removeTag(tag) {
-      this.selectedTags = this.selectedTags.filter(t => t !== tag)
-    }
-  }" class="w-full max-w-4xl mx-auto p-4">
-  <!-- Filter Button -->
-  <button @click="isOpen = !isOpen"
-    class="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium transition-colors border rounded-md shadow-sm border-input bg-background hover:bg-accent hover:text-accent-foreground">
-    Filtros
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 transition-transform"
-      :class="{ 'rotate-180': isOpen }">
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  </button>
+    removeTag(tag) {this.selectedTags = this.selectedTags.filter(t => t !== tag)}}"
+    class="w-full container mx-auto p-4 mt-20">
+    <!-- Filter Button -->
+    <button @click="isOpen = !isOpen"
+        class="bg-transparent text-black inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium transition-colors border rounded-md shadow-sm border-input bg-background hover:bg-accent hover:text-accent-foreground">
+        Filtros
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="w-4 h-4 transition-transform" :class="{ 'rotate-180': isOpen }">
+            <path d="m6 9 6 6 6-6" />
+        </svg>
+    </button>
 
-  <!-- Filter Content -->
-  <div x-show="isOpen" x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 transform -translate-y-2"
-    x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="opacity-100 transform translate-y-0"
-    x-transition:leave-end="opacity-0 transform -translate-y-2" class="mt-4">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 p-4 bg-white rounded-lg border">
-      <!-- Categories Section -->
-      <div class="space-y-4">
-        <h3 class="font-semibold">Categorias</h3>
-        <div class="space-y-2">
-          {% for c in categories %}
-          <label class="flex items-center gap-2">
-            <input type="checkbox" data-filter="category" class="w-4 h-4 border rounded-sm border-input filter-checkbox" name="category" value="{{ c.id }}">
-            <span class="flex items-center gap-2">
-              <img src="{{ c.image.url }}" class="w-6 h-6"></img>
-             {{ c.title }}
-            </span>
-          </label>
-          {% endfor %}
-        </div>
-      </div>
+    <!-- Filter Content -->
+    <div x-show="isOpen" 
+        x-transition:enter="transition ease-out duration-500"
+        x-transition:enter-start="opacity-0 transform -translate-y-2"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition ease-in duration-400"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-2" class="mt-4">
+        <div class="flex justify-between gap-6 p-4 bg-white rounded-lg border">
+            <!-- Categories Section -->
+            <div class="space-y-4">
+                <h3 class="font-semibold">Categorias</h3>
+                <div class="space-y-2">
+                    {% for c in categories %}
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" data-filter="category"
+                            class="w-4 h-4 border rounded-sm border-input filter-checkbox" name="category"
+                            value="{{ c.id }}">
+                        <span class="flex items-center gap-2">
+                            <img src="{{ c.image.url }}" class="w-6 h-6"></img>
+                            {{ c.title }}
+                        </span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
 
-      <!-- Vendors Section -->
-      <div class="space-y-4">
-        <h3 class="font-semibold">Marcas</h3>
-        <div class="space-y-2">
-          {% for vendor in vendors %}
-          <label class="flex items-center gap-2">
-            <input type="checkbox" data-filter="vendor" class="w-4 h-4 border rounded-sm border-input filter-checkbox" name="vendor" value="{{ vendor.id }}">
-              <img src="{{ vendor.image.url }}" class="w-6 h-6"></img>
-            {{ vendor }}
-          </label>
-          {% endfor %}
-        </div>
-      </div>
+            <!-- Vendors Section -->
+            <div class="space-y-4">
+                <h3 class="font-semibold">Marcas</h3>
+                <div class="space-y-2">
+                    {% for vendor in vendors %}
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" data-filter="vendor"
+                            class="w-4 h-4 border rounded-sm border-input filter-checkbox" name="vendor"
+                            value="{{ vendor.id }}">
+                        <img src="{{ vendor.image.url }}" class="w-6 h-6"></img>
+                        {{ vendor }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
 
-      <!-- Tags Section -->
-      <div class="space-y-4">
-        <h3 class="font-semibold">Etiquetas</h3>
-        <div class="flex flex-wrap gap-2">
-          <template x-for="tag in selectedTags" :key="tag">
-            <span class="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm">
-              <span x-text="tag"></span>
-              <button @click="removeTag(tag)" class="w-4 h-4 hover:text-red-500">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3">
-                  <path d="M18 6 6 18" />
-                  <path d="m6 6 12 12" />
-                </svg>
-              </button>
-            </span>
-          </template>
-        </div>
-      </div>
+            <!-- Tags Section -->
+            <!-- <div class="space-y-4">
+                <h3 class="font-semibold">Etiquetas</h3>
+                <div class="flex flex-wrap gap-2">
+                    <template x-for="tag in selectedTags" :key="tag">
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 rounded-full text-sm">
+                            <span x-text="tag"></span>
+                            <button @click="removeTag(tag)" class="w-4 h-4 hover:text-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="w-3 h-3">
+                                    <path d="M18 6 6 18" />
+                                    <path d="m6 6 12 12" />
+                                </svg>
+                            </button>
+                        </span>
+                    </template>
+                </div>
+            </div> -->
 
-      <!-- Price Range Section -->
-      <div class="space-y-4">
-        <h3 class="font-semibold">By Price</h3>
-        <div class="px-2">
-          <div class="relative pt-1">
-            <input type="range" x-model="priceMin" min="0" max="1000"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-            <input type="range" x-model="priceMax" min="0" max="1000"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mt-2">
-          </div>
-          <div class="flex justify-between text-sm mt-4">
-            <span x-text="'From: $' + priceMin"></span>
-            <span x-text="'To: $' + priceMax"></span>
-          </div>
+            <!-- Price Range Section -->
+            <div class="bg-white rounded-lg shadow p-6 max-w-sm space-y-4">
+                <h2 class="text-lg font-semibold mb-4 pb-2 ">Precio</h2>
+
+                <input class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    type="range" name="range" value="{{ min_max_price.price__max }}" id="range"
+                    min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}"
+                    oninput="max_price.value=this.value">
+                <div class="flex justify-between text-sm text-gray-600">
+                    <span>Min: ${{ min_max_price.price__min }}</span>
+                    <span>Max: ${{ min_max_price.price__max }}</span>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <span class="text-gray-700">$</span>
+                    <input class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary sm:text-sm" type="number" name="price" value="{{ min_max_price.price__max }}" id="max_price" min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}" placeholder="Current Price" onkeyup="range.value=this.value">
+
+                </div>
+
+                <button class="w-full px-6 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors" id="price-filter-btn">Filtrar</button>
+
+
+            </div>
+
+
         </div>
-        <div class="space-y-2">
-          {% for range in price_ranges %}
-          <label class="flex items-center gap-2">
-            <input type="checkbox" class="w-4 h-4 border rounded-sm border-input" name="price_range"
-              value="{{ range.value }}">
-            {{ range.label }}
-          </label>
-          {% endfor %}
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <script>
 
-    $(document).ready(function() {
-        $(".filter-checkbox").on("click", function() {
-            
+    $(document).ready(function () {
+        $(".filter-checkbox, #price-filter-btn").on("click", function () {
+
             let filter_object = {}
 
-            $(".filter-checkbox").each(function() {
+            let min_price = $('#max_price').attr('min')
+            let max_price = $('#max_price').val()
+
+            filter_object.min_price = min_price;
+            filter_object.max_price = max_price;
+
+            $(".filter-checkbox").each(function () {
                 let filter_value = $(this).val()
                 let filter_key = $(this).data('filter')
 
                 // console.log('Filter value: ', filter_value);
                 // console.log('Filter key: ', filter_key);
-                
-                filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function(e) {
+
+                filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function (e) {
                     return e.value
                 })
             })
@@ -125,17 +136,41 @@
                 url: '/filter-products',
                 data: filter_object,
                 dataType: 'json',
-                beforeSend: function() {
-                    
+                beforeSend: function () {
+
                 },
 
-                success: function(res) {
+                success: function (res) {
                     $('#filtered-product').html(res.data)
-                    
+
                 }
             })
         })
-        
+
+
+        $('#max_price').on('blur', function () {
+            let min_price = $(this).attr('min')
+            let max_price = $(this).attr('max')
+            let current_price = $(this).val()
+
+            if (current_price < parseInt(min_price) || current_price > parseInt(max_price)) {
+                console.log('Price bad');
+
+                min_Price = Math.round(min_price * 100) / 100
+                max_Price = Math.round(max_price * 100) / 100
+
+                alert('Price must between $' + min_price + ' and $' + max_price)
+
+                $(this).val(min_price)
+                $('#range').val(min)
+
+                $(this).focus()
+
+                return false
+            }
+
+        })
+
     })
-    
+
 </script>
