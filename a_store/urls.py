@@ -14,5 +14,9 @@ urlpatterns = [
     path('vendors/', vendor_list_view, name='vendor-list'),
     path('vendor/<vid>/', vendor_detail_view, name='vendor-detail'),
     # Tags
-    path('products/tag/<slug:tag_slug>/', tag_list_view, name='tags')
+    path('products/tag/<slug:tag_slug>/', tag_list_view, name='tags'),
+    # Search
+    path('search/', search_view, name='search'),
+    # Filter
+    path('filter-products/', filter_product, name="filter-product")
 ]
