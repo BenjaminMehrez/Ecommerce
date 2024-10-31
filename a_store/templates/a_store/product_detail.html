@@ -60,7 +60,7 @@
                     {% endfor %}
                 </div>
                 <div class="flex items-baseline space-x-4">
-                    <span class="text-3xl font-bold text-blue-600" id="current-product-price">${{ product.price}}</span>
+                    <span class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">${{ product.price}}</span>
                     {% if product.old_price %}
                     <span class="text-xl text-gray-500 line-through">${{ product.old_price }}</span>
                     <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
@@ -68,10 +68,17 @@
                 </div>
                 <input type="number" value="1" id="product-quantity" class="w-20 mb-10">
                 <div>
-                    <input type="hidden" value="{{ product.id }}" class="product-id">
-                    <input type="hidden" value="{{ product.title }}" class="product-title">
-                    <button id="add-to-cart-btn"
-                        class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Add
+                    <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
+                    <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
+                    <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
+                    <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
+                    <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
+                    <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+                        <strong class="font-bold">Error:</strong>
+                        <span class="block sm:inline">Producto ya agregado</span>
+                    </div>
+                    <button id="add-to-cart-btn" data-index="{{ product.id }}"
+                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Add
                         to Cart</button>
                 </div>
             </div>
@@ -104,25 +111,36 @@
 
 <script>
 
-    $("#add-to-cart-btn").on("click", function () {
+    $(".add-to-cart-btn").on("click", function () {
 
-        let quantity = $('#product-quantity').val()
-        let product_title = $('.product-title').val()
-        let product_id = $('.product-id').val()
-        let product_price = $('#current-product-price').text()
         let this_val = $(this)
+        let index = this_val.attr('data-index')
+
+        let quantity = $('.product-quantity-' + index).val()
+        let product_title = $('.product-title-' + index).val()
+
+        let product_id = $('.product-id-' + index).val()
+        let product_price = $('.current-product-price-' + index).text()
+
+        let product_pid = $('.product-pid-' + index).val()
+        let product_image = $('.product-image-' + index).val()
 
         console.log('Quantity:', quantity);
         console.log('Title:', product_title);
         console.log('price:', product_price);
         console.log('id:', product_id);
+        console.log('Pid:', product_pid);
+        console.log('Image:', product_image);
+        console.log('Index:', index);
         console.log('Current Element:', this_val);
-        
+
 
         $.ajax({
             url: '/add-to-cart',
             data: {
                 'id': product_id,
+                'pid': product_pid,
+                'image': product_image,
                 'qty': quantity,
                 'title': product_title,
                 'price': product_price
@@ -130,15 +148,30 @@
             dataType: 'json',
             beforeSend: function() {
                 console.log('Product adding');
-                
+
             },
 
             success: function(res) {
-                this_val.html('Item added to cart')
+                this_val.html('Producto agregado')
+
                 console.log('Producto agreagdo al cart');
                 $('.cart-items-count').text(res.totalcartitems)
+
+            },
+            
+            error: function() {
+                // Selecciona la notificación de error
+                const errorNotification = $('#error-notification');
                 
+                // Muestra la notificación con un efecto fade-in
+                errorNotification.fadeIn();
+
+                // Desaparece la notificación después de 3 segundos
+                setTimeout(function() {
+                    errorNotification.fadeOut();
+                }, 3000);
             }
+
         })
     })
 

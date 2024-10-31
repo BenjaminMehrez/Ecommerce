@@ -1,47 +1,147 @@
 {% extends 'layouts/blank.html' %}
 {% load static %}
-{% block content %} 
+{% block content %}
 
 {% include 'includes/filter.html' %}
 
-<section class="container mx-auto px-4 pb-12 md:pb-24 pt-4 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+<section class="container mx-auto px-4 pb-12 md:pb-24 pt-4 opacity-0"
+    _="on load transition my opacity to 1 over 0.3 seconds">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" id="filtered-product">
         {% for product in products %}
-        <article class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
+        <article
+            class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0"
+            _="on load transition my opacity to 1 over 0.3 seconds">
             {% if product.image %}
-            <div class="aspect-square overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                    src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
-            </div>
+            <a href="{% url 'product-detail' product.pid %}">
+                <div class="aspect-square overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
+                </div>
+            </a>
             {% endif %}
-            <div class="p-4">
-                <h3 class="font-bold text-gray-800 text-xl mb-2 line-clamp-2">{{ product.title }}</h3>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category }}</span>
-                    <span class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <div class="space-y-1">
-                        <span class="block text-xl font-bold text-gray-900">${{ product.price|floatformat:2 }}</span>
-                        {% if product.old_price %}
-                        <div class="flex items-center gap-2">
-                            <span class="text-sm text-gray-500 line-through">${{ product.old_price|floatformat:2 }}</span>
-                            <span class="inline-block bg-red-100 rounded-full px-2 py-1 text-xs font-semibold text-red-600">
-                                -{{ product.get_precentage|floatformat:0 }}%
-                            </span>
-                        </div>
-                        {% endif %}
+            <a href="{% url 'product-detail' product.pid %}">
+                <div class="p-5">
+                    <h3 class="font-bold text-gray-800 text-xl mb-2 line-clamp-2">{{ product.title }}</h3>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span
+                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
+                        <span
+                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
                     </div>
-                    <a href="{% url 'product-detail' product.pid %}"
-                        class="inline-block bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
-                        Ver
-                    </a>
+                    <div class="flex items-center justify-between pr-5">
+                        <div class="space-y-1">
+                            <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">${{ product.price|floatformat:2}}</span>
+                            {% if product.old_price %}
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-500 line-through">${{ product.old_price|floatformat:2}}</span>
+                                <span
+                                    class="inline-block bg-red-100 rounded-full px-2 py-1 text-xs font-semibold text-red-600">
+                                    -{{ product.get_precentage|floatformat:0 }}%
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+            </a>
+            <div class="add-cart space-x-2">
+                <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
+                <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
+                <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
+                <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
+                <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
+                <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+                    <strong class="font-bold">Error:</strong>
+                    <span class="block sm:inline">Producto ya agregado</span>
                 </div>
+                <button id="add-to-cart-btn" data-index="{{ product.id }}"
+                    class="add-to-cart-btn relative inline-flex items-center justify-center p-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+                    role="button">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
+                </button>
             </div>
-        </article>
-        {% endfor %}
+    </div>
+    </div>
+
+
+    </article>
+    {% endfor %}
     </div>
 </section>
 
+
+<script>
+
+    $(".add-to-cart-btn").on("click", function () {
+
+        let this_val = $(this)
+        let index = this_val.attr('data-index')
+
+        let quantity = $('.product-quantity-' + index).val()
+        let product_title = $('.product-title-' + index).val()
+
+        let product_id = $('.product-id-' + index).val()
+        let product_price = $('.current-product-price-' + index).text()
+
+        let product_pid = $('.product-pid-' + index).val()
+        let product_image = $('.product-image-' + index).val()
+
+        console.log('Quantity:', quantity);
+        console.log('Title:', product_title);
+        console.log('price:', product_price);
+        console.log('id:', product_id);
+        console.log('Pid:', product_pid);
+        console.log('Image:', product_image);
+        console.log('Index:', index);
+        console.log('Current Element:', this_val);
+
+
+        $.ajax({
+            url: '/add-to-cart',
+            data: {
+                'id': product_id,
+                'pid': product_pid,
+                'image': product_image,
+                'qty': quantity,
+                'title': product_title,
+                'price': product_price
+            },
+            dataType: 'json',
+            beforeSend: function() {
+                console.log('Product adding');
+
+            },
+
+            success: function(res) {
+                this_val.html(`
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z" fill="currentColor"/>
+                        </svg>
+                `);
+
+                console.log('Producto agreagdo al cart');
+                $('.cart-items-count').text(res.totalcartitems)
+
+            },
+
+            error: function() {
+                // Selecciona la notificación de error
+                const errorNotification = $('#error-notification');
+                
+                // Muestra la notificación con un efecto fade-in
+                errorNotification.fadeIn();
+
+                // Desaparece la notificación después de 3 segundos
+                setTimeout(function() {
+                    errorNotification.fadeOut();
+                }, 3000);
+            }
+        })
+    })
+
+</script>
 
 {% endblock %}
