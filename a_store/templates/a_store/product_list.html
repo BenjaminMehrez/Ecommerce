@@ -30,7 +30,7 @@
                     </div>
                     <div class="flex items-center justify-between pr-5">
                         <div class="space-y-1">
-                            <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">${{ product.price|floatformat:2}}</span>
+                            <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">${{ product.price|floatformat:2 }}</span>
                             {% if product.old_price %}
                             <div class="flex items-center gap-2">
                                 <span class="text-sm text-gray-500 line-through">${{ product.old_price|floatformat:2}}</span>
@@ -84,7 +84,7 @@
         let product_title = $('.product-title-' + index).val()
 
         let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text()
+        let product_price = $('.current-product-price-' + index).text().replace('$', '').replace(',', '');
 
         let product_pid = $('.product-pid-' + index).val()
         let product_image = $('.product-image-' + index).val()

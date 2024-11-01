@@ -60,15 +60,15 @@
                     {% endfor %}
                 </div>
                 <div class="flex items-baseline space-x-4">
-                    <span class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">${{ product.price}}</span>
+                    <span class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">${{ product.price|floatformat:2 }}</span>
                     {% if product.old_price %}
                     <span class="text-xl text-gray-500 line-through">${{ product.old_price }}</span>
                     <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
                     {% endif %}
                 </div>
-                <input type="number" value="1" id="product-quantity" class="w-20 mb-10">
+                <input type="number" value="1" id="product-quantity" class="w-20 mb-10 product-quantity-{{ product.id }}">
                 <div>
-                    <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
+                    <!-- <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16"> -->
                     <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
                     <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
                     <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
@@ -120,7 +120,7 @@
         let product_title = $('.product-title-' + index).val()
 
         let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text()
+        let product_price = $('.current-product-price-' + index).text().replace('$', '').replace(',', '');
 
         let product_pid = $('.product-pid-' + index).val()
         let product_image = $('.product-image-' + index).val()
