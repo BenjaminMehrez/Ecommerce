@@ -1,55 +1,61 @@
-{% extends 'layouts/box.html' %}
+{% extends 'layouts/g.html' %}
+{% load static %}
+{% block title %}Editar Perfil | {% endblock %}
 
 {% block content %}
 
-{% if onboarding %}
-<h1 class="mb-4">Complete your Profile</h1>
-{% else %}
-<h1 class="mb-4">Edit your Profile</h1>
-{% endif %}
-
-<div class="text-center flex flex-col items-center">
-    <img id="avatar" class="w-36 h-36 rounded-full object-cover my-4" src="{{ user.profile.avatar }}" />
-    <div class="text-center max-w-md">
-        <h1 id="displayname">{{ user.profile.displayname|default:"" }}</h1>
-        <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+<div class="flex flex-col px-10 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+    <h1 class="mb-2 text-3xl">Editar Perfil</h1>
+    <div class="text-center flex flex-col items-center">
+        <img id="avatar" class="w-36 h-36 rounded-full object-cover mb-4" src="{{ user.profile.avatar }}" />
+        <div class="text-center max-w-md">
+            <h1 id="realname">{{ user.profile.name }}</h1>
+            <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+        </div>
     </div>
+    <form method="POST" enctype="multipart/form-data" class="flex flex-col gap-5 pt-5">
+        {% csrf_token %}
+        <div>
+            <h2>Informacion Personal</h2>
+            {{ form.as_p }}
+        </div>
+        <div>
+            <h2 class="mb-5 ">Direccion</h2>
+            {{ shipping_form.as_p }}
+        </div>
+        <button type="submit">Guardar Cambios</button>
+        <a class="button secondaryAction text-center" href="{% url 'home' %}">Cancelar</a>
+    </form>
+    
+    <a class="hover:underline text-gray-500 mt-16" href="{% url 'profile-delete' %}">Eliminar Perfil</a>
 </div>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" >Submit</button>
-    {% if onboarding %}
-    <a class="button button-gray ml-1" href="{% url 'home' %}">Skip</a>
-    {% else %}
-    <a class="button button-gray ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
-    {% endif %}
-</form>
 
 
-
+<div class="absolute top-1/2" hx-trigger="load">
+    <img alt="Result loading..." class="htmx-indicator loader" width="150" src="{% static 'images/logo.png' %}" />
+</div>
 
 <script>
-    
+
     // This updates the avatar
     const fileInput = document.querySelector('input[type="file"]');
 
     fileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    const image = document.querySelector('#avatar');
+        const file = event.target.files[0];
+        const image = document.querySelector('#avatar');
 
-    if (file && file.type.includes('image')) {
-        const url = URL.createObjectURL(file);
-        image.src = url;
-    }
+        if (file && file.type.includes('image')) {
+            const url = URL.createObjectURL(file);
+            image.src = url;
+        }
     });
 
     // This updates the name
-    const display_nameInput = document.getElementById('id_displayname');
-    const display_nameOutput = document.getElementById('displayname');
+    const realnameInput = document.getElementById('id_realname');
+    const realnameOutput = document.getElementById('realname');
 
-    display_nameInput.addEventListener('input', (event) => {
-        display_nameOutput.innerText = event.target.value;
+    realnameInput.addEventListener('input', (event) => {
+        realnameOutput.innerText = event.target.value;
     });
 
 </script>

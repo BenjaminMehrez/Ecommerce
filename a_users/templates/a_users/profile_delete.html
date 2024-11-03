@@ -1,14 +1,20 @@
 {% extends 'layouts/box.html' %}
+{% load static %}
+{% block title %}Eliminar Cuenta | {% endblock %}
 
 {% block content %}
 
-<h1>Delete Account</h1>
-<p>Are you sure you want to delete your account?</p>
+<h1>Eliminar Cuenta</h1>
+<p>Estas seguro que quieres eliminar tu cuenta?</p>
 
 <form method='POST'>
     {% csrf_token %}
-    <button type="submit" class="button-red mt-6">Yes, I want to delete my account</button>
-    <a class="button button-gray ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+    <button type="submit" class="button-red mt-6">Si, quiero eliminar mi cuenta</button>
+    <a class="button button-gray ml-1" href="{{ request.META.HTTP_REFERER }}">Cancelar</a>
 </form>
+
+<div class="absolute top-40 left-80" hx-trigger="load">
+    <img alt="Result loading..." class="htmx-indicator loader" width="150" src="{% static 'images/logo.png' %}"/>
+</div>
 
 {% endblock %}

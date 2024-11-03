@@ -1,58 +1,64 @@
-{% extends 'layouts/box.html' %}
+{% extends 'layouts/f.html' %}
+{% load static %}
+
+
+{% block title %}Configuracion | {% endblock %}
+
+
 
 {% block content %}
 
-<h1 class="mb-8">Account Settings</h1>
+<h1 class="text-center sm:text-start mb-8">Configuracion</h1>
 
-<table class="w-full text-sm text-left text-gray-500">
-    <tbody>
-        <tr>
-            <th scope="row" class="pt-4 pb-1 text-base font-bold text-gray-900">
-                Email address
-            </th>
-            <td id="email-address" class="pt-4 pb-1 pl-4">
+<div class="text-center sm:text-start w-full text-sm text-left text-gray-500">
+
+    <div class="flex flex-col sm:flex-row items-center justify-between sm:px-10 border-y-2">
+
+        <h2 class="pt-4 pb-1 text-base font-bold text-gray-900">
+            Correo Electronico
+        </h2>
+        <div class="flex flex-col text-center gap-3">
+            <p id="email-address" class="m-0">
                 {% if user.email %}{{ user.email }}{% else %}No Email{% endif %}
-            </td>
-            <td class="pt-4 pb-1 pl-4">
-                <a id="email-edit" class="cursor-pointer font-medium text-blue-600 hover:underline"
-                    hx-get="{% url 'profile-emailchange' %}"
-                    hx-target="#email-address"
-                    hx-swap="innerHTML" >
-                    Edit
-                </a>
-            </td>
-        </tr>
-        <tr class="border-b">
-            <th scope="row" class="pb-4 font-medium text-gray-900">  
-            </th>
-            <td class="pb-4 pl-4">
-                {% if user.emailaddress_set.first.verified %}
-                <span class="text-green-500">Verified</span>{% else %}
-                <span class="text-amber-500">Not verified</span>
-                {% endif %}
-            </td>
-            <td class="pb-4 pl-4">
-                <a href="{% url 'profile-emailverify' %}" class="font-medium text-blue-600 hover:underline">
-                    {% if not user.emailaddress_set.first.verified %}Verify{% endif %}
-                </a>
-            </td>
-        </tr>
+            </p>
+            {% if user.emailaddress_set.first.verified %}
+            <span class="text-green-500">Verificado</span>{% else %}
+            <span class="text-amber-500">No verificado</span>
+            {% endif %}
+        </div>
+        <div class="flex flex-col gap-2 py-4 ">
+            <a href="{% url 'profile-emailverify' %}" class="font-medium text-blue-600 hover:underline">
+                {% if not user.emailaddress_set.first.verified %}Verifica{% endif %}
+            </a>
+            <a id="email-edit" class="cursor-pointer font-medium text-blue-600 hover:underline"
+                hx-get="{% url 'profile-emailchange' %}" hx-target="#email-address" hx-swap="innerHTML">
+                Editar
+            </a>
+        </div>
 
-        <tr class="border-b">
-            <th scope="row" class="py-4 text-base font-bold text-gray-900">
-                Delete Account
-            </th>
-            <td class="py-4 pl-4">
-                Once deleted, account is gone. Forever.
-            </td>
-            <td class="py-4 pl-4">
-                <a href="{% url 'profile-delete' %}" class="font-medium text-red-600 hover:underline">
-                    Delete
-                </a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    </div>
 
 
+    <div class="flex flex-col sm:flex-row items-center justify-between sm:px-10 border-b-2">
+
+        <div class="py-4 text-base font-bold text-gray-900">
+            Eliminar Cuenta
+        </div>
+
+        <div class="py-4 pl-4">
+            Una vez eliminada, la cuenta desaparece para siempre.
+        </div>
+        <div class="py-5">
+            <a href="{% url 'profile-delete' %}" class="font-medium text-red-600 hover:underline">
+                Eliminar
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="absolute top-32 left-2/4" hx-trigger="load">
+    <img alt="Result loading..." class="htmx-indicator loader" width="150" src="{% static 'images/logo.png' %}" />
+</div>
 {% endblock %}
