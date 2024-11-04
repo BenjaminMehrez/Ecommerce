@@ -29,11 +29,11 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
-    'https://7727-2803-9800-9844-9537-ba65-46e0-ceaf-413e.ngrok-free.app',
+    'https://b7eb-2803-9800-9844-9537-e3ff-63b9-df65-eb0a.ngrok-free.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://7727-2803-9800-9844-9537-ba65-46e0-ceaf-413e.ngrok-free.app",
+    "https://b7eb-2803-9800-9844-9537-e3ff-63b9-df65-eb0a.ngrok-free.app",
 ]
 
 
