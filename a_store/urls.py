@@ -3,6 +3,10 @@ from .views import *
 
 
 urlpatterns = [
+    # Paypal
+    path('paypal/', include("paypal.standard.ipn.urls")),
+    path('payment-success/', payment_success_view, name='payment-failed'),
+    path('payment-failed/', payment_failed_view, name='payment-success'),
     # Homepage
     path('', home, name='home'),
     path('products/', product_list_view, name='product-list'),

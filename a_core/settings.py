@@ -28,14 +28,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ALLOWED_ORIGINS = [
+    'https://7727-2803-9800-9844-9537-ba65-46e0-ceaf-413e.ngrok-free.app',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://7727-2803-9800-9844-9537-ba65-46e0-ceaf-413e.ngrok-free.app",
+]
+
+
 
 AUTHENTICATION_BACKENDS = [
-
     'django.contrib.auth.backends.ModelBackend',
-
     'allauth.account.auth_backends.AuthenticationBackend',
-
 ]
+
+
+INTERNAL_IPS = (
+    '127.0.0.1',
+    'localhost:8000'
+)
+
 
 # Application definition
 
@@ -48,13 +61,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    # Paypal
     'paypal.standard.ipn',
+    # Allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # Others
     "django_htmx",
     'django.contrib.humanize',
     'taggit',
+    # Apps
     'a_store',
     'a_users',
 ]
@@ -170,3 +187,8 @@ JAZZMIN_SETTINGS = {
     'copyright': 'benjaminmehrez'
 }
 
+
+# PAYPAL
+
+PAYPAL_RECEIVER_EMAIL = 'maxibusiness@gmail.com'
+PAYPAL_TEST = True

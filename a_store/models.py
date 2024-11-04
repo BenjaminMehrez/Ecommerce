@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 STATUS_CHOICE = (
-    ("process", "Processing"),
+    ("processing", "Processing"),
     ("shipped", "Shipped"),
     ("delivered", "Delivered"),
 )
