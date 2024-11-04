@@ -29,5 +29,10 @@ urlpatterns = [
     path('delete-from-cart/', delete_item_from_cart, name='delete-from-cart'),
     path('update-cart/', update_cart, name='update-cart'),
     # Checkout
-    path('checkout/', checkout_view, name='checkout')
+    path('checkout/', checkout_view, name='checkout'),
+    # Dashboard
+    path('dashboard/', customer_dashboard, name='dashboard'),
+    # Order Detail
+    path('dashboard/order/<int:id>/', order_datail, name='order-detail'),
+    
 ]
