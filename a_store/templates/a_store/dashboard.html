@@ -257,7 +257,7 @@
                                 Gestión de Direcciones
                             </h2>
                         </div>
-                        
+
                         <!-- Address Form -->
                         <div class="p-6 bg-gray-50">
                             <h3 class="text-xl font-semibold text-gray-700 mb-4">Mi dirección</h3>
@@ -265,87 +265,104 @@
                                 {% csrf_token %}
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="space-y-2">
-                                        <label for="fullname" class="block text-sm font-medium text-gray-700">Nombre completo:</label>
-                                        <input type="text" id="fullname" name="fullname" placeholder="Lionel Messi" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="fullname" class="block text-sm font-medium text-gray-700">Nombre
+                                            completo:</label>
+                                        <input type="text" id="fullname" name="fullname" placeholder="Lionel Messi"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico:</label>
-                                        <input type="email" id="email" name="email" placeholder="lionel@gmail.com" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="email" class="block text-sm font-medium text-gray-700">Correo
+                                            electrónico:</label>
+                                        <input type="email" id="email" name="email" placeholder="lionel@gmail.com"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="address" class="block text-sm font-medium text-gray-700">Dirección:</label>
-                                        <input type="text" id="address" name="address" placeholder="Barrio Champions 321" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="address"
+                                            class="block text-sm font-medium text-gray-700">Dirección:</label>
+                                        <input type="text" id="address" name="address"
+                                            placeholder="Barrio Champions 321"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="street" class="block text-sm font-medium text-gray-700">Calle y número:</label>
-                                        <input type="text" id="street" name="street" placeholder="Los ganadores 123" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="street" class="block text-sm font-medium text-gray-700">Calle y
+                                            número:</label>
+                                        <input type="text" id="street" name="street" placeholder="Los ganadores 123"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="zipcode" class="block text-sm font-medium text-gray-700">Código Postal:</label>
-                                        <input type="text" id="zipcode" name="zipcode" placeholder="32122" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="zipcode" class="block text-sm font-medium text-gray-700">Código
+                                            Postal:</label>
+                                        <input type="text" id="zipcode" name="zipcode" placeholder="32122"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="city" class="block text-sm font-medium text-gray-700">Provincia:</label>
-                                        <input type="text" id="city" name="city" placeholder="Santa Fe" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="city"
+                                            class="block text-sm font-medium text-gray-700">Provincia:</label>
+                                        <input type="text" id="city" name="city" placeholder="Santa Fe"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="mobile" class="block text-sm font-medium text-gray-700">Celular:</label>
-                                        <input type="text" id="mobile" name="mobile" placeholder="23198321" 
-                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <label for="mobile"
+                                            class="block text-sm font-medium text-gray-700">Celular:</label>
+                                        <input type="text" id="mobile" name="mobile" placeholder="23198321"
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                 </div>
                                 <div class="mt-6">
-                                    <button type="submit" class="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <button type="submit"
+                                        class="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         Guardar Dirección
                                     </button>
                                 </div>
                             </form>
                         </div>
-                
+
                         <!-- Existing Addresses -->
-                            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                                <div class="p-6">
-                                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Direcciones</h2>
-                                    
-                                    <div class="space-y-8">
-                                        <!-- Billing Addresses Section -->
-                                        <div>
-                                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Direcciones de Facturación</h3>
-                                            <div class="flex flex-col">
-                                                {% for address in address %}
-                                                <h4>Direccion {{ forloop.counter }}</h4>
-                                                <div class="bg-gray-50 rounded-lg shadow p-4 space-y-3">
-                                                    <div class="space-y-1">
-                                                        <p class="font-medium text-gray-800">{{ address.full_name }}</p>
-                                                        <p class="text-gray-600">{{ address.email }}</p>
-                                                        <p class="text-gray-600">{{ address.address }}</p>
-                                                        <p class="text-gray-600">{{ address.street }}</p>
-                                                        <p class="text-gray-600">{{ address.zipcode }}, {{ address.city }}</p>
-                                                        <p class="text-gray-600">{{ address.mobile }}</p>
-                                                    </div>
-                                                    <button
-                                                        class="w-full mt-2 px-4 py-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                                                        {% if address.is_default %}
-                                                        Dirección Predeterminada
-                                                        {% else %}
-                                                        Establecer como Predeterminada
-                                                        {% endif %}
-                                                    </button>
+                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                            <div class="p-6">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Direcciones</h2>
+
+                                <div class="space-y-8">
+                                    <!-- Billing Addresses Section -->
+                                    <div>
+                                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Direcciones de Facturación
+                                        </h3>
+                                        <div class="flex flex-col gap-6">
+                                            {% for address in address %}
+                                            <span>Direccion {{ forloop.counter }}</span>
+                                            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-3">
+                                                <div class="space-y-1">
+                                                    <p class="font-medium text-gray-800">{{ address.full_name }}</p>
+                                                    <p class="text-gray-600">{{ address.email }}</p>
+                                                    <p class="text-gray-600">{{ address.address }}</p>
+                                                    <p class="text-gray-600">{{ address.street }}</p>
+                                                    <p class="text-gray-600">{{ address.zipcode }}, {{ address.city }}
+                                                    </p>
+                                                    <p class="text-gray-600">{{ address.mobile }}</p>
                                                 </div>
-                                                {% empty %}
-                                                <p class="text-gray-600 col-span-full">No hay direcciones de facturación guardadas.</p>
-                                                {% endfor %}
+                                                {% if address.status %}
+                                                <i data-address-id="{{ address.id }}"
+                                                    class="check check{{ address.id }}">✅</i>
+                                                <button data-address-id="{{ address.id }}"
+                                                    class="hidden px-4 py-2 make-default-address button{{ address.id }} action_btn">Establecer
+                                                    como predeterminado</button>
+                                                {% else %}
+                                                <i data-address-id="{{ address.id }}"
+                                                    class="hidden check check{{ address.id }}">✅</i>
+                                                <button data-address-id="{{ address.id }}"
+                                                    class="px-4 py-2 make-default-address button{{ address.id }} action_btn">Establecer
+                                                    como predeterminado</button>
+                                                {% endif %}
                                             </div>
+                                            {% empty %}
+                                            <p class="text-gray-600 col-span-full">No hay direcciones de facturación
+                                                guardadas.</p>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
 
@@ -416,5 +433,41 @@
         // Mostrar el dashboard por defecto
         showContent('content-dashboard');
     });
+
+
+    $(document).ready(function () {
+
+        $(document).on('click', '.make-default-address', function () {
+            let id = $(this).attr('data-address-id')
+            let this_val = $(this)
+
+            console.log('ID es:', id);
+            console.log('element es:', this_val);
+
+
+
+
+            $.ajax({
+                url: '/make-default-address',
+                data: {
+                    'id': id
+                },
+                dataType: 'json',
+
+
+                success: function (response) {
+                    console.log('Adderss cambiado');
+                    if (response.boolean == true) {
+
+                        $('.check').hide()
+                        $('.action_btn').show()
+
+                        $('.check' + id).show()
+                        $('.button' + id).hide()
+                    }
+                }
+            })
+        })
+    })
 </script>
 {% endblock %}

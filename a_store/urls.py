@@ -34,5 +34,6 @@ urlpatterns = [
     path('dashboard/', customer_dashboard, name='dashboard'),
     # Order Detail
     path('dashboard/order/<int:id>/', order_datail, name='order-detail'),
+    path('make-default-address/', make_address_default, name='make-default-address'),
     
 ]

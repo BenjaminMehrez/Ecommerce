@@ -282,12 +282,19 @@ def checkout_view(request):
     
     paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
     
-    cart_total_amount = 0
-    if 'cart_data_obj' in request.session:
-        for p_id, item in request.session['cart_data_obj'].items():
-            cart_total_amount += int(item['qty']) * float(item['price'])
+    # cart_total_amount = 0
+    # if 'cart_data_obj' in request.session:
+    #     for p_id, item in request.session['cart_data_obj'].items():
+    #         cart_total_amount += int(item['qty']) * float(item['price'])
     
-    return render(request, 'a_store/checkout.html', {'cart_data': request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount, 'paypal_payment_button': paypal_payment_button})
+    try:
+        active_address = Address.objects.get(user=request.user, status=True)
+    except:
+        messages.warning(request, 'No se puede tener mas de una direccion predeterminada')
+        active_address = None
+        
+    
+    return render(request, 'a_store/checkout.html', {'cart_data': request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount, 'paypal_payment_button': paypal_payment_button, 'active_address':active_address})
 
 
 @login_required
@@ -349,3 +356,12 @@ def order_datail(request, id):
         'order_items': order_items,
     }
     return render(request, 'a_store/order-detail.html', context)
+
+
+
+
+def make_address_default(request):
+    id = request.GET['id']
+    Address.objects.update(status=False)
+    Address.objects.filter(id=id).update(status=True)
+    return JsonResponse({'boolean': True})
