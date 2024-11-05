@@ -220,7 +220,13 @@ class Wishlist(models.Model):
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    address = models.CharField(max_length=100, null=True)
+    full_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255)
+    address = models.CharField(max_length=255)
+    street = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=255)
+    zipcode = models.CharField(max_length=255, null=True, blank=True)
+    mobile = models.CharField(max_length=300, null=True)
     status = models.BooleanField(default=False)
     
     class Meta:

@@ -12,7 +12,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 from django.contrib.auth.decorators import login_required
-
+from .forms import AddressForm
 
 # Create your views here.
 
@@ -308,8 +308,34 @@ def payment_failed_view(request):
 @login_required
 def customer_dashboard(request):
     orders = CartOrder.objects.filter(user=request.user).order_by('-id')
+    address = Address.objects.filter(user=request.user)
+
+    
+    if request.method == 'POST':
+        fullname = request.POST.get('fullname')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        street = request.POST.get('street')
+        zipcode = request.POST.get('zipcode')
+        city = request.POST.get('city')
+        mobile = request.POST.get('mobile')
+            
+        new_address = Address.objects.create(
+            user=request.user,
+            full_name=fullname,
+            email=email,
+            address=address,
+            street=street,
+            zipcode=zipcode,
+            city=city,
+            mobile=mobile,
+        )
+        messages.success(request, 'Direccion agregada')
+        return redirect('dashboard')
+            
     context = {
         'orders': orders,
+        'address': address,
     }
     return render(request, 'a_store/dashboard.html', context)
     
