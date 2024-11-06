@@ -32,8 +32,12 @@ urlpatterns = [
     path('checkout/', checkout_view, name='checkout'),
     # Dashboard
     path('dashboard/', customer_dashboard, name='dashboard'),
+    path('make-default-address/', make_address_default, name='make-default-address'),
     # Order Detail
     path('dashboard/order/<int:id>/', order_datail, name='order-detail'),
-    path('make-default-address/', make_address_default, name='make-default-address'),
+    # Wishlist
+    path('wishlist/', wishlist_view, name='wishlist'),
+    path('add-to-wishlist/', add_to_wishlist, name='add-to-wishlist'),
+    
     
 ]
