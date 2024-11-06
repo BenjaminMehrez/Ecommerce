@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib import messages
-
+from a_users.models import Profile
 from django.urls import reverse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -319,7 +319,7 @@ def payment_failed_view(request):
 def customer_dashboard(request):
     orders = CartOrder.objects.filter(user=request.user).order_by('-id')
     address = Address.objects.filter(user=request.user)
-
+    profile = Profile.objects.get(user=request.user)
     
     if request.method == 'POST':
         fullname = request.POST.get('fullname')
@@ -346,6 +346,7 @@ def customer_dashboard(request):
     context = {
         'orders': orders,
         'address': address,
+        'profile': profile,
     }
     return render(request, 'a_store/dashboard.html', context)
     

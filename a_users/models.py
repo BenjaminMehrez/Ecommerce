@@ -9,25 +9,25 @@ from django.conf import settings
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='avatars/', null=True, blank=True) # blank signify that can is empty, null can save something empty   
-    first_name = models.CharField(max_length=10, null=True)
-    last_name = models.CharField(max_length=10, null=True)
+    full_name = models.CharField(max_length=30, null=True)
+    bio = models.CharField(max_length=200, null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(unique=True, null=True)
-
+    verified = models.BooleanField(default=False)
     created = models.DateTimeField(User, auto_now_add=True)
     
     
     def __str__(self):
-        if self.first_name and self.last_name:
-            return f'{self.first_name} {self.last_name}'
+        if self.full_name:
+            return f'{self.full_name}'
         return self.user.username
         
     
     
     @property
     def name(self):
-        if self.first_name:
-            return self.first_name
+        if self.full_name:
+            return self.full_name
         return self.user.username
     
     
@@ -38,3 +38,21 @@ class Profile(models.Model):
         except:
             avatar = static('images/avatar_default.jpg')
         return avatar
+    
+    
+    
+class ContacUs(models.Model):
+    full_name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    phone = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200)
+    message = models.TextField()
+    
+    
+    class Meta:
+        verbose_name = 'Contact Us'
+        verbose_name_plural = 'Contact Us'
+        
+        
+    def __str__(self):
+        return self.full_name
