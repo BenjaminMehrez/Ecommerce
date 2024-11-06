@@ -84,6 +84,8 @@ def product_detail_view(request, pid):
     product = get_object_or_404(Product, pid=pid)
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
     p_images = product.p_images.all
+    wishlist_items = Wishlist.objects.filter(user=request.user)  # Obtener la lista de deseos del usuario actual
+    wishlist_product_ids = wishlist_items.values_list('product_id', flat=True)
 
     # Getting all review related to a product
     reviews = ProductReview.objects.filter(product=product).order_by('-date')
@@ -97,6 +99,7 @@ def product_detail_view(request, pid):
         'average_rating': average_rating,
         'reviews': reviews,
         'products': products,
+        'wishlist_product_ids': wishlist_product_ids,
     }
 
     return render(request, 'a_store/product_detail.html', context)

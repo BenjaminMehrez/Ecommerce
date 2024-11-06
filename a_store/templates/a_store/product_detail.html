@@ -48,7 +48,11 @@
             <div class="space-y-6">
                 <div class="flex justify-between">
                     <h1 class="text-3xl font-bold">{{ product.title }}</h1>
+                    {% if product.id in wishlist_product_ids %}
+                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img src="{% static 'images/heart-black.svg' %}" alt="wishlist"></button>
+                    {% else%}
                     <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img src="{% static 'images/heart.svg' %}" alt="wishlist"></button>
+                    {% endif %}
                 </div>
                 <p class="text-gray-600">SKU: {{ product.sku }}</p>
                 <p class="text-gray-600">Stock: <span
@@ -211,7 +215,7 @@ $(document).ready(function() {
             success: function(response) {
                 this_val.html('<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M16.5 3c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"></path> </g> </g></svg>')
                 if (response.bool === true){
-                    
+                    location.reload()
                 }
                 
             },
