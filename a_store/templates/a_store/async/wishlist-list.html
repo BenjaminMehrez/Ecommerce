@@ -1,0 +1,79 @@
+<table class="min-w-full divide-y divide-gray-200" id="wishlist-list">
+    <thead class="bg-gray-50">
+        <tr>
+            <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Productos
+            </th>
+            <th scope="col"
+                class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
+                Precio
+            </th>
+            <th scope="col"
+                class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
+                Stock
+            </th>
+            <th scope="col"
+                class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
+                Accion
+            </th>
+            <th scope="col"
+                class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                Eliminar
+            </th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+        {% for w in wishlist %}
+        <tr class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 h-40 w-40">
+                        <img class="h-40 w-40 rounded-lg object-cover" src="{{ w.product.image.url }}"
+                            alt="{{ w.product.title }}">
+                    </div>
+                    <div class="ml-4">
+                        <a href="{% url 'product-detail' w.product.pid %}" class="text-sm font-medium text-gray-900">
+                            {{ w.product.title }}
+                        </a>
+                    </div>
+                </div>
+            </td>
+            <td class="py-4 whitespace-nowrap">    
+                <span class="text-xl text-gray-900 current-price current-product-price-{{ w.product.id }}">${{ w.product.price|floatformat:2 }}</span>
+            </td>
+            <td class="py-4 whitespace-nowrap">
+                {% if w.product.in_stock %}
+                    <p>En stock</p>
+                    {% else %}
+                    <p>Sin stock</p>
+                {% endif %}
+            </td>
+            <td class="py-4 whitespace-nowrap text-xl font-medium ">           
+                <div>
+                    <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ w.product.id }} w-16">
+                    <input type="hidden" class="product-pid-{{ w.product.id }} w-16" value="{{ w.product.pid }}">
+                    <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
+                    <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
+                    <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
+                    <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+                        <strong class="font-bold">Error:</strong>
+                        <span class="block sm:inline">Producto ya agregado</span>
+                    </div>
+                    <button id="add-to-cart-btn" data-index="{{ w.product.id }}"
+                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Add
+                        to Cart</button>
+                </div>
+            </td>
+            <td class="py-4 whitespace-nowrap text-xl font-medium ">
+                <button data-wishlist-product="{{ w.id }}" class="delete-wishlist-product w-24 p-3 flex justify-center bg-red-700 hover:bg-red-800 text-gray-100 hover:text-gray-500">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

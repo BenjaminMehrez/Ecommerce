@@ -38,6 +38,7 @@ urlpatterns = [
     # Wishlist
     path('wishlist/', wishlist_view, name='wishlist'),
     path('add-to-wishlist/', add_to_wishlist, name='add-to-wishlist'),
+    path('delete-wishlist/', delete_wishlist, name='delete-wishlist'),
     
     
 ]

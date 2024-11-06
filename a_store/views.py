@@ -12,7 +12,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 from django.contrib.auth.decorators import login_required
-from .forms import AddressForm
+from django.core import serializers
 
 # Create your views here.
 
@@ -407,3 +407,20 @@ def add_to_wishlist(request):
         }
     
     return JsonResponse(context)
+
+
+
+
+def delete_wishlist(request):
+    pid = request.GET['id']
+    wishlist = Wishlist.objects.filter(user=request.user)
+    product = Wishlist.objects.get(id=pid)
+    product.delete()
+    
+    context = {
+        'bool': True,
+        'wishlist': wishlist
+    }
+    wishlist_json = serializers.serialize('json', wishlist)
+    data = render_to_string('a_store/async/wishlist-list.html', context)
+    return JsonResponse({'data': data, 'w': wishlist_json})
