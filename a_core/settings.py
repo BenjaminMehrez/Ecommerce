@@ -126,7 +126,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'a_core.wsgi.application'
 
 
-POSTGRES_LOCALLY = False
+POSTGRES_LOCALLY = True
 
 
 # SETTING DATABASE
@@ -190,7 +190,7 @@ MEDIA_URL = 'media/'
 
 
 # Media server
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY != True:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     cloudinary.config(
         cloud_name= env('CLOUD_NAME'),

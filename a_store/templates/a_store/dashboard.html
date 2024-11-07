@@ -258,12 +258,11 @@
                 <div id="content-dashboard" class="bg-white shadow overflow-hidden sm:rounded-lg">
                     <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            Panel
+                            Hola {{ request.user|title }} !!
                         </h3>
                     </div>
                     <div class="px-4 py-5 sm:p-6">
-                        <p>Bienvenido a tu panel de control. Aquí puedes ver una descripción general de tu actividad
-                            reciente.</p>
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
 
@@ -310,7 +309,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody class="bg-white divide-y divide-gray-200">
-                                                    {% for order in orders %}
+                                                    {% for order in orders_list %}
                                                     <tr>
                                                         <td
                                                             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -590,5 +589,30 @@
             })
         })
     })
+
+
+    const labels = {{ month|safe }}
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Ordenes',
+            backgroundColor: 'rgb(0, 33, 94)',
+            borderColor: 'rgb(0, 33, 94)',
+            data: {{ total_orders|safe }}
+        }]
+    }
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+    }
+
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    )
+
 </script>
 {% endblock %}

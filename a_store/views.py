@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from taggit.models import Tag
 from .models import *
 from django.db.models import Q
@@ -12,6 +12,8 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
 from django.contrib.auth.decorators import login_required
+import calendar
+from django.db.models.functions import ExtractMonth
 from django.core import serializers
 
 # Create your views here.
@@ -321,9 +323,19 @@ def payment_failed_view(request):
 
 @login_required
 def customer_dashboard(request):
-    orders = CartOrder.objects.filter(user=request.user).order_by('-id')
+    orders_list = CartOrder.objects.filter(user=request.user).order_by('-id')
     address = Address.objects.filter(user=request.user)
     profile = Profile.objects.get(user=request.user)
+    
+    
+    orders = CartOrder.objects.annotate(month=ExtractMonth('order_date')).values('month').annotate(count=Count('id')).values('month', 'count')
+    month = []
+    total_orders = []
+    
+    for i in orders:
+        month.append(calendar.month_name[i['month']])
+        total_orders.append(i['count'])
+    
     
     if request.method == 'POST':
         fullname = request.POST.get('fullname')
@@ -348,9 +360,12 @@ def customer_dashboard(request):
         return redirect('dashboard')
             
     context = {
-        'orders': orders,
+        'orders_list': orders_list,
+        'orders':orders,
         'address': address,
         'profile': profile,
+        'month': month,
+        'total_orders': total_orders,
     }
     return render(request, 'a_store/dashboard.html', context)
     
