@@ -39,14 +39,14 @@ else:
     DEBUG = False    
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'https://ecommercemehrez.up.railway.app']
 
 CORS_ALLOWED_ORIGINS = [
-    'https://b7eb-2803-9800-9844-9537-e3ff-63b9-df65-eb0a.ngrok-free.app',
+    'https://ecommercemehrez.up.railway.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://b7eb-2803-9800-9844-9537-e3ff-63b9-df65-eb0a.ngrok-free.app",
+    "https://ecommercemehrez.up.railway.app",
 ]
 
 
