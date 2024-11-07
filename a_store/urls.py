@@ -11,6 +11,9 @@ urlpatterns = [
     path('', home, name='home'),
     path('products/', product_list_view, name='product-list'),
     path('product/<pid>/', product_detail_view, name='product-detail'),
+    # Contact
+    path('contact/', contact, name='contact'),
+    path('ajax-contact-form/', ajax_contaxt, name='ajax-contaxt'),
     # Category
     path('category/', category_list_view, name='category-list'),
     path('category/<cid>/', category_product_list_view, name='category-product-list'),

@@ -1,0 +1,109 @@
+{% extends 'layouts/blank.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+        </div>
+        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+            <div class="max-w-md mx-auto">
+                <div>
+                    <h1 class="text-2xl font-semibold">Contact Us</h1>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <h2 class="text-green-600" id="message-response"></h2>
+                    <form action="" method="post" id="contact-form"
+                        class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                        {% csrf_token %}
+                        <div class="flex flex-col gap-6">
+                            <label for="full_name">
+                                Nombre Completo
+                                <input type="text" id="full_name" name="full_name" placeholder="Lionel Messi">
+                            </label>
+                            <label for="email">
+                                Email
+                                <input type="email" id="email" name="email" placeholder="email">
+                            </label>
+                            <label for="phone">
+                                Celular
+                                <input type="text" id="phone" name="phone" placeholder="phone">
+                            </label>
+                            <label for="subject">
+                                Subject
+                                <input type="text" id="subject" name="subject" placeholder="subject">
+                            </label>
+                            <label for="message">
+                                Mensaje
+                                <input type="text" id="message" name="message" placeholder="message">
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <button class="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    $(document).ready(function() {
+        
+        $(document).on('submit', '#contact-form', function(e) {
+            e.preventDefault()
+
+            let full_name = $('#full_name').val()
+            let email = $('#email').val()
+            let phone = $('#phone').val()
+            let subject = $('#subject').val()
+            let message = $('#message').val()
+
+            console.log(full_name);
+            console.log(email);
+            console.log(phone);
+            console.log(subject);
+            console.log(message);
+            
+            $.ajax({
+                url: '/ajax-contact-form',
+                data: {
+                    'full_name': full_name,
+                    'email': email,
+                    'phone': phone,
+                    'subject': subject,
+                    'message': message,
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    console.log('enviando...');
+                    
+                },
+
+                success: function(response) {
+                    $('#contact-form').hide()
+                    $('#message-response').html('Mensaje Enviado !!!')
+
+                    
+                }
+            })
+
+            
+        })
+
+
+    })
+
+
+
+
+</script>
+
+
+
+{% endblock %}

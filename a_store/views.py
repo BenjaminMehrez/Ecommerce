@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib import messages
-from a_users.models import Profile
+from a_users.models import *
 from django.urls import reverse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -443,3 +443,50 @@ def delete_wishlist(request):
     wishlist_json = serializers.serialize('json', wishlist)
     data = render_to_string('a_store/async/wishlist-list.html', context)
     return JsonResponse({'data': data, 'w': wishlist_json})
+
+
+
+
+
+def contact(request):
+    return render(request, 'a_store/contact.html')
+
+
+def ajax_contaxt(request):
+    full_name = request.GET['full_name']
+    email = request.GET['email']
+    phone = request.GET['phone']
+    subject = request.GET['subject']
+    message = request.GET['message']
+
+    contact = ContacUs.objects.create(
+        full_name=full_name,
+        email=email,
+        phone=phone,
+        subject=subject,
+        message=message
+    )
+
+    
+    data = {
+        'bool': True,
+        'message': 'Mensaje enviado exitosamente'
+    }
+    
+    return JsonResponse({'data': data})
+
+
+def about_us(request):
+    pass
+
+
+def purchase_guide(request):
+    pass
+
+
+def privacy_policy(request):
+    pass
+
+
+def terms_of_service(request):
+    pass
