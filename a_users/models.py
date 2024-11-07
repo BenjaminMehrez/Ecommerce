@@ -38,14 +38,6 @@ class Profile(models.Model):
         return self.user.username
     
     
-    @property
-    def avatar(self):
-        try:
-            avatar = self.image.url
-        except:
-            avatar = static('images/avatar_default.jpg')
-        return avatar
-    
     
     
 class ContacUs(models.Model):
