@@ -84,9 +84,13 @@ def product_detail_view(request, pid):
     product = get_object_or_404(Product, pid=pid)
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
     p_images = product.p_images.all
-    wishlist_items = Wishlist.objects.filter(user=request.user)  # Obtener la lista de deseos del usuario actual
-    wishlist_product_ids = wishlist_items.values_list('product_id', flat=True)
-
+    
+    try:
+        wishlist_items = Wishlist.objects.filter(user=request.user)  # Obtener la lista de deseos del usuario actual
+        wishlist_product_ids = wishlist_items.values_list('product_id', flat=True)
+    except:
+        wishlist_product_ids = 0
+        
     # Getting all review related to a product
     reviews = ProductReview.objects.filter(product=product).order_by('-date')
 
