@@ -2,12 +2,73 @@
 
 {% block content %}
 
-<div class="container mx-auto px-4 py-8 max-w-7xl">
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Checkout</h1>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div class="lg:col-span-2">
+            <div class="space-y-4">
+                {% for item in order_items %}
+                    <div class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
+                        <img src="{{ item.image }}" alt="{{ item.name }}" class="w-24 h-24 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h3 class="font-semibold">{{ item.item }}</h3>
+                            <div class="text-sm text-gray-600">Qty: {{ item.qty }}</div>
+                            <div class="mt-1">Price: ${{ item.price }}</div>
+                            <div class="font-medium">Total: ${{ item.total }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span>Tax</span>
+                        <span>${{ tax }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Shipping</span>
+                        <span>${{ shipping }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Discount</span>
+                        <span class="text-green-600">-${{ order.saved }}</span>
+                    </div>
+                    <hr class="my-4">
+                    <div class="flex justify-between font-semibold">
+                        <span>Total</span>
+                        <span>${{ order.price }}</span>
+                    </div>
+                </div>
+                <div class="mt-6 space-y-4">
+                    <div class="flex gap-2">
+                        <input type="text" placeholder="Enter Coupon Code..." class="flex-1 px-3 py-2 border rounded-md">
+                        <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Apply</button>
+                    </div>
+                    <button class="w-full py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
+                        Pay With Stripe (Credit or Debit Card)
+                    </button>
+                    <button class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Pay With PayPal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- <div class="container mx-auto px-4 py-8 max-w-7xl">
     <h1 class="text-4xl font-semibold text-gray-900 mb-2">Verificar</h1>
     <p class="text-gray-600 mb-8">Hay {{ totalcartitems }} producto{{ totalcartitems|pluralize }} en tu carrito</p>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Left Column - Form -->
         <div class="lg:col-span-2">
             <div class="mb-6">
                 <p class="text-sm text-gray-600">¿Ya tienes una cuenta?
@@ -24,64 +85,13 @@
                 </button>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-6">Detalles de facturación</h2>
-                <form method="post" action="" class="space-y-4">
-                    {% csrf_token %}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="first_name" class="block text-sm font-medium text-gray-700">Nombre Completo</label>
-                            <input type="text" id="first_name" name="first_name" required value="{{ active_address.full_name }}" 
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="address" class="block text-sm font-medium text-gray-700">Dirección</label>
-                        <input type="text" id="address" name="address" required value="{{ active_address.email }}"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-
-                    <div>
-                        <label for="address2" class="block text-sm font-medium text-gray-700">Calle y número</label>
-                        <input type="text" id="address2" name="address2" value="{{ active_address.street }}"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="city" class="block text-sm font-medium text-gray-700">Provincia</label>
-                            <input type="text" id="city" name="city" required value="{{ active_address.city }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label for="postcode" class="block text-sm font-medium text-gray-700">Codigo Postal</label>
-                            <input type="text" id="postcode" name="postcode" required value="{{ active_address.zipcode }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700">Numero de Telefono</label>
-                        <input type="tel" id="phone" name="phone" required value="{{ active_address.mobile }}"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-
-                    <div>
-                        <label for="notes" class="block text-sm font-medium text-gray-700">Información adicional</label>
-                        <textarea id="notes" name="notes" rows="4" 
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
-                    </div>
-                </form>
-            </div>
         </div>
 
-        <!-- Right Column - Order Summary -->
         <div class="lg:col-span-1">
             <div class="bg-white p-6 rounded-lg shadow-sm">
                 <h2 class="text-xl font-semibold mb-6">Tu orden</h2>
                 <div class="space-y-4">
-                    <!-- Product 1 -->
+
                      {% for product_id, item in cart_data.items %}
                     <div class="flex items-start space-x-4">
                         <img src="{{ item.image }}" alt="{{ item.image }}" class="w-16 h-16 object-cover rounded">
@@ -115,6 +125,6 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 {% endblock %}
