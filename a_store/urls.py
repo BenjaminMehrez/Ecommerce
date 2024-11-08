@@ -32,7 +32,8 @@ urlpatterns = [
     path('delete-from-cart/', delete_item_from_cart, name='delete-from-cart'),
     path('update-cart/', update_cart, name='update-cart'),
     # Checkout
-    path('checkout/', checkout_view, name='checkout'),
+    path('checkout/<oid>/', checkout, name='checkout'),
+    path('save-checkout-info/', save_checkout_info, name='save-checkout-info'),
     # Dashboard
     path('dashboard/', customer_dashboard, name='dashboard'),
     path('make-default-address/', make_address_default, name='make-default-address'),

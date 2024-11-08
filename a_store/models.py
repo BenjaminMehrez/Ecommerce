@@ -171,10 +171,36 @@ class ProductImages(models.Model):
 
 class CartOrder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=200, decimal_places=2, default='1.99')
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    phone = models.CharField(max_length=100, null=True, blank=True)
+    
+    
+    address = models.CharField(max_length=100, null=True, blank=True)
+    number = models.CharField(max_length=100, null=True, blank=True)
+    zipcode = models.CharField(max_length=100, null=True, blank=True)
+    level = models.CharField(max_length=100, null=True, blank=True)
+    departament = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
+
+    
+    price = models.DecimalField(max_digits=200, decimal_places=2, default='0.00')
+    saved = models.DecimalField(max_digits=200, decimal_places=2, default='0.00')
+    
+    shipping_method = models.CharField(max_length=100, null=True, blank=True)
+    tracking_id = models.CharField(max_length=100, null=True, blank=True)
+    tracking_website_address = models.CharField(max_length=100, null=True, blank=True)
+    
     paid_status = models.BooleanField(default=False)
     order_date = models.DateTimeField(auto_now_add=True)
     product_status = models.CharField(choices=STATUS_CHOICE, max_length=30, default='processing')
+    sku = ShortUUIDField(null=True, blank=True, unique=True, length=5, max_length=20, prefix='SKU', alphabet='1234567890')
+    oid = ShortUUIDField(null=True, blank=True, unique=True, length=5, max_length=20, alphabet='1234567890')
+    
+    stripe_payment_intent = models.CharField(max_length=100, null=True, blank=True)
+    
     
     class Meta:
         verbose_name_plural = 'Cart Order'
@@ -241,12 +267,16 @@ class Wishlist(models.Model):
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    full_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(max_length=255)
     address = models.CharField(max_length=255)
-    street = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=255)
+    number = models.CharField(max_length=255, null=True, blank=True)
+    level = models.CharField(max_length=255)
+    departament = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255)
+    country = models.CharField(max_length=255)
     mobile = models.CharField(max_length=300, null=True)
     status = models.BooleanField(default=False)
     

@@ -244,66 +244,98 @@ def update_cart(request):
     return JsonResponse({'data': context, 'totalcartitems': len(request.session['cart_data_obj'])})
 
 
-@login_required
-def checkout_view(request):
+def save_checkout_info(request):
     cart_total_amount = 0
     total_amount = 0
     
-    # Checking if cart-data-obj session exists
-    if 'cart_data_obj' in request.session:
+    if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        address = request.POST.get('address')
+        number = request.POST.get('number')
+        zipcode = request.POST.get('zipcode')
+        level = request.POST.get('level')
+        departament = request.POST.get('departament')
+        city = request.POST.get('city')
+        country = request.POST.get('country')
+        mobile = request.POST.get('mobile') 
         
-        # Getting total amount for Paypal
+        request.session['first_name'] = first_name
+        request.session['last_name'] = last_name
+        request.session['email'] = email
+        request.session['address'] = address
+        request.session['number'] = number
+        request.session['zipcode'] = zipcode
+        request.session['level'] = level
+        request.session['departament'] = departament
+        request.session['city'] = city
+        request.session['country'] = country
+        request.session['mobile'] = mobile
         
-        for p_id, item in request.session['cart_data_obj'].items():
-            total_amount += int(item['qty']) * float(item['price'])
         
-        # Create order Object
-        order = CartOrder.objects.create(
-            user=request.user,
-            price=total_amount
-        )   
-        
-        # Getting total amount for The cart
-        for p_id, item in request.session['cart_data_obj'].items():
-            cart_total_amount += int(item['qty']) * float(item['price'])
+        if 'cart_data_obj' in request.session:
+            
+            for p_id, item in request.session['cart_data_obj'].items():
+                total_amount += int(item['qty']) * float(item['price'])
+            
+            order = CartOrder.objects.create(
+                user=request.user,
+                price=total_amount,
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                address=address,
+                number=number,
+                zipcode=zipcode,
+                level=level,
+                departament=departament,
+                city=city,
+                country=country,
+                phone=mobile,
+            ) 
+            
+            del request.session['first_name']
+            del request.session['last_name']
+            del request.session['email']
+            del request.session['address']
+            del request.session['number']
+            del request.session['zipcode']
+            del request.session['level']
+            del request.session['departament']
+            del request.session['city']
+            del request.session['country']
+            del request.session['mobile']
+            
+            for p_id, item in request.session['cart_data_obj'].items():
+                cart_total_amount += int(item['qty']) * float(item['price'])
 
-            cart_order_products = CartOrderItems.objects.create(
-                order=order,
-                invoice_no='INVOICE_NO-' + str(order.id), # INVOICE NO
-                item=item['title'],
-                image=item['image'],
-                qty=item['qty'],
-                price=item['price'],
-                total=float(item['qty']) * float(item['price'])
-            )
-        
-    host = request.get_host()
-    paypal_dict = {
-        'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': cart_total_amount,
-        'item_name': 'Order-Item-No-' + str(order.id),
-        'invoice': 'INVOICE_NO-' + str(order.id),
-        'currency_code': 'USD',
-        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')), 
-        'return_url': 'http://{}{}'.format(host, reverse('payment-success')), 
-        'cancel_url': 'http://{}{}'.format(host, reverse('payment-failed')), 
+                cart_order_products = CartOrderItems.objects.create(
+                    order=order,
+                    invoice_no='INVOICE_NO-' + str(order.id), # INVOICE NO
+                    item=item['title'],
+                    image=item['image'],
+                    qty=item['qty'],
+                    price=item['price'],
+                    total=float(item['qty']) * float(item['price'])
+                )
+            
+        return redirect('checkout', order.oid)       
+    return redirect('checkout', order.oid)       
+
+
+
+
+def checkout(request, oid):
+    order = CartOrder.objects.get(oid=oid)
+    order_items = CartOrderItems.objects.filter(order=order)
+    
+    context = {
+        'order':order,
+        'order_items': order_items,
     }
     
-    paypal_payment_button = PayPalPaymentsForm(initial=paypal_dict)
-    
-    # cart_total_amount = 0
-    # if 'cart_data_obj' in request.session:
-    #     for p_id, item in request.session['cart_data_obj'].items():
-    #         cart_total_amount += int(item['qty']) * float(item['price'])
-    
-    try:
-        active_address = Address.objects.get(user=request.user, status=True)
-    except:
-        messages.warning(request, 'No se puede tener mas de una direccion predeterminada')
-        active_address = None
-        
-    
-    return render(request, 'a_store/checkout.html', {'cart_data': request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount, 'paypal_payment_button': paypal_payment_button, 'active_address':active_address})
+    return render(request, 'a_store/checkout.html', context)
 
 
 @login_required
@@ -338,22 +370,30 @@ def customer_dashboard(request):
     
     
     if request.method == 'POST':
-        fullname = request.POST.get('fullname')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         address = request.POST.get('address')
-        street = request.POST.get('street')
+        number = request.POST.get('number')
         zipcode = request.POST.get('zipcode')
+        level = request.POST.get('level')
+        departament = request.POST.get('departament')
         city = request.POST.get('city')
+        country = request.POST.get('country')
         mobile = request.POST.get('mobile')
             
         new_address = Address.objects.create(
             user=request.user,
-            full_name=fullname,
+            first_name=first_name,
+            last_name=last_name,
             email=email,
             address=address,
-            street=street,
+            number=number,
             zipcode=zipcode,
+            level=level,
+            departament=departament,
             city=city,
+            country=country,
             mobile=mobile,
         )
         messages.success(request, 'Direccion agregada')
@@ -429,7 +469,6 @@ def add_to_wishlist(request):
 
 
 
-
 def delete_wishlist(request):
     pid = request.GET['id']
     wishlist = Wishlist.objects.filter(user=request.user)
@@ -443,8 +482,6 @@ def delete_wishlist(request):
     wishlist_json = serializers.serialize('json', wishlist)
     data = render_to_string('a_store/async/wishlist-list.html', context)
     return JsonResponse({'data': data, 'w': wishlist_json})
-
-
 
 
 

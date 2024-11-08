@@ -1,5 +1,5 @@
 {% extends 'layouts/blank.html' %}
-
+{% load static %}
 {% block content %}
 <div class="flex min-h-screen">
     <div class="w-64 bg-white shadow-sm min-h-screen">
@@ -144,7 +144,11 @@
                     <div class="px-4 py-5 sm:px-6 flex justify-between items-center space-x-4">
                         <div class="flex space-x-4 items-center">
                             <div class="flex-shrink-0">
+                                {%  if user.profile.image %}
                                 <img class="h-16 w-16 rounded-full object-cover border-2 border-gray-200" src="{{ user.profile.image.url }}" alt="Foto de perfil">
+                                {% else %}
+                                <img class="h-16 w-16 rounded-full object-cover border-2 border-gray-200" src="{% static 'images/avatar_default.jpg' %}" alt="Foto de perfil">
+                                {% endif %}
                             </div>
                             <div class="mt-5">
                                 <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -383,50 +387,69 @@
                         <!-- Address Form -->
                         <div class="p-6 bg-gray-50">
                             <h3 class="text-xl font-semibold text-gray-700 mb-4">Mi dirección</h3>
-                            <form method="POST" class="space-y-6">
+                            <form method="POST" class="space-y-6 px-20">
                                 {% csrf_token %}
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="space-y-2">
-                                        <label for="fullname" class="block text-sm font-medium text-gray-700">Nombre
-                                            completo:</label>
-                                        <input type="text" id="fullname" name="fullname" placeholder="Lionel Messi"
+                                        <label for="first_name" class="block text-sm font-medium text-gray-700">Nombre:</label>
+                                        <input type="text" id="first_name" name="first_name" placeholder="Lionel" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="last_name" class="block text-sm font-medium text-gray-700">Apellido:</label>
+                                        <input type="text" id="last_name" name="last_name" placeholder="Messi" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
                                         <label for="email" class="block text-sm font-medium text-gray-700">Correo
-                                            electrónico:</label>
-                                        <input type="email" id="email" name="email" placeholder="lionel@gmail.com"
+                                            electrónico:</label> 
+                                        <input type="email" id="email" name="email" placeholder="lionel@gmail.com" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
                                         <label for="address"
                                             class="block text-sm font-medium text-gray-700">Dirección:</label>
                                         <input type="text" id="address" name="address"
-                                            placeholder="Barrio Champions 321"
+                                            placeholder="Barrio Champions 321" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
-                                        <label for="street" class="block text-sm font-medium text-gray-700">Calle y
-                                            número:</label>
-                                        <input type="text" id="street" name="street" placeholder="Los ganadores 123"
+                                        <label for="number" class="block text-sm font-medium text-gray-700">Numero:</label>
+                                        <input type="text" id="number" name="number" placeholder="Los ganadores 123" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="level" class="block text-sm font-medium text-gray-700">Piso:</label>
+                                        <input type="text" id="level" name="level" placeholder="5" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="departament" class="block text-sm font-medium text-gray-700">Departamento:</label>
+                                        <input type="text" id="departament" name="departament" placeholder="41" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
                                         <label for="zipcode" class="block text-sm font-medium text-gray-700">Código
                                             Postal:</label>
-                                        <input type="text" id="zipcode" name="zipcode" placeholder="32122"
+                                        <input type="text" id="zipcode" name="zipcode" placeholder="32122" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
                                         <label for="city"
                                             class="block text-sm font-medium text-gray-700">Provincia:</label>
-                                        <input type="text" id="city" name="city" placeholder="Santa Fe"
+                                        <input type="text" id="city" name="city" placeholder="Santa Fe" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="country"
+                                            class="block text-sm font-medium text-gray-700">Pais:</label>
+                                        <input type="text" id="country" name="country" placeholder="Argentina" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                     <div class="space-y-2">
                                         <label for="mobile"
                                             class="block text-sm font-medium text-gray-700">Celular:</label>
-                                        <input type="text" id="mobile" name="mobile" placeholder="23198321"
+                                        <input type="text" id="mobile" name="mobile" placeholder="23198321" required
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                 </div>
@@ -454,13 +477,14 @@
                                             <span>Direccion {{ forloop.counter }}</span>
                                             <div class="bg-gray-50 rounded-lg shadow p-4 space-y-3">
                                                 <div class="space-y-1">
-                                                    <p class="font-medium text-gray-800">{{ address.full_name }}</p>
-                                                    <p class="text-gray-600">{{ address.email }}</p>
-                                                    <p class="text-gray-600">{{ address.address }}</p>
-                                                    <p class="text-gray-600">{{ address.street }}</p>
-                                                    <p class="text-gray-600">{{ address.zipcode }}, {{ address.city }}
-                                                    </p>
-                                                    <p class="text-gray-600">{{ address.mobile }}</p>
+                                                    <p class="font-medium text-gray-800">Nombre: {{ address.first_name }} {{ address.last_name }}</p>
+                                                    <p class="text-gray-600">Correo Electronico: {{ address.email }}</p>
+                                                    <p class="text-gray-600">Numero: {{ address.number }}</p>
+                                                    <p class="text-gray-600">Piso: {{ address.level }}</p>
+                                                    <p class="text-gray-600">Departamento: {{ address.departament }}</p>
+                                                    <p class="text-gray-600">Codigo Postal: {{ address.zipcode }}</p>
+                                                    <p class="text-gray-600">Provincia: {{ address.city }}, {{ address.country }}</p>
+                                                    <p class="text-gray-600">Celular: {{ address.mobile }}</p>
                                                 </div>
                                                 {% if address.status %}
                                                 <i data-address-id="{{ address.id }}"
