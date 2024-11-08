@@ -330,6 +330,27 @@ def checkout(request, oid):
     order = CartOrder.objects.get(oid=oid)
     order_items = CartOrderItems.objects.filter(order=order)
     
+    
+    if request.method == 'POST':
+        code = request.POST.get('code')
+        coupon = Coupon.objects.filter(code=code, active=True).first()
+        if coupon:
+            if coupon in order.coupons.all():
+                messages.warning(request, 'Cupon ya fue aplicado')
+                return redirect('checkout', order.oid)
+            else:
+                discount = order.price * coupon.discount / 100
+                order.coupons.add(coupon)
+                order.price -= discount
+                order.saved += discount
+                order.save()
+                
+                messages.success(request, 'Cupon aplicado')
+                return redirect('checkout', order.oid)
+        else:
+            messages.warning(request, 'No existe el cupon')
+            return redirect('checkout', order.oid)
+        
     context = {
         'order':order,
         'order_items': order_items,

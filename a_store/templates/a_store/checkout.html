@@ -43,10 +43,11 @@
                     </div>
                 </div>
                 <div class="mt-6 space-y-4">
-                    <div class="flex gap-2">
-                        <input type="text" placeholder="Enter Coupon Code..." class="flex-1 px-3 py-2 border rounded-md">
+                    <form method="POST" class="flex gap-2">
+                        {% csrf_token %}
+                        <input name="code" type="text" placeholder="Enter Coupon Code..." class="flex-1 px-3 py-2 border rounded-md">
                         <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Apply</button>
-                    </div>
+                    </form>
                     <button class="w-full py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
                         Pay With Stripe (Credit or Debit Card)
                     </button>
