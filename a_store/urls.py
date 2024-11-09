@@ -5,7 +5,7 @@ from .views import *
 urlpatterns = [
     # Paypal
     path('paypal/', include("paypal.standard.ipn.urls")),
-    path('payment-success/', payment_success_view, name='payment-success'),
+    path('payment-success/<oid>/', payment_success_view, name='payment-success'),
     path('payment-failed/', payment_failed_view, name='payment-failed'),
     # Homepage
     path('', home, name='home'),

@@ -1,87 +1,23 @@
-{% extends 'layouts/blank.html' %}
+{% extends 'layouts/c.html' %}
 
 {% block content %}
 
-<div class="mt-20 max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
-    <!-- Header -->
-    <div class="flex justify-between items-start mb-12">
-        <div class="flex items-center">
-            <!-- Replace with your actual logo -->
-            <div class="w-16 h-16 bg-amber-100 rounded-lg flex items-center justify-center">
-                <span class="text-amber-600">🥖</span>
-            </div>
-            <div class="ml-4">
-                <h2 class="text-lg font-semibold text-gray-800">EcommerceMehrez</h2>
-                <p class="text-sm text-gray-600">203 North, Suite 810, Chicago, USA</p>
-            </div>
+<div class="flex items-center justify-center bg-gray-100">
+    <div class="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
+        <div class="text-center">
+            <svg class="mx-auto h-12 w-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h1 class="mt-4 text-3xl font-bold text-gray-900">Pago completado</h1>
+            <h2 class="mt-2 text-xl text-gray-600">Su pedido se ha realizado correctamente.</h2>
+            <p class="mt-2 text-lg font-semibold text-gray-800">Número de pedido #{{ order.oid }}</p>
+            <p class="mt-4 text-sm text-gray-600">
+                <a href="{% url 'contact' %}" class="text-blue-500 hover:text-blue-600 transition duration-300 ease-in-out">Contáctanos</a> si tienes algún problema o pregunta.
+            </p>
+            <a href="{% url 'home' %}" class="mt-6 inline-block bg-blue-500 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out">
+                Volver a la página principal
+            </a>
         </div>
-        <div class="text-right">
-            <h1 class="text-2xl font-bold text-gray-800">FACTURA</h1>
-            <p class="text-gray-600">ID Number: {{ invoice.id|default:"90657" }}</p>
-        </div>
-    </div>
-
-    <!-- Table -->
-    <div class="overflow-x-auto">
-        <table class="w-full">
-            <thead>
-                <tr class="border-b">
-                    <th class="text-left py-3 px-4 bg-gray-50">Producto</th>
-                    <th class="text-right py-3 px-4 bg-gray-50">Precio</th>
-                    <th class="text-right py-3 px-4 bg-gray-50">Cantidad</th>
-                    <th class="text-right py-3 px-4 bg-gray-50">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product_id, item in cart_data.items %}
-                <tr class="border-b">
-                    <td class="py-4 px-4">
-                        <div>{{ item.title }}</div>
-                    </td>
-                    <td class="text-right py-4 px-4">${{ item.price }}</td>
-                    <td class="text-right py-4 px-4">{{ item.qty }}</td>
-                    <td class="text-right py-4 px-4">${% widthratio item.price 1 item.qty %}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Totals -->
-    <div class="mt-8">
-        <!-- <div class="flex justify-between py-2">
-            <span class="font-medium">Subtotal</span>
-            <span>${{ cart_total_amount }}</span>
-        </div> -->
-        <!-- <div class="flex justify-between py-2">
-            <span class="font-medium">Tax</span>
-            <span>${{ tax|default:"65.99" }}</span>
-        </div> -->
-        <div class="flex justify-between py-2 border-t border-black">
-            <span class="font-bold">Grand Total</span>
-            <span class="font-bold">${{ cart_total_amount }}</span>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="mt-12 pt-4 border-t">
-        <div class="flex justify-between">
-            <div>
-                <h4 class="font-medium mb-2">Informacion de Factura</h4>
-                <!-- <p class="text-sm text-gray-600">Issue date: {{ invoice.date|default:"20 march 2022" }}</p> -->
-                <p class="text-sm text-gray-600">Cliente: {{ request.user|title }}</p>
-                <!-- <p class="text-sm text-gray-600">Swift Code: {{ invoice.swift_code|default:"SFTV VNV05" }}</p> -->
-            </div>
-            <div class="text-right">
-                <h4 class="font-medium mb-2">Monto Total</h4>
-                <div class="text-2xl font-bold text-emerald-600">${{ cart_total_amount }}</div>
-                <p class="text-sm text-gray-600">Taxes included</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="flex mt-12 justify-center pt-4 border-t">
-        <h3>Gracias por tu compra!!</h3>
     </div>
 </div>
 

@@ -34,12 +34,12 @@
                     </div>
                     <div class="flex justify-between">
                         <span>Discount</span>
-                        <span class="text-green-600">-${{ order.saved }}</span>
+                        <span class="text-green-600"> -${{ order.saved }}</span>
                     </div>
                     <hr class="my-4">
                     <div class="flex justify-between font-semibold">
                         <span>Total</span>
-                        <span>${{ order.price }}</span>
+                        <span>${{ order.price|floatformat:2 }}</span>
                     </div>
                 </div>
                 <div class="mt-6 space-y-4">
@@ -51,9 +51,7 @@
                     <button class="w-full py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
                         Pay With Stripe (Credit or Debit Card)
                     </button>
-                    <button class="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                        Pay With PayPal
-                    </button>
+                    <div id="paypal-button-container"></div>
                 </div>
             </div>
         </div>
@@ -61,71 +59,39 @@
 </div>
 
 
+<script src="https://www.paypal.com/sdk/js?client-id=ATAeu9wXQDZ2UTOLfAPExCWpvC6OH4kVK2bDpCi1-6K8aqPqk497TItblXM3_izjEfyh8ET6MIEJfetK&currency=USD"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
 
 
+<script>
 
+    let price = parseFloat('{{ order.price }}').toFixed(2);
+    
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [
+                    {
+                        amount: {
+                            value: price,
+                        },
+                    },
+                ],
+            });
+        },    
 
-<!-- <div class="container mx-auto px-4 py-8 max-w-7xl">
-    <h1 class="text-4xl font-semibold text-gray-900 mb-2">Verificar</h1>
-    <p class="text-gray-600 mb-8">Hay {{ totalcartitems }} producto{{ totalcartitems|pluralize }} en tu carrito</p>
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(Detail) {
+                console.log(Detail);
+                if (Detail.status === 'COMPLETED'){
+                    window.location.href = `/payment-success/{{order.oid}}/?status=${Detail.status}`
+                }
+            })
+        }
+    
+    }).render('#paypal-button-container')
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2">
-            <div class="mb-6">
-                <p class="text-sm text-gray-600">¿Ya tienes una cuenta?
-                    <a href="#" class="text-blue-600 hover:text-blue-700">Haga clic aquí para iniciar sesión</a>
-                </p>
-            </div>
-
-            <div class="flex gap-4 mb-6">
-                <div class="flex-grow">
-                    <input type="text" placeholder="Enter Coupon Code..." class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                </div>
-                <button class="px-6 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700">
-                    Aplica Cupon
-                </button>
-            </div>
-
-        </div>
-
-        <div class="lg:col-span-1">
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-semibold mb-6">Tu orden</h2>
-                <div class="space-y-4">
-
-                     {% for product_id, item in cart_data.items %}
-                    <div class="flex items-start space-x-4">
-                        <img src="{{ item.image }}" alt="{{ item.image }}" class="w-16 h-16 object-cover rounded">
-                        <div class="flex-grow">
-                            <a href="{% url 'product-detail' item.pid %}" class="font-medium">{{ item.title }}</a>
-                            <div class="flex justify-between items-center mt-1">
-                                <span class="text-sm text-gray-500">x{{ item.qty }}</span>
-                                <span class="text-sm pl-20 text-gray-600">${{ item.price|floatformat:2 }}</span>
-                                <span class="font-semibold text-green-600">${% widthratio item.price 1 item.qty %}</span>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
-                    <div class="border-t pt-4 mt-4">
-                        <div class="flex justify-between items-center">
-                            <span class="font-medium">Subtotal</span>
-                            <span class="font-bold text-green-600">${{ cart_total_amount|floatformat:2 }}</span>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Place Order
-                    </button>
-
-                    <div class="w-40">
-                        {{ paypal_payment_button.render }}
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
+</script>
 
 {% endblock %}
