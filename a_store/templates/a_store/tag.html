@@ -29,7 +29,7 @@
         </div>
         <div class="flex items-center justify-between mb-4">
           <div class="space-y-1">
-            <span class="block text-lg font-bold text-gray-900">${{ product.price }}</span>
+            <span class="block text-lg font-bold text-gray-900">${{ product.price|formato_precio  }}</span>
             {% if product.old_price %}
             <div class="flex items-center gap-2">
               <span class="text-sm text-gray-500 line-through">${{ product.old_price }}</span>

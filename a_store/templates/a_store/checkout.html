@@ -1,5 +1,5 @@
 {% extends 'layouts/blank.html' %}
-
+{% load price_filters %}
 {% block content %}
 
 <div class="container mx-auto px-4 py-8">
@@ -13,8 +13,8 @@
                         <div class="flex-1">
                             <h3 class="font-semibold">{{ item.item }}</h3>
                             <div class="text-sm text-gray-600">Qty: {{ item.qty }}</div>
-                            <div class="mt-1">Price: ${{ item.price }}</div>
-                            <div class="font-medium">Total: ${{ item.total }}</div>
+                            <div class="mt-1">Price: ${{ item.price|formato_precio }}</div>
+                            <div class="font-medium">Total: ${{ item.total|formato_precio  }}</div>
                         </div>
                     </div>
                 {% endfor %}
@@ -34,12 +34,12 @@
                     </div>
                     <div class="flex justify-between">
                         <span>Discount</span>
-                        <span class="text-green-600"> -${{ order.saved }}</span>
+                        <span class="text-green-600"> -${{ order.saved|formato_precio  }}</span>
                     </div>
                     <hr class="my-4">
                     <div class="flex justify-between font-semibold">
                         <span>Total</span>
-                        <span>${{ order.price|floatformat:2 }}</span>
+                        <span>${{ order.price|formato_precio  }}</span>
                     </div>
                 </div>
                 <div class="mt-6 space-y-4">

@@ -44,7 +44,7 @@
                 </div>
             </td>
             <td class="py-4 whitespace-nowrap">    
-                <div class="text-xl text-gray-900">${{ item.price|floatformat:2 }}</div>
+                <div class="text-xl text-gray-900">${{ item.price|formato_precio  }}</div>
             </td>
             <td class="py-4 whitespace-nowrap">
                 <input type="number" name="quantity" value="{{ item.qty }}" min="1"
