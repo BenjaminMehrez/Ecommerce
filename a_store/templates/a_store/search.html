@@ -1,5 +1,6 @@
 {% extends 'layouts/blank.html' %}
 {% load static %}
+{% load price_filters %}
 
 {% block content %}
 {% spaceless %}
@@ -21,10 +22,10 @@
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="space-y-1">
-                        <span class="block text-xl font-bold text-gray-900">$<span class="tabular-nums">{{ product.price|floatformat:2 }}</span></span>
+                        <span class="block text-xl font-bold text-gray-900"><span class="tabular-nums">$ {{ product.price|formato_precio }}</span></span>
                         {% if product.old_price %}
                         <div class="flex items-center gap-2">
-                            <span class="text-sm text-gray-500 line-through">$<span class="tabular-nums">{{ product.old_price|floatformat:2 }}</span></span>
+                            <span class="text-sm text-gray-500 line-through"><span class="tabular-nums">$ {{ product.old_price|formato_precio}}</span></span>
                             <span class="inline-block bg-red-100 rounded-full px-2 py-1 text-xs font-semibold text-red-600">
                                 -<span class="tabular-nums">{{ product.get_percentage|floatformat:0 }}</span>%
                             </span>

@@ -68,9 +68,9 @@
                     {% endfor %}
                 </div>
                 <div class="flex items-baseline space-x-4">
-                    <span class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">${{ product.price|formato_precio }}</span>
+                    <span class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
                     {% if product.old_price %}
-                    <span class="text-xl text-gray-500 line-through">${{ product.old_price|formato_precio }}</span>
+                    <span class="text-xl text-gray-500 line-through">$ {{ product.old_price|formato_precio }}</span>
                     <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
                     {% endif %}
                 </div>
@@ -136,7 +136,7 @@ $(document).ready(function() {
         let product_title = $('.product-title-' + index).val()
 
         let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text().replace('$', '').replace(',', '');
+        let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
 
         let product_pid = $('.product-pid-' + index).val()
         let product_image = $('.product-image-' + index).val()

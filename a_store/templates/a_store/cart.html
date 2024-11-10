@@ -63,7 +63,10 @@
                             class="product-qty-{{ product_id }} shadow-sm focus:ring-primary focus:border-primary block w-20 sm:text-xl border-gray-300 rounded-md">
                     </td>
                     <td class="py-4 whitespace-nowrap">          
-                        <div class="text-xl text-green-600 font-medium">${% widthratio item.price 1 item.qty %}</div>
+                        {% widthratio item.price 1 item.qty as total %}
+                        <div class="text-xl text-green-600 font-medium">
+                            ${{ total|formato_precio }}
+                        </div>
                     </td>
                     <td class="py-4 whitespace-nowrap text-xl font-medium ">           
                         <button data-product="{{ product_id }}" class="update-product w-24 p-3 flex justify-center text-gray-100 hover:text-gray-500">
@@ -108,12 +111,12 @@
                     <label for="address"
                         class="block text-sm font-medium text-gray-700">Dirección:</label>
                     <input type="text" id="address" name="address"
-                        placeholder="Barrio Champions 321" required
+                        placeholder="9 de julio y Av,San martin" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
                 <div class="space-y-2">
                     <label for="number" class="block text-sm font-medium text-gray-700">Numero:</label>
-                    <input type="text" id="number" name="number" placeholder="Los ganadores 123" required
+                    <input type="text" id="number" name="number" placeholder="3323" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 </div>
                 <div class="space-y-2">

@@ -34,12 +34,12 @@
                     </div>
                     <div class="flex justify-between">
                         <span>Discount</span>
-                        <span class="text-green-600"> -${{ order.saved|formato_precio  }}</span>
+                        <span class="text-green-600"> -${{ order.saved|formato_precio }}</span>
                     </div>
                     <hr class="my-4">
                     <div class="flex justify-between font-semibold">
                         <span>Total</span>
-                        <span>${{ order.price|formato_precio  }}</span>
+                        <span>${{ order.price|formato_precio }}</span>
                     </div>
                 </div>
                 <div class="mt-6 space-y-4">
@@ -48,8 +48,8 @@
                         <input name="code" type="text" placeholder="Enter Coupon Code..." class="flex-1 px-3 py-2 border rounded-md">
                         <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Apply</button>
                     </form>
-                    <button class="w-full py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">
-                        Pay With Stripe (Credit or Debit Card)
+                    <button class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                        Mercado Pago 
                     </button>
                     <div id="paypal-button-container"></div>
                 </div>

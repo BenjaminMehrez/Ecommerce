@@ -51,7 +51,7 @@
                         </div>
                     </td>
                     <td class="py-4 whitespace-nowrap">    
-                        <span class="text-xl text-gray-900 current-price current-product-price-{{ w.product.id }}">${{ w.product.price|formato_precio  }}</span>
+                        <span class="text-xl text-gray-900 current-price current-product-price-{{ w.product.id }}">$ {{ w.product.price|formato_precio  }}</span>
                     </td>
                     <td class="py-4 whitespace-nowrap">
                         {% if w.product.in_stock %}
@@ -118,7 +118,8 @@ $(document).ready(function() {
         let product_title = $('.product-title-' + index).val()
 
         let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text().replace('$', '').replace(',', '');
+        let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
+
 
         let product_pid = $('.product-pid-' + index).val()
         let product_image = $('.product-image-' + index).val()
