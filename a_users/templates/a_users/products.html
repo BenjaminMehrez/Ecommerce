@@ -1,0 +1,91 @@
+{% extends 'layouts/blank.html' %}
+{% load price_filters %}
+{% load static %}
+
+{% block content %}
+<div class="flex min-h-screen bg-gray-50">
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-sm">
+        <div class="px-4 py-6">
+            <div class="flex items-center gap-4 ">
+                <img src="{% static 'images/logo-black.svg' %}" alt="E-commerce" class="h-8">
+                <h2 class="flex mt-2">E-commerce</h2>
+            </div>
+            <nav class="mt-6 space-y-2">
+                <a href="{% url 'dashboard-admin' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    Panel
+                </a>
+                <a href="{% url 'products' %}"
+                    class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    Productos
+                </a>
+                <!-- Add other navigation items similarly -->
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
+                <p class="text-sm text-gray-500">Gestiona todos tus productos desde aquí</p>
+            </div>
+            <a href="" class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+                Crear Producto
+            </a>
+        </div>
+
+        <main class="flex-1 p-6">
+            <div class="flex items-center gap-4 mb-6">
+                <select id="status-filter" class="border rounded px-2 py-1">
+                    <option value="">Todos los Estados</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
+            <div class="space-y-4">
+                {% for product in all_products %}
+                <div class="flex items-center justify-between rounded-lg border p-4 bg-white">
+                    <div class="flex items-center gap-4">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                            class="w-20 h-20 object-cover rounded-lg">
+                        <div>
+                            <h2 class="font-semibold">{{ product.title }}</h2>
+                            <p class="text-sm text-gray-500">$ {{ product.price|formato_precio }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-40">
+                        {% if product.status == True %}
+                        <span class="p-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
+                        {% else %}
+                        <span class="p-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Inactivo</span>
+                        {% endif %}
+                        <span class="text-sm text-gray-500">{{ product.date|date:'d M, Y' }}</span>
+                        <div class="space-x-3">
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm">
+                                Edit
+                            </button>
+                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

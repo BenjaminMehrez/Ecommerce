@@ -13,5 +13,6 @@ urlpatterns = [
     
     # UserADMIN
     path('dashboard-admin/', dashboard, name='dashboard-admin'),
+    path('products/', products, name='products'),
     
 ]

@@ -154,3 +154,18 @@ def dashboard(request):
     }
     
     return render(request, 'a_users/dashboard.html', context)
+
+
+
+
+def products(request):
+    all_products = Product.objects.all()
+    all_categories = Category.objects.all()
+    
+    context = {
+    'all_products': all_products,
+    'all_categories': all_categories,
+    }
+    
+    return render(request, 'a_users/products.html', context)
+    
