@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Checkout</h1>
+    <h1 class="text-3xl font-bold mb-8">Verificar</h1>
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div class="lg:col-span-2">
             <div class="space-y-4">
@@ -12,8 +12,8 @@
                         <img src="{{ item.image }}" alt="{{ item.name }}" class="w-24 h-24 object-cover rounded-lg">
                         <div class="flex-1">
                             <h3 class="font-semibold">{{ item.item }}</h3>
-                            <div class="text-sm text-gray-600">Qty: {{ item.qty }}</div>
-                            <div class="mt-1">Price: ${{ item.price|formato_precio }}</div>
+                            <div class="text-sm text-gray-600">Cantidad: {{ item.qty }}</div>
+                            <div class="mt-1">Precio: $ {{ item.price|formato_precio }}</div>
                             <div class="font-medium">Total: ${{ item.total|formato_precio  }}</div>
                         </div>
                     </div>
@@ -22,30 +22,30 @@
         </div>
         <div>
             <div class="bg-white rounded-lg shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                <h2 class="text-xl font-semibold mb-4">Resumen del pedido</h2>
                 <div class="space-y-2">
                     <div class="flex justify-between">
-                        <span>Tax</span>
-                        <span>${{ tax }}</span>
+                        <span>Impuesto</span>
+                        <span>${{ tax }} 0</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Shipping</span>
-                        <span>${{ shipping }}</span>
+                        <span>Envío</span>
+                        <span>${{ shipping }} 0</span>
                     </div>
                     <div class="flex justify-between">
-                        <span>Discount</span>
+                        <span>Descuento</span>
                         <span class="text-green-600"> -${{ order.saved|formato_precio }}</span>
                     </div>
                     <hr class="my-4">
                     <div class="flex justify-between font-semibold">
                         <span>Total</span>
-                        <span>${{ order.price|formato_precio }}</span>
+                        <span>$ {{ order.price|formato_precio }}</span>
                     </div>
                 </div>
                 <div class="mt-6 space-y-4">
                     <form method="POST" class="flex gap-2">
                         {% csrf_token %}
-                        <input name="code" type="text" placeholder="Enter Coupon Code..." class="flex-1 px-3 py-2 border rounded-md">
+                        <input name="code" type="text" placeholder="Introduzca el código de cupón..." class="flex-1 px-3 py-2 border rounded-md">
                         <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Apply</button>
                     </form>
                     <button class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">

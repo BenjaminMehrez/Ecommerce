@@ -89,14 +89,14 @@
         let product_pid = $('.product-pid-' + index).val()
         let product_image = $('.product-image-' + index).val()
 
-        console.log('Quantity:', quantity);
-        console.log('Title:', product_title);
-        console.log('price:', product_price);
-        console.log('id:', product_id);
-        console.log('Pid:', product_pid);
-        console.log('Image:', product_image);
-        console.log('Index:', index);
-        console.log('Current Element:', this_val);
+        // console.log('Quantity:', quantity);
+        // console.log('Title:', product_title);
+        // console.log('price:', product_price);
+        // console.log('id:', product_id);
+        // console.log('Pid:', product_pid);
+        // console.log('Image:', product_image);
+        // console.log('Index:', index);
+        // console.log('Current Element:', this_val);
 
 
         $.ajax({
@@ -111,7 +111,7 @@
             },
             dataType: 'json',
             beforeSend: function() {
-                console.log('Product adding');
+                // console.log('Product adding');
 
             },
 
@@ -122,7 +122,7 @@
                         </svg>
                 `);
 
-                console.log('Producto agreagdo al cart');
+                // console.log('Producto agreagdo al cart');
                 $('.cart-items-count').text(res.totalcartitems)
 
             },

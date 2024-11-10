@@ -57,11 +57,11 @@
                 </div>
                 <p class="text-gray-600">SKU: {{ product.sku }}</p>
                 <p class="text-gray-600">Stock: <span
-                        class="font-semibold {% if product.stock > 0 %}text-green-600{% else %}text-red-600{% endif %}">{% if product.stock > 0 %}In Stock ({{ product.stock }}){% else %}Out of Stock{% endif %}</span>
+                        class="font-semibold {% if product.stock > 0 %}text-green-600{% else %}text-red-600{% endif %}">{% if product.stock > 0 %}En Stock ({{ product.stock }}){% else %}Out of Stock{% endif %}</span>
                 </p>
                 <p class="text-gray-700">{{ product.description }}</p>
                 <div class="flex flex-wrap gap-2 items-center">
-                    <span class="font-semibold">Tags:</span>
+                    <span class="font-semibold">Categorias:</span>
                     {% for tag in product.tags.all %}
                     <a href="{% url 'tags' tag.slug %}"
                         class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 hover:bg-blue-500 hover:text-white transition duration-200">#{{tag.name }}</a>
@@ -86,8 +86,7 @@
                         <span class="block sm:inline">Producto ya agregado</span>
                     </div>
                     <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Add
-                        to Cart</button>
+                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar a Carrito</button>
                 </div>
             </div>
         </div>
@@ -97,7 +96,7 @@
     <!-- Related Products -->
     {% if products %}
     <div class="bg-white rounded-lg shadow-lg p-6 max-w-6xl mx-auto">
-        <h3 class="text-2xl font-bold mb-6">Related Products</h3>
+        <h3 class="text-2xl font-bold mb-6">Productos Relacionados</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {% for product in products %}
             <a href="{% url 'product-detail' product.pid %}" class="group">
@@ -106,9 +105,6 @@
                         class="w-full h-48 object-cover rounded-lg mb-4">
                     <h4 class="font-semibold text-lg mb-2 group-hover:text-blue-600">{{ product.title }}</h4>
                     <p class="text-blue-600 font-bold">${{ product.price|formato_precio }}</p>
-                    <button
-                        class="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Add
-                        to Cart</button>
                 </div>
             </a>
             {% endfor %}

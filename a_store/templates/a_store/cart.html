@@ -6,171 +6,156 @@
 {% load static %}
 
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1>Tu carrito</h1>
+    <h1 class="text-2xl sm:text-3xl font-bold mb-6">Tu carrito</h1>
     {% if cart_data %}
-    <p>Tenes {{ totalcartitems }} producto{{ totalcartitems|pluralize }} en el carrito</p>
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200" id="cart-list">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Productos
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
-                        Precio
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
-                        Cantidad
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
-                        Subtotal
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-sm  font-medium text-gray-500 uppercase tracking-wider">
-                        Actualizar
-                    </th>
-                    <th scope="col"
-                        class="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                        Eliminar
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                {% for product_id, item in cart_data.items %}
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 h-40 w-40">
-                                <img class="h-40 w-40 rounded-lg object-cover" src="{{ item.image }}"
-                                    alt="{{ item.title }}">
-                            </div>
-                            <div class="ml-4">
-                                <a href="{% url 'product-detail' item.pid %}" class="text-sm font-medium text-gray-900">
-                                    {{ item.title }}
-                                </a>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-4 whitespace-nowrap">    
-                        <div class="text-xl text-gray-900">${{ item.price|formato_precio }}</div>
-                    </td>
-                    <td class="py-4 whitespace-nowrap">
-                        <input type="number" name="quantity" value="{{ item.qty }}" min="1"
-                            class="product-qty-{{ product_id }} shadow-sm focus:ring-primary focus:border-primary block w-20 sm:text-xl border-gray-300 rounded-md">
-                    </td>
-                    <td class="py-4 whitespace-nowrap">          
-                        {% widthratio item.price 1 item.qty as total %}
-                        <div class="text-xl text-green-600 font-medium">
-                            ${{ total|formato_precio }}
-                        </div>
-                    </td>
-                    <td class="py-4 whitespace-nowrap text-xl font-medium ">           
-                        <button data-product="{{ product_id }}" class="update-product w-24 p-3 flex justify-center text-gray-100 hover:text-gray-500">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                            </svg>
-                        </button>
-                    </td>
-                    <td class="py-4 whitespace-nowrap text-xl font-medium ">
-                        <button data-product="{{ product_id }}" class="delete-product w-24 p-3 flex justify-center bg-red-700 hover:bg-red-800 text-gray-100 hover:text-gray-500">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <form action="{% url 'save-checkout-info' %}" method="POST" class="space-y-6 px-10">
-            {% csrf_token %}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
-                    <label for="first_name" class="block text-sm font-medium text-gray-700">Nombre:</label>
-                    <input type="text" id="first_name" name="first_name" placeholder="Lionel" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="last_name" class="block text-sm font-medium text-gray-700">Apellido:</label>
-                    <input type="text" id="last_name" name="last_name" placeholder="Messi" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Correo
-                        electrónico:</label> 
-                    <input type="email" id="email" name="email" placeholder="lionel@gmail.com" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="address"
-                        class="block text-sm font-medium text-gray-700">Dirección:</label>
-                    <input type="text" id="address" name="address"
-                        placeholder="9 de julio y Av,San martin" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="number" class="block text-sm font-medium text-gray-700">Numero:</label>
-                    <input type="text" id="number" name="number" placeholder="3323" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="level" class="block text-sm font-medium text-gray-700">Piso:</label>
-                    <input type="text" id="level" name="level" placeholder="5" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="departament" class="block text-sm font-medium text-gray-700">Departamento:</label>
-                    <input type="text" id="departament" name="departament" placeholder="41" 
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="zipcode" class="block text-sm font-medium text-gray-700">Código
-                        Postal:</label>
-                    <input type="text" id="zipcode" name="zipcode" placeholder="32122" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="city"
-                        class="block text-sm font-medium text-gray-700">Provincia:</label>
-                    <input type="text" id="city" name="city" placeholder="Santa Fe" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="country"
-                        class="block text-sm font-medium text-gray-700">Pais:</label>
-                    <input type="text" id="country" name="country" placeholder="Argentina" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                </div>
-                <div class="space-y-2">
-                    <label for="mobile"
-                        class="block text-sm font-medium text-gray-700">Celular:</label>
-                    <input type="text" id="mobile" name="mobile" placeholder="23198321" required
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+        <p class="text-base sm:text-lg mb-4">Tienes {{ totalcartitems }} producto{{ totalcartitems|pluralize }} en el carrito</p>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full divide-y divide-gray-200" id="cart-list">
+                    <thead class="bg-gray-50 hidden sm:table-header-group">
+                        <tr>
+                            <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Productos</th>
+                            <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                            <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
+                            <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
+                            <th scope="col" class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for product_id, item in cart_data.items %}
+                        <tr class="flex flex-col sm:table-row hover:bg-gray-50">
+                            <td class="px-4 sm:px-6 py-4">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 h-24 w-24">
+                                        <img class="h-24 w-24 rounded-md object-cover" src="{{ item.image }}" alt="{{ item.title }}">
+                                    </div>
+                                    <div class="ml-4">
+                                        <a href="{% url 'product-detail' item.pid %}" class="text-sm font-medium text-gray-900 hover:text-indigo-600">
+                                            {{ item.title }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-2 sm:py-4">    
+                                <div class="text-sm text-gray-900">
+                                    <span class="sm:hidden font-medium">Precio: </span>${{ item.price|formato_precio }}
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-2 sm:py-4">
+                                <span class="sm:hidden font-medium">Cantidad: </span>
+                                <input type="number" name="quantity" value="{{ item.qty }}" min="1"
+                                    class="product-qty-{{ product_id }} shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-20 text-sm border-gray-300 rounded-md">
+                            </td>
+                            <td class="px-4 sm:px-6 py-2 sm:py-4">          
+                                {% widthratio item.price 1 item.qty as total %}
+                                <div class="text-sm text-green-600 font-medium">
+                                    <span class="sm:hidden font-medium">Subtotal: </span>${{ total|formato_precio }}
+                                </div>
+                            </td>
+                            <td class="px-4 sm:px-6 py-2 sm:py-4 text-sm font-medium">
+                                <div class="flex space-x-2">
+                                    <button data-product="{{ product_id }}" class="update-product text-indigo-600 hover:text-indigo-900 bg-transparent">
+                                        <span class="sr-only">Actualizar</span>
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                        </svg>
+                                    </button>
+                                    <button data-product="{{ product_id }}" class="delete-product text-red-600 hover:text-red-900 bg-transparent">
+                                        <span class="sr-only">Eliminar</span>
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="mt-8 bg-white shadow-md rounded-lg p-4 sm:p-6">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">Total a pagar: ${{ cart_total_amount|formato_precio }}</h3>
                 </div>
             </div>
-            <button>sumbit</button>
-        </form>
-        <div class="p-6 text-xl">
-            <h3>Total a pagar: ${{ cart_total_amount|formato_precio }}</h3>
         </div>
-    </div>
+        
+        <div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden">
+            <form action="{% url 'save-checkout-info' %}" method="POST" class="p-4 sm:p-6 space-y-6">
+                {% csrf_token %}
+                <h2 class="text-xl sm:text-2xl font-semibold mb-4">Información de envío</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div class="space-y-2">
+                        <label for="first_name" class="block text-sm font-medium text-gray-700">Nombre:</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="Lionel" required value="{{ address.first_name }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="last_name" class="block text-sm font-medium text-gray-700">Apellido:</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Messi" required value="{{ address.last_name }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico:</label> 
+                        <input type="email" id="email" name="email" placeholder="lionel@gmail.com" required value="{{ address.email }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="address" class="block text-sm font-medium text-gray-700">Dirección:</label>
+                        <input type="text" id="address" name="address" placeholder="9 de julio y Av,San martin" required value="{{ address.address }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="number" class="block text-sm font-medium text-gray-700">Número:</label>
+                        <input type="text" id="number" name="number" placeholder="3323" required value="{{ address.number }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="level" class="block text-sm font-medium text-gray-700">Piso:</label>
+                        <input type="text" id="level" name="level" placeholder="5" value="{{ address.level }}" 
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="departament" class="block text-sm font-medium text-gray-700">Departamento:</label>
+                        <input type="text" id="departament" name="departament" placeholder="41" value="{{ address.departament }}" 
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="zipcode" class="block text-sm font-medium text-gray-700">Código Postal:</label>
+                        <input type="text" id="zipcode" name="zipcode" placeholder="32122" required value="{{ address.zipcode }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="city" class="block text-sm font-medium text-gray-700">Provincia:</label>
+                        <input type="text" id="city" name="city" placeholder="Santa Fe" required value="{{ address.city }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="country" class="block text-sm font-medium text-gray-700">País:</label>
+                        <input type="text" id="country" name="country" placeholder="Argentina" required value="{{ address.country }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                    <div class="space-y-2">
+                        <label for="mobile" class="block text-sm font-medium text-gray-700">Celular:</label>
+                        <input type="text" id="mobile" name="mobile" placeholder="23198321" required value="{{ address.mobile }}"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <button class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Proceder al pago
+                    </button>
+                </div>
+            </form>
+        </div>
     {% else %}
         <div class="text-center py-12">
-            <h2 class="text-2xl font-semibold text-gray-900">Tu carrito está vacío</h2>
+            <h2 class="text-xl sm:text-2xl font-semibold text-gray-900">Tu carrito está vacío</h2>
             <p class="mt-2 text-sm text-gray-600">¿Por qué no agregas algunos productos?</p>
-            <a href="{% url 'product-list' %}" class="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <a href="{% url 'product-list' %}" class="mt-6 inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Ir a la tienda
             </a>
         </div>
     {% endif %}
 </div>
-
 
 
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.contrib.auth.decorators import user_passes_test
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.decorators import login_required
 from allauth.account.views import LoginView
@@ -70,7 +71,7 @@ def profile_edit_view(request):
 
 @login_required
 def profile_settings_view(request):
-    return render(request, 'a_users/profile_settings.html')
+    return render(request, 'a_users/dashboard.html')
 
 
 @login_required
@@ -89,7 +90,7 @@ def profile_emailchange(request):
             email = form.cleaned_data['email']
             if User.objects.filter(email=email).exclude(id=request.user.id).exists():
                 messages.warning(request, f'{email} ya fue esta registrado.')
-                return redirect('profile-settings')
+                return redirect('dashboard')
             
             form.save()
             
@@ -99,10 +100,10 @@ def profile_emailchange(request):
             # Then send confirmation email
             send_email_confirmation(request, request.user)
             
-            return redirect('profile-settings')
+            return redirect('dashboard')
         else:
             messages.warning(request, 'Formulario no valido')
-            return redirect('profile-settings')
+            return redirect('dashboard')
     
     return redirect('home')
 
@@ -110,7 +111,7 @@ def profile_emailchange(request):
 @login_required
 def profile_emailverify(request):
     send_email_confirmation(request, request.user)
-    return redirect('profile-settings')
+    return redirect('dashboard')
 
 
 
@@ -130,6 +131,11 @@ def profile_delete_view(request):
 
 # USERADMIN
 
+
+def admin_required(user):
+    return user.is_superuser
+
+@user_passes_test(admin_required)
 def dashboard(request):
     revenue = CartOrder.objects.aggregate(price=Sum('price'))
     total_orders_count = CartOrder.objects.all()
@@ -157,7 +163,7 @@ def dashboard(request):
 
 
 
-
+@user_passes_test(admin_required)
 def products(request):
     all_products = Product.objects.all()
     all_categories = Category.objects.all()

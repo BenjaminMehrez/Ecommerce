@@ -201,7 +201,7 @@ def cart_view(request):
             cart_total_amount += int(item['qty']) * float(item['price'])
         return render(request, 'a_store/cart.html', {'cart_data': request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
     else:
-        messages.warning(request, 'no hay productos')
+        messages.warning(request, 'No hay productos')
         return redirect('home')
 
 

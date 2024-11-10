@@ -18,7 +18,7 @@
             <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl p-5">
                 <div class="flex flex-col md:flex-row justify-evenly items-center">
                     <div class="md:shrink-0">
-                        {% if user.profile.image.url %}
+                        {% if user.profile.image %}
                             <img id="avatar" class="h-32 w-32 object-cover rounded-full border-4 border-gray-200" src="{{ user.profile.image.url }}" alt="Current profile photo">
                         {% else %}
                             <div id="avatar-placeholder" class="h-32 w-32 rounded-full bg-gray-100 flex items-center justify-center">
