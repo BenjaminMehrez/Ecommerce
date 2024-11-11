@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 if ENVIRONMENT == 'development':
     DEBUG = True
 else:
-    DEBUG = True    
+    DEBUG = False    
 
 
 ALLOWED_HOSTS = ['*', 'https://ecommercemehrez.up.railway.app']
