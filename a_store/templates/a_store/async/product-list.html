@@ -21,7 +21,7 @@
                 <div class="flex items-center gap-2">
                     <span class="text-sm text-gray-500 line-through">${{ product.old_price|formato_precio  }}</span>
                     <span class="inline-block bg-red-100 rounded-full px-2 py-1 text-xs font-semibold text-red-600">
-                        -{{ product.get_precentage }}%
+                        -{{ product.get_precentage|floatformat:0 }}%
                     </span>
                 </div>
                 {% endif %}

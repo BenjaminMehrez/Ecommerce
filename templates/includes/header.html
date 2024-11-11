@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <a href="{% url 'product-list' %}"
-                    class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Productos</a>
+                    class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Novedades</a>
             </nav>
             <div class="hidden md:grid col-start-6 lg:col-start-5 lg:col-end-7 justify-start items-center">
                 <form action="{% url 'search' %}" method="GET" class="relative">
@@ -138,7 +138,7 @@
             x-transition:leave-end="opacity-0 translate-x-96">
                 <ul class="flex flex-col items-end mt-40 md:mt-0 px-10 md:px-0 text-xl md:text-sm h-full md:flex-row -translate-y-10 md:translate-y-0">
                     {% if request.user.is_authenticated %}
-					<nav class="md:hidden">
+					<nav class="md:hidden mb-5">
 						<div x-data="{ open: true }" class="relative">
 							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
 								<svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +155,7 @@
 								x-transition:leave="transition ease-in duration-75"
 								x-transition:leave-start="transform opacity-100 scale-100"
 								x-transition:leave-end="transform opacity-0 scale-95"
-								class="text-end">
+								class="text-end mt-2">
 								<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 									{% for category in categories %}
 									<a href="{% url 'category-product-list' category.cid %}"
@@ -170,7 +170,7 @@
 							</div>
 						</div>
 					</nav>
-					<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Productos</a></li>
+					<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Novedades</a></li>
                     <div class="flex flex-col items-end gap-6 pt-8 mt-6 md:mt-0 border-t-2 w-full md:pt-0 md:flex md:border-0 md:flex-row md:items-center md:gap-3">
 						<div x-data="{ open: false }" class="hidden md:block ml-3 relative">
                             <div>
@@ -189,6 +189,7 @@
                           </div>
 						<li><a class="md:hidden hover:underline" href="{% url 'dashboard' %}">Mi cuenta</a></li>
 						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Ayuda</a></li>
+						<li><a href="{% url 'dashboard-admin' %}" class="md:hidden hover:underline">Adminstracion</a></li>
 						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Contactanos</a></li>
 					</div>
                     {% else %}
@@ -224,7 +225,7 @@
 							</div>
 						</div>
 					</nav>
-					<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Productos</a></li>
+					<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Novedades</a></li>
                     <div class="flex flex-col items-end gap-6 pt-8 mt-6 md:mt-0 border-t-2 w-full md:pt-0 md:flex md:border-0 md:flex-row md:items-center md:gap-3">
 						<li class="min-w-20 md:ml-5 lg:ml-16"><a class="hover:underline" href="{% url 'account_login' %}">Inicia sesión</a></li>
                     	<li><a class="hover:underline" href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Regístrate</a></li>
