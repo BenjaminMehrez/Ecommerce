@@ -36,7 +36,7 @@ SECRET_KEY = env('SECRET_KEY')
 if ENVIRONMENT == 'development':
     DEBUG = True
 else:
-    DEBUG = False    
+    DEBUG = True    
 
 
 ALLOWED_HOSTS = ['*', 'https://ecommercemehrez.up.railway.app']
@@ -45,12 +45,10 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 CORS_ALLOWED_ORIGINS = [
     'https://ecommercemehrez.up.railway.app',
-    'https://a4f5-2803-9800-9844-9537-503b-47ba-7d56-26ee.ngrok-free.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ecommercemehrez.up.railway.app",
-    'https://a4f5-2803-9800-9844-9537-503b-47ba-7d56-26ee.ngrok-free.app',
 
 ]
 

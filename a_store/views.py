@@ -244,6 +244,7 @@ def update_cart(request):
     return JsonResponse({'data': context, 'totalcartitems': len(request.session['cart_data_obj'])})
 
 
+@login_required
 def save_checkout_info(request):
     cart_total_amount = 0
     total_amount = 0
@@ -325,7 +326,7 @@ def save_checkout_info(request):
 
 
 
-
+@login_required
 def checkout(request, oid):
     order = CartOrder.objects.get(oid=oid)
     order_items = CartOrderItems.objects.filter(order=order)
@@ -437,7 +438,7 @@ def customer_dashboard(request):
     return render(request, 'a_store/dashboard.html', context)
     
     
-    
+@login_required
 def order_datail(request, id):
     order = CartOrder.objects.get(user=request.user, id=id)
     order_items = CartOrderItems.objects.filter(order=order)
@@ -449,7 +450,7 @@ def order_datail(request, id):
 
 
 
-
+@login_required
 def make_address_default(request):
     id = request.GET['id']
     Address.objects.update(status=False)
@@ -470,7 +471,7 @@ def wishlist_view(request):
     return render(request, 'a_store/wishlist.html', context)
 
 
- 
+@login_required
 def add_to_wishlist(request):
     product_id = request.GET['id']
     product = Product.objects.get(id=product_id)
@@ -495,7 +496,7 @@ def add_to_wishlist(request):
     return JsonResponse(context)
 
 
-
+@login_required
 def delete_wishlist(request):
     pid = request.GET['id']
     wishlist = Wishlist.objects.filter(user=request.user)
