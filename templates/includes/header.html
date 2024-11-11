@@ -1,11 +1,11 @@
 {% load static %}
 {% if request.resolver_match.url_name != 'account_login' and request.resolver_match.url_name != 'account_signup' %}
 <header x-data="{ mobilenavOpen: false, mobilesearchOpen: false }" class="bg-white shadow-md top-0 z-40 sticky">
-    <div class="md:grid grid-cols-7 items-center lg:container m-auto px-4 sm:px-6 lg:px-8 sticky h-16">
-            <div class="flex justify-between items-center m-auto px-4 sm:px-6 lg:px-8 pt-2 md:pt-0">
+    <div class="md:grid grid-cols-9 items-center xl:container m-auto sticky md:pr-10 h-16">
+            <div class="flex justify-between items-center m-auto px-4 pt-2 md:pt-0">
                 <div class="flex">
                     <a href="/" class="flex items-center gap-2">
-                      <img class="h-12 md:h-8 w-auto" src="{% static 'images/logo-black.svg' %}" alt="Logo">
+                      <img class="h-12 w-auto" src="{% static 'images/logo-black.svg' %}" alt="Logo">
                       <span class="hidden sm:block text-lg font-bold text-gray-900">Ecommerce</span>
                     </a>
                 </div>
@@ -50,7 +50,7 @@
             </div>
         
         
-            <nav class="hidden md:grid col-start-3 grid-flow-col space-x-4">
+            <nav class="hidden md:grid col-start-4 lg:col-start-3 grid-flow-col justify-center space-x-4">
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" @click.away="open = false"
                         class="bg-transparent text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium inline-flex items-center">
@@ -85,7 +85,7 @@
                 <a href="{% url 'product-list' %}"
                     class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Productos</a>
             </nav>
-            <div class="hidden md:grid col-start-5 justify-end items-center">
+            <div class="hidden md:grid col-start-6 lg:col-start-5 lg:col-end-7 justify-start items-center">
                 <form action="{% url 'search' %}" method="GET" class="relative">
                   <input type="search" name="q" placeholder="Buscar productos..." class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" />
                   <button class="bg-transparent absolute inset-y-0 left-0 flex items-center pl-3">          
@@ -100,12 +100,12 @@
             x-transition:leave="duration-300 ease-in"
             x-transition:leave-start="opacity-100 translate-x-0"
             x-transition:leave-end="opacity-0 -translate-x-96">
-                        <form class="flex mt-6 justify-center" method="GET" action="{% url 'search' %}">
-                            <input class="p-1 search text-black outline-0" type="text" name="q" placeholder="Buscar" value="{{ query }}">
+                        <form class="flex mt-6 justify-center px-4" method="GET" action="{% url 'search' %}">
+                            <input class="p-2 search text-black outline-0" type="text" name="q" placeholder="Buscar" value="{{ query }}">
                             <button class="p-2 bg-gray-200 search-lupa hover:bg-gray-300"><img class="w-7" src="{% static 'images/search-black.svg' %}" alt="search"></button>
                         </form> 
             </nav>
-            <div class="hidden md:grid grid-flow-col col-start-6 justify-end ">
+            <div class="hidden md:grid grid-flow-col col-start-7 col-end-9 lg:col-start-8 justify-center xl:justify-end">
                 <a href="{% url 'cart' %}"
                     class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -129,38 +129,108 @@
                         class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-700 text-xs font-medium text-white">{% if wishlist == 0 %}0{% else %}{{ wishlist.count }}{% endif %}</span>
                 </a>
             </div>
-            <nav x-show="mobilenavOpen" x-cloak class="md:!block grid col-start-7 bg-white h-screen w-screen md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
+            <nav x-show="mobilenavOpen" x-cloak class="md:!grid grid col-start-9 col-end-10 md:justify-center bg-white h-screen w-screen md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
             x-transition:enter="duration-300 ease-out"
             x-transition:enter-start="opacity-0 translate-x-96"
             x-transition:enter-end="opacity-100 translate-x-0"
             x-transition:leave="duration-300 ease-in"
             x-transition:leave-start="opacity-100 translate-x-0"
             x-transition:leave-end="opacity-0 translate-x-96">
-                <ul class="flex items-center navitems text-black flex-col md:flex-row gap-8 md:gap-0 justify-center h-full -translate-y-10 md:translate-y-0">
+                <ul class="flex flex-col items-end mt-40 md:mt-0 px-10 md:px-0 text-xl md:text-sm h-full md:flex-row -translate-y-10 md:translate-y-0">
                     {% if request.user.is_authenticated %}
-                    <li x-data="{ dropdownOpen: false }" class="hover:bg-gray-200 rounded-lg relative">
-                        <a @click="dropdownOpen = !dropdownOpen" @click.away="dropdownOpen = false" class="cursor-pointer select-none">
-                            <img class="h-8 w-8 rounded-full" src="{% static 'images/usericon.svg' %}" alt="">
-                            <img x-bind:class="dropdownOpen && 'rotate-180 duration-300'" class="w-4" src="https://img.icons8.com/small/32/0000/expand-arrow.png" alt="Dropdown" />
-                        </a>
-                        <div x-show="dropdownOpen" x-cloak class="w-40 absolute right-0 bg-white text-black shadow rounded-lg w-30 p-2 z-20"
-                        x-transition:enter="duration-300 ease-out"
-                        x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
-                        x-transition:enter-end="opacity-100 translate-y-0 scale-100">
-                            <ul class="hoverlist [&>li>a]:justify-end">
-                                <li><a href="{% url 'profile' %}">Mi Perfil</a></li>
-                                {% if request.user.is_superuser %}
-                                    <hr style="border: 1px solid #999;">
-                                    <a href="{% url 'dashboard-admin' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Adminstracion</a>
-                                {% endif %}
-                                <li><a href="{% url 'account_logout' %}">Cerrar Sesion</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    
+					<nav class="md:hidden">
+						<div x-data="{ open: true }" class="relative">
+							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
+								<svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd"
+										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+										clip-rule="evenodd" />
+								</svg>
+								Categorias
+							</a>
+							<div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
+								x-transition:enter-start="transform opacity-0 scale-95"
+								x-transition:enter-end="transform opacity-100 scale-100"
+								x-transition:leave="transition ease-in duration-75"
+								x-transition:leave-start="transform opacity-100 scale-100"
+								x-transition:leave-end="transform opacity-0 scale-95"
+								class="text-end">
+								<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+									{% for category in categories %}
+									<a href="{% url 'category-product-list' category.cid %}"
+										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										role="menuitem">{{ category.title }}</a>
+									{% endfor %}
+									<div class="border-t border-gray-100"></div>
+									<a href="{% url 'category-list' %}"
+										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										role="menuitem">Todas las categorias</a>
+								</div>
+							</div>
+						</div>
+					</nav>
+					<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Productos</a></li>
+                    <div class="flex flex-col items-end gap-6 pt-8 mt-6 md:mt-0 border-t-2 w-full md:pt-0 md:flex md:border-0 md:flex-row md:items-center md:gap-3">
+						<div x-data="{ open: false }" class="hidden md:block ml-3 relative">
+                            <div>
+                              <button @click="open = !open" @click.away="open = false" class="bg-transparent flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
+                                <img class="h-8 w-8 rounded-full" src="{% static 'images/usericon.svg' %}" alt="">
+                              </button>
+                            </div>
+                            <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                              <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Mi cuenta</a>
+                              <a href="{% url 'account_logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cerrar Sesion</a>
+                              {% if request.user.is_superuser %}
+                              <hr style="border: 1px solid #999;">
+                              <a href="{% url 'dashboard-admin' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Adminstracion</a>
+                              {% endif %}
+                            </div>
+                          </div>
+						<li><a class="md:hidden hover:underline" href="{% url 'dashboard' %}">Mi cuenta</a></li>
+						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Ayuda</a></li>
+						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Contactanos</a></li>
+					</div>
                     {% else %}
-                    <li><a class="hover:underline" href="{% url 'account_login' %}">Inicia sesión</a></li>
-                    <li><a class="hover:underline" href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Regístrate</a></li>
+					<nav class="md:hidden">
+						<div x-data="{ open: true }" class="relative">
+							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
+								<svg class=" h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 20 20" fill="currentColor">
+									<path fill-rule="evenodd"
+										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+										clip-rule="evenodd" />
+								</svg>
+								Categorias
+							</a>
+							<div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
+								x-transition:enter-start="transform opacity-0 scale-95"
+								x-transition:enter-end="transform opacity-100 scale-100"
+								x-transition:leave="transition ease-in duration-75"
+								x-transition:leave-start="transform opacity-100 scale-100"
+								x-transition:leave-end="transform opacity-0 scale-95"
+								class="text-end">
+								<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+									{% for category in categories %}
+									<a href="{% url 'category-product-list' category.cid %}"
+										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										role="menuitem">{{ category.title }}</a>
+									{% endfor %}
+									<div class="border-t border-gray-100"></div>
+									<a href="{% url 'category-list' %}"
+										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										role="menuitem">Todas las categorias</a>
+								</div>
+							</div>
+						</div>
+					</nav>
+					<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Productos</a></li>
+                    <div class="flex flex-col items-end gap-6 pt-8 mt-6 md:mt-0 border-t-2 w-full md:pt-0 md:flex md:border-0 md:flex-row md:items-center md:gap-3">
+						<li class="min-w-20 md:ml-5 lg:ml-16"><a class="hover:underline" href="{% url 'account_login' %}">Inicia sesión</a></li>
+                    	<li><a class="hover:underline" href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Regístrate</a></li>
+						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Ayuda</a></li>
+						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Contactanos</a></li>
+					</div>
                     {% endif %}
                 </ul>
             </nav>
@@ -168,76 +238,3 @@
 </header>
 {% endif %}
 
-
-
-
-<!-- <header class="bg-white shadow-md sticky top-0 z-40">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <div class="flex-shrink-0">
-          <a href="/" class="flex items-center gap-2">
-            <img class="h-8 w-auto" src="{% static 'images/logo-black.svg' %}" alt="Logo">
-            <span class="text-lg font-bold text-gray-900">Ecommerce</span>
-          </a>
-        </div>
-        <nav class="hidden md:flex space-x-4">
-          <div x-data="{ open: false }" class="relative">
-            <button @click="open = !open" @click.away="open = false" class="bg-transparent text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium inline-flex items-center">
-              Categorias
-              <svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </button>
-            <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-              <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                {% for category in categories %}
-                  <a href="{% url 'category-product-list' category.cid %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">{{ category.title }}</a>
-                {% endfor %}
-                <div class="border-t border-gray-100"></div>
-                <a href="{% url 'category-list' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Todas las categorias</a>
-              </div>
-            </div>
-          </div>
-          <a href="{% url 'product-list' %}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Productos</a>
-        </nav>
-        <div class="hidden md:flex items-center">
-          <form action="{% url 'search' %}" method="GET" class="relative">
-            <input type="search" name="q" placeholder="Buscar productos..." class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" />
-            <button class="bg-transparent absolute inset-y-0 left-0 flex items-center pl-3">          
-                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </button>
-          </form>
-        </div>
-        <div class="flex items-center">
-          <a href="{% url 'cart' %}" class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            <span class="cart-items-count absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-700 text-xs font-medium text-white">{{ request.session.cart_data_obj|length }}</span>
-          </a>
-          <a href="{% url 'wishlist' %}" class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
-            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            <span class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-700 text-xs font-medium text-white">{% if wishlist == 0 %}0{% else %}{{ wishlist.count }}{% endif %}</span>
-          </a>
-          {% if request.user.is_authenticated %}
-            <div x-data="{ open: false }" class="ml-3 relative">
-              <div>
-                <button @click="open = !open" @click.away="open = false" class="bg-transparent flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu" aria-haspopup="true">
-                  <img class="h-8 w-8 rounded-full" src="{% static 'images/usericon.svg' %}" alt="">
-                </button>
-              </div>
-              <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Mi cuenta</a>
-                <a href="{% url 'account_logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cerrar Sesion</a>
-                {% if request.user.is_superuser %}
-                <hr style="border: 1px solid #999;">
-                <a href="{% url 'dashboard-admin' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Adminstracion</a>
-                {% endif %}
-              </div>
-            </div>
-          {% else %}
-            <a href="{% url 'account_login' %}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Iniciar Sesion</a>
-            <a href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}" class="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">Registrate</a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-</header> -->
