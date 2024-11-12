@@ -74,7 +74,7 @@
                     <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
                     {% endif %}
                 </div>
-                <input type="number" value="1" id="product-quantity" class="w-20 mb-10 product-quantity-{{ product.id }}">
+                <input type="number" inputmode="numeric" pattern="[0-9]*" value="1" id="product-quantity" class="w-20 mb-10 product-quantity-{{ product.id }}">
                 <div>
                     <!-- <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16"> -->
                     <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
