@@ -1,9 +1,10 @@
 {% extends 'layouts/blank.html' %}
+{% load price_filters %}
 
 {% block content %}
 <div class="flex min-h-screen bg-gray-100">
 
-    <div class="w-64 bg-white shadow-lg">
+    <div class="hidden md:block w-64 bg-white shadow-lg">
         <nav class="mt-6 px-4">
             <a href="{% url 'dashboard' %}"
                 class="mt-1 group flex items-center px-3 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
@@ -32,7 +33,62 @@
         </nav>
     </div>
 
-    <div class="flex-1">
+    <div class="flex-1 p-4 max-w-7xl mx-auto">
+        <h1 class="text-2xl font-bold mb-4">Tus Órdenes</h1>
+        
+        <div class="bg-white rounded-lg shadow">
+          <div class="p-4 border-b">
+            <h2 class="text-xl font-semibold">Resumen de Órdenes</h2>
+            <p class="text-gray-600 text-sm">Detalles de tus compras recientes.</p>
+          </div>
+      
+          <!-- Table header - hidden on mobile -->
+          <div class="hidden md:grid md:grid-cols-6 gap-4 p-4 font-semibold bg-gray-100 text-gray-700 border-b">
+            <div>Orden</div>
+            <div>Imagen</div>
+            <div>Producto</div>
+            <div>Precio</div>
+            <div>Cantidad</div>
+            <div>Total</div>
+          </div>
+      
+          <!-- Mobile-friendly order items -->
+          <div class="divide-y">
+            {% for order in order_items %}
+              <div class="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 items-center">
+                <div class="flex justify-between md:block">
+                  <span class="md:hidden font-semibold">Orden:</span>
+                  <span class="ml-4 ">#{{ order.id }}</span>
+                </div>
+                <div class="flex justify-center">
+                  <img 
+                    src="{{ order.image }}" 
+                    alt="{{ order.item }}"
+                    class="w-20 h-20 object-cover rounded mr-3 md:mr-6 lg:mr-20 xl:mr-32"/>
+                </div>
+                <div class="flex justify-between md:block">
+                  <span class="md:hidden font-semibold">Producto:</span>
+                  <span class="text-sm">{{ order.item }}</span>
+                </div>
+                <div class="flex justify-between md:block">
+                  <span class="md:hidden font-semibold">Precio:</span>
+                  <span class="text-green-600 text-sm">${{ order.price|formato_precio }}</span>
+                </div>
+                <div class="flex justify-between md:block">
+                  <span class="md:hidden font-semibold">Cantidad:</span>
+                  <span class="ml-6">{{ order.qty }}</span>
+                </div>
+                <div class="flex justify-between md:block">
+                  <span class="md:hidden font-semibold">Total:</span>
+                  <span class="font-semibold text-sm">${{ order.total|formato_precio }}</span>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+    </div>
+
+    <!-- <div class="hidden lg:block flex-1">
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h1 class="text-2xl font-semibold text-gray-900 mb-6">Tus Órdenes</h1>
@@ -90,14 +146,14 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            ${{ o.price }}
+                                            $ {{ o.price|formato_precio }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ o.qty }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        ${{ o.total }}
+                                        $ {{ o.total|formato_precio }}
                                     </td>
                                 </tr>
                                 {% empty %}
@@ -113,7 +169,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
 </div>
 
 {% endblock %}

@@ -159,12 +159,12 @@
 								<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 									{% for category in categories %}
 									<a href="{% url 'category-product-list' category.cid %}"
-										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										class="block py-2  text-gray-700 hover:underline"
 										role="menuitem">{{ category.title }}</a>
 									{% endfor %}
 									<div class="border-t border-gray-300"></div>
 									<a href="{% url 'category-list' %}"
-										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										class="block py-2  text-gray-700 hover:underline"
 										role="menuitem">Todas las categorias</a>
 								</div>
 							</div>
@@ -207,16 +207,16 @@
                                     class="text-end mt-2">
                                     <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                                         <a href="{% url 'dashboard' %}"
-										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										class="block py-2  text-gray-700 hover:underline"
 										role="menuitem">Panel</a>
                                         <a href="{% url 'dashboard-profile' %}"
-										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										class="block py-2  text-gray-700 hover:underline"
 										role="menuitem">Perfil</a>
                                         <a href="{% url 'dashboard-address' %}"
-										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										class="block py-2  text-gray-700 hover:underline"
 										role="menuitem">Mi Direcciones</a>
                                         <a href="{% url 'dashboard-orders' %}"
-										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+										class="block py-2  text-gray-700 hover:underline"
 										role="menuitem">Ordenes</a>
                                     </div>
                                 </div>
