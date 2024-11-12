@@ -157,9 +157,9 @@
                         <div class="flex space-x-4 items-center">
                             <div class="flex-shrink-0">
                                 {% if user.profile.image %}
-                                    <img id="avatar" class="h-32 w-32 object-cover rounded-full border-4 border-gray-200" src="{{ user.profile.image.url }}" alt="Current profile photo">
+                                    <img id="avatar" class="h-16 w-16 object-cover rounded-full border-4 border-gray-200" src="{{ user.profile.image.url }}" alt="Current profile photo">
                                 {% else %}
-                                    <div id="avatar-placeholder" class="h-32 w-32 rounded-full bg-gray-100 flex items-center justify-center">
+                                    <div id="avatar-placeholder" class="h-16 w-16 rounded-full bg-gray-100 flex items-center justify-center">
                                         <span class="text-gray-500 text-4xl font-bold">{{ user.username|make_list|first|upper }}</span>
                                     </div>
                                 {% endif %}
