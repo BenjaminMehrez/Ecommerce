@@ -50,7 +50,8 @@ def profile_edit_view(request):
             if request.user.emailaddress_set.get(primary=True).verified:
                 return redirect('profile')
             else:
-                return redirect('home')
+                messages.success(request, 'Perfil actualizado')
+                return redirect('dashboard-profile')
                 
         
     if request.path == reverse('profile-onboarding'):
@@ -90,7 +91,7 @@ def profile_emailchange(request):
             email = form.cleaned_data['email']
             if User.objects.filter(email=email).exclude(id=request.user.id).exists():
                 messages.warning(request, f'{email} ya fue esta registrado.')
-                return redirect('dashboard')
+                return redirect('dashboard-profile')
             
             form.save()
             
@@ -100,10 +101,10 @@ def profile_emailchange(request):
             # Then send confirmation email
             send_email_confirmation(request, request.user)
             
-            return redirect('dashboard')
+            return redirect('dashboard-profile')
         else:
             messages.warning(request, 'Formulario no valido')
-            return redirect('dashboard')
+            return redirect('dashboard-profile')
     
     return redirect('home')
 
@@ -111,7 +112,7 @@ def profile_emailchange(request):
 @login_required
 def profile_emailverify(request):
     send_email_confirmation(request, request.user)
-    return redirect('dashboard')
+    return redirect('dashboard-profile')
 
 
 

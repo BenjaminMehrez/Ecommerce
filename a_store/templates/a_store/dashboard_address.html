@@ -1,0 +1,343 @@
+{% extends 'layouts/blank.html' %}
+{% load static %}
+{% block content %}
+
+<div class="flex min-h-screen">
+
+    <div class="w-64 bg-white shadow-sm min-h-screen">
+        <nav class="mt-6 px-4">
+            <a href="{% url 'dashboard-profile' %}"
+                class="group flex items-center px-3 py-2 text-base font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200">
+                <svg class="mr-4 h-6 w-6 group-hover:text-gray-500" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M16.5 7.063C16.5 10.258 14.57 13 12 13c-2.572 0-4.5-2.742-4.5-5.938C7.5 3.868 9.16 2 12 2s4.5 1.867 4.5 5.063zM4.102 20.142C4.487 20.6 6.145 22 12 22c5.855 0 7.512-1.4 7.898-1.857a.416.416 0 0 0 .09-.317C19.9 18.944 19.106 15 12 15s-7.9 3.944-7.989 4.826a.416.416 0 0 0 .091.317z"
+                            fill="#000000"></path>
+                    </g>
+                </svg>
+                Perfil
+            </a>
+            <a href="{% url 'dashboard' %}"
+                class="group flex items-center px-3 py-2 text-base font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200">
+                <svg class="mr-4 h-6 w-6 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Panel
+            </a>
+            <a href="{% url 'dashboard-orders' %}"
+            class="mt-1 group flex items-center px-3 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+
+                <svg class="mr-4 h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M3.17004 7.43994L12 12.5499L20.77 7.46991" stroke="#292D32" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M12 21.6099V12.5399" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path
+                            d="M9.92999 2.48L4.59 5.45003C3.38 6.12003 2.39001 7.80001 2.39001 9.18001V14.83C2.39001 16.21 3.38 17.89 4.59 18.56L9.92999 21.53C11.07 22.16 12.94 22.16 14.08 21.53L19.42 18.56C20.63 17.89 21.62 16.21 21.62 14.83V9.18001C21.62 7.80001 20.63 6.12003 19.42 5.45003L14.08 2.48C12.93 1.84 11.07 1.84 9.92999 2.48Z"
+                            stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M17 13.24V9.58002L7.51001 4.09998" stroke="#292D32" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </svg>
+                </svg>
+                Ordenes
+            </a>
+            <a href="#"
+                class="mt-1 group flex items-center px-3 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                <svg class="mr-4 h-6 w-6" viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="_x3C_Layer_x3E_"
+                    version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <g id="truck_x2C__logistics_x2C__transport_x2C__transportation_2_">
+                            <g id="XMLID_215_">
+                                <line fill="none" id="XMLID_259_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="19.5" x2="10.5" y1="27.5"
+                                    y2="27.5"></line>
+                                <line fill="none" id="XMLID_230_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="24" x2="3.5" y1="30.5" y2="30.5">
+                                </line>
+                                <line fill="none" id="XMLID_228_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="1.6" x2="1.5" y1="30.5"
+                                    y2="30.5"></line>
+                                <polyline fill="none" id="XMLID_945_" points=" 3.5,27.5 2.5,27.5 2.5,25.5 "
+                                    stroke="#263238" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-miterlimit="10"></polyline>
+                                <line fill="none" id="XMLID_231_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="17.5" x2="8.5" y1="25.5"
+                                    y2="25.5"></line>
+                                <line fill="none" id="XMLID_947_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="4.5" x2="1.5" y1="25.5"
+                                    y2="25.5"></line>
+                                <path d=" M26.5,27.5H30c0.276,0,0.5-0.224,0.5-0.5v-1" fill="none" id="XMLID_232_"
+                                    stroke="#263238" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-miterlimit="10"></path>
+                                <circle cx="24" cy="28" fill="none" id="XMLID_216_" r="2.5" stroke="#263238"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></circle>
+                                <circle cx="8" cy="28" fill="none" id="XMLID_217_" r="2.5" stroke="#263238"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></circle>
+                                <circle cx="24" cy="28" fill="none" id="XMLID_254_" r="0.5" stroke="#263238"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></circle>
+                                <circle cx="8" cy="28" fill="none" id="XMLID_955_" r="0.5" stroke="#263238"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"></circle>
+                                <path
+                                    d="M28.105,11.5H23.5c-0.552,0-1,0.447-1,1v3 c0,1.656,1.344,3,3,3h5V18L28.105,11.5z"
+                                    fill="none" id="XMLID_251_" stroke="#263238" stroke-miterlimit="10"></path>
+                                <rect fill="none" height="2" id="XMLID_218_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" width="3" x="27.5" y="23.5"></rect>
+                                <line fill="none" id="XMLID_2062_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="1.5" x2="1.5" y1="6.5" y2="25.5">
+                                </line>
+                                <polyline fill="none" id="XMLID_219_" points=" 19.5,27.5 19.5,4.5 1.5,4.5 "
+                                    stroke="#263238" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-miterlimit="10"></polyline>
+                                <path d=" M19.5,25.5v-17h4.711c1.676,0,3.174,1.045,3.754,2.617L30.5,18v8" fill="none"
+                                    id="XMLID_257_" stroke="#263238" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-miterlimit="10"></path>
+                                <line fill="none" id="XMLID_220_" stroke="#263238" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-miterlimit="10" x1="1.6" x2="1.5" y1="30.5"
+                                    y2="30.5"></line>
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+                Seguimiento de Envio
+            </a>
+            <a href="#"
+                class="mt-1 group flex items-center px-3 py-2 text-base leading-6 font-semibold text-gray-600 rounded-md text-gray-900 hover:bg-gray-50 bg-gray-200">
+                <svg class="mr-4 h-6 w-6 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Mi dirección
+            </a>
+            <a href=""
+                class="mt-1 group flex items-center px-3 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                <svg class="mr-4 h-6 w-6 group-hover:text-gray-500" viewBox="0 0 25 25" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <path d="M6 8.5H9M10.5 5.5V19.5M6 11.5H9M13 8.5H18M6 14.5H9M4.5 5.5H20.5V19.5H4.5V5.5Z"
+                            stroke="#121923" stroke-width="1.2"></path>
+                    </g>
+                </svg>
+                Detalles de cuenta
+            </a>
+            <a href="{% url 'account_logout' %}"
+                class="mt-1 group flex items-center px-3 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                <svg class="mr-4 h-6 w-6 group-hover:text-gray-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Cerrar Sesion
+            </a>
+        </nav>
+    </div>
+
+    <div class="flex-1 min-h-screen bg-gray-100">
+        <div class="py-6">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+
+
+                <div class="container mx-auto px-4 py-8">
+                    <div id="content-address" class="bg-white shadow-lg rounded-lg overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200">
+                            <h2 class="text-2xl font-bold text-gray-800">
+                                Gestión de Direcciones
+                            </h2>
+                        </div>
+
+
+                        <div class="p-6 bg-gray-50">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Mi dirección</h3>
+                            <form method="POST" class="space-y-6 px-20">
+                                {% csrf_token %}
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label for="first_name"
+                                            class="block text-sm font-medium text-gray-700">Nombre:</label>
+                                        <input type="text" id="first_name" name="first_name" placeholder="Lionel"
+                                            required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="last_name"
+                                            class="block text-sm font-medium text-gray-700">Apellido:</label>
+                                        <input type="text" id="last_name" name="last_name" placeholder="Messi" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="email" class="block text-sm font-medium text-gray-700">Correo
+                                            electrónico:</label>
+                                        <input type="email" id="email" name="email" placeholder="lionel@gmail.com"
+                                            required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="address"
+                                            class="block text-sm font-medium text-gray-700">Dirección:</label>
+                                        <input type="text" id="address" name="address"
+                                            placeholder="Barrio Champions 321" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="number"
+                                            class="block text-sm font-medium text-gray-700">Numero:</label>
+                                        <input type="text" id="number" name="number" placeholder="23123" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="level" class="block text-sm font-medium text-gray-700">Piso:</label>
+                                        <input type="text" id="level" name="level" placeholder="5" 
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="departament"
+                                            class="block text-sm font-medium text-gray-700">Departamento:</label>
+                                        <input type="text" id="departament" name="departament" placeholder="41" 
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="zipcode" class="block text-sm font-medium text-gray-700">Código
+                                            Postal:</label>
+                                        <input type="text" id="zipcode" name="zipcode" placeholder="32122" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="city"
+                                            class="block text-sm font-medium text-gray-700">Provincia:</label>
+                                        <input type="text" id="city" name="city" placeholder="Santa Fe" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="country"
+                                            class="block text-sm font-medium text-gray-700">Pais:</label>
+                                        <input type="text" id="country" name="country" placeholder="Argentina" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="mobile"
+                                            class="block text-sm font-medium text-gray-700">Celular:</label>
+                                        <input type="text" id="mobile" name="mobile" placeholder="23198321" required
+                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    </div>
+                                </div>
+                                <div class="mt-6">
+                                    <button type="submit"
+                                        class="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Guardar Dirección
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                            <div class="p-6">
+                                <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Direcciones</h2>
+
+                                <div class="space-y-8">
+
+                                    <div>
+                                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Direcciones de Facturación
+                                        </h3>
+                                        <div class="flex flex-col gap-6">
+                                            {% for address in address %}
+                                            <span>Direccion {{ forloop.counter }}</span>
+                                            <div class="bg-gray-50 rounded-lg shadow p-4 space-y-3">
+                                                <div class="space-y-1">
+                                                    <p class="font-medium text-gray-800">Nombre: {{ address.first_name }} {{ address.last_name }}</p>
+                                                    <p class="text-gray-600">Correo Electronico: {{ address.email }}</p>
+                                                    <p class="text-gray-600">Numero: {{ address.number }}</p>
+                                                    <p class="text-gray-600">Piso: {{ address.level }}</p>
+                                                    <p class="text-gray-600">Departamento: {{ address.departament }}</p>
+                                                    <p class="text-gray-600">Codigo Postal: {{ address.zipcode }}</p>
+                                                    <p class="text-gray-600">Provincia: {{ address.city }}, {{ address.country }}</p>
+                                                    <p class="text-gray-600">Celular: {{ address.mobile }}</p>
+                                                </div>
+                                                {% if address.status %}
+                                                <i data-address-id="{{ address.id }}"
+                                                    class="check check{{ address.id }}">✅</i>
+                                                <button data-address-id="{{ address.id }}"
+                                                    class="hidden px-4 py-2 make-default-address button{{ address.id }} action_btn">Establecer
+                                                    como predeterminado</button>
+                                                {% else %}
+                                                <i data-address-id="{{ address.id }}"
+                                                    class="hidden check check{{ address.id }}">✅</i>
+                                                <button data-address-id="{{ address.id }}"
+                                                    class="px-4 py-2 make-default-address button{{ address.id }} action_btn">Establecer
+                                                    como predeterminado</button>
+                                                {% endif %}
+                                            </div>
+                                            {% empty %}
+                                            <p class="text-gray-600 col-span-full">No hay direcciones de facturación
+                                                guardadas.</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $(document).on('click', '.make-default-address', function () {
+            let id = $(this).attr('data-address-id')
+            let this_val = $(this)
+
+            console.log('ID es:', id);
+            console.log('element es:', this_val);
+
+
+
+
+            $.ajax({
+                url: '/make-default-address',
+                data: {
+                    'id': id
+                },
+                dataType: 'json',
+
+
+                success: function (response) {
+                    console.log('Adderss cambiado');
+                    if (response.boolean == true) {
+
+                        $('.check').hide()
+                        $('.action_btn').show()
+
+                        $('.check' + id).show()
+                        $('.button' + id).hide()
+                    }
+                }
+            })
+        })
+    })
+    
+</script>
+
+{% endblock %}

@@ -162,7 +162,7 @@
 										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
 										role="menuitem">{{ category.title }}</a>
 									{% endfor %}
-									<div class="border-t border-gray-100"></div>
+									<div class="border-t border-gray-300"></div>
 									<a href="{% url 'category-list' %}"
 										class="block py-2  text-gray-700 hover:bg-gray-100 hover:text-gray-900"
 										role="menuitem">Todas las categorias</a>
@@ -189,11 +189,11 @@
                           </div>
 						<li><a class="md:hidden hover:underline" href="{% url 'dashboard' %}">Mi cuenta</a></li>
 						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Ayuda</a></li>
-						<li><a href="{% url 'dashboard-admin' %}" class="md:hidden hover:underline">Adminstracion</a></li>
 						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Contactanos</a></li>
+						<li><a href="{% url 'account_logout' %}" class="md:hidden hover:underline">Cerrar Sesion</a></li>
 					</div>
                     {% else %}
-					<nav class="md:hidden">
+					<nav class="md:hidden mb-5">
 						<div x-data="{ open: true }" class="relative">
 							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
 								<svg class=" h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"

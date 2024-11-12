@@ -383,11 +383,6 @@ def payment_failed_view(request):
 
 @login_required
 def customer_dashboard(request):
-    orders_list = CartOrder.objects.filter(user=request.user).order_by('-id')
-    address = Address.objects.filter(user=request.user)
-    profile = Profile.objects.get(user=request.user)
-    
-    
     orders = CartOrder.objects.annotate(month=ExtractMonth('order_date')).values('month').annotate(count=Count('id')).values('month', 'count')
     month = []
     total_orders = []
@@ -396,6 +391,39 @@ def customer_dashboard(request):
         month.append(calendar.month_name[i['month']])
         total_orders.append(i['count'])
     
+    context = {
+        'orders':orders,
+        'month': month,
+        'total_orders': total_orders,
+    }
+    return render(request, 'a_store/dashboard.html', context)
+    
+    
+@login_required
+def customer_dashboard_profile(request):
+    profile = Profile.objects.get(user=request.user)
+    
+    context = {
+        'profile': profile
+    }
+    
+    return render(request, 'a_store/dashboard_profile.html', context)
+    
+    
+@login_required
+def customer_dashboard_orders(request):
+    orders_list = CartOrder.objects.filter(user=request.user).order_by('-id')
+        
+    context = {
+        'orders_list': orders_list
+    }
+    
+    return render(request, 'a_store/dashboard_orders.html', context)
+    
+    
+@login_required
+def customer_dashboard_address(request):
+    address = Address.objects.filter(user=request.user)
     
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -424,19 +452,18 @@ def customer_dashboard(request):
             country=country,
             mobile=mobile,
         )
-        messages.success(request, 'Direccion agregada')
-        return redirect('dashboard')
+        messages.success(request, 'Direccion Agregada')
+        return redirect('dashboard-address')
             
+        
     context = {
-        'orders_list': orders_list,
-        'orders':orders,
         'address': address,
-        'profile': profile,
-        'month': month,
-        'total_orders': total_orders,
+
     }
-    return render(request, 'a_store/dashboard.html', context)
     
+    return render(request, 'a_store/dashboard_address.html', context)
+    
+
     
 @login_required
 def order_datail(request, id):
