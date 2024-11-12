@@ -4,7 +4,38 @@
 
 {% block content %}
 
-<h1>Eliminar Cuenta</h1>
+<div class="max-w-md w-full space-y-8 bg-white p-10 text-center rounded-xl shadow-md">
+    <div>
+        <h1 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Eliminar Cuenta
+        </h1>
+        <p class="mt-2 text-center text-sm text-gray-600">
+            ¿Estás seguro que quieres eliminar tu cuenta?
+        </p>
+    </div>
+    <form class="mt-8 space-y-6" method="POST">
+        {% csrf_token %}
+        <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <button
+                class="w-full sm:w-auto px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out">
+                Sí, quiero eliminar mi cuenta
+            </button>
+            <a href="{{ request.META.HTTP_REFERER }}"
+                class="w-full sm:w-auto px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+
+<div id="result" class="mt-8"></div>
+
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" hx-trigger="load">
+    <img alt="Cargando..." class="htmx-indicator" width="150" src="{% static 'images/logo.png' %}" />
+</div>
+
+
+<!-- <h1>Eliminar Cuenta</h1>
 <p>Estas seguro que quieres eliminar tu cuenta?</p>
 
 <form method='POST'>
@@ -15,6 +46,6 @@
 
 <div class="absolute top-40 left-80" hx-trigger="load">
     <img alt="Result loading..." class="htmx-indicator loader" width="150" src="{% static 'images/logo.png' %}"/>
-</div>
+</div> -->
 
 {% endblock %}

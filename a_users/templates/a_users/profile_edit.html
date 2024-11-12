@@ -66,9 +66,9 @@
             </label>
 
             <div class="flex flex-col space-y-10">
-                <div>
+                <div class="flex flex-col gap-6 text-center">
                     <button class="w-40 p-3 rounded-md">Guardar Cambios</button>
-                    <a class="w-40 p-3 rounded-md bg-gray-600 text-white" href="{% url 'dashboard' %}">Cancelar</a>
+                    <a class="w-40 p-3 rounded-md bg-gray-600 text-white font-medium" href="{% url 'dashboard' %}">Cancelar</a>
                 </div>
                 <div class="mt-4">
                     <a class="hover:underline hover:text-red-600 text-gray-500" href="{% url 'profile-delete' %}">Eliminar Perfil</a>
@@ -83,7 +83,7 @@
 
 
 <div class="absolute top-1/2" hx-trigger="load">
-    <img alt="Result loading..." class="htmx-indicator loader" width="150" src="{% static 'images/logo.png' %}" />
+    <img alt="Result loading..." class="htmx-indicator loader w-6" width="150" src="{% static 'images/logo-black.svg' %}" />
 </div>
 
 <script>

@@ -1,7 +1,7 @@
 <form action="{% url 'profile-emailchange' %}" method="post" class="flex gap-4 text-black" autocomplete="off">
     {% csrf_token %}
     {% for field in form %}{{ field }}{% endfor %}
-    <button class="!bg-gray-800 p-4">Cambiar</button>
+    <button class="!bg-gray-800 p-2">Cambiar</button>
 </form>
 
 <a hx-swap-oob="true" id="email-edit" href="{% url 'dashboard-profile' %}" class="font-medium text-blue-600 hover:underline">

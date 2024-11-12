@@ -4,7 +4,7 @@
 
 <div class="flex min-h-screen">
 
-    <div class="w-64 bg-white shadow-sm min-h-screen">
+    <div class="hidden md:block w-64 bg-white shadow-sm min-h-screen">
         <nav class="mt-6 px-4">
             <a href="{% url 'dashboard-profile' %}"
                 class="group flex items-center px-3 py-2 text-base font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200">
@@ -151,8 +151,6 @@
     <div class="flex-1 min-h-screen bg-gray-100">
         <div class="py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-
-
                 <div class="container mx-auto px-4 py-8">
                     <div id="content-address" class="bg-white shadow-lg rounded-lg overflow-hidden">
                         <div class="px-6 py-4 border-b border-gray-200">
@@ -163,8 +161,8 @@
 
 
                         <div class="p-6 bg-gray-50">
-                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Mi dirección</h3>
-                            <form method="POST" class="space-y-6 px-20">
+                            <h3 class="text-xl font-semibold text-gray-700 mb-4">Crear Nueva Direccíon</h3>
+                            <form method="POST" class="p-3">
                                 {% csrf_token %}
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="space-y-2">
@@ -237,7 +235,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-6">
-                                    <button type="submit"
+                                    <button
                                         class="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         Guardar Dirección
                                     </button>
@@ -248,8 +246,6 @@
 
                         <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                             <div class="p-6">
-                                <h2 class="text-2xl font-bold text-gray-800 mb-6">Gestión de Direcciones</h2>
-
                                 <div class="space-y-8">
 
                                     <div>
@@ -270,17 +266,19 @@
                                                     <p class="text-gray-600">Celular: {{ address.mobile }}</p>
                                                 </div>
                                                 {% if address.status %}
-                                                <i data-address-id="{{ address.id }}"
-                                                    class="check check{{ address.id }}">✅</i>
+                                                <div data-address-id="{{ address.id }}"
+                                                    class="check check{{ address.id }} w-auto m-auto rounded-md text-center md:w-60 md:m-0 bg-green-500 px-4 py-2 text-white font-semibold hover:underline">Dirección predeterminada</div>
                                                 <button data-address-id="{{ address.id }}"
-                                                    class="hidden px-4 py-2 make-default-address button{{ address.id }} action_btn">Establecer
-                                                    como predeterminado</button>
+                                                    class="hidden px-4 py-2 make-default-address text-sm button{{ address.id }} action_btn">Establecer
+                                                    como predeterminado
+                                                </button>
                                                 {% else %}
-                                                <i data-address-id="{{ address.id }}"
-                                                    class="hidden check check{{ address.id }}">✅</i>
+                                                <div data-address-id="{{ address.id }}"
+                                                    class="hidden check check{{ address.id }} w-auto m-auto rounded-md text-center md:w-60 md:m-0 bg-green-500 px-4 py-2 text-white font-semibold hover:underline">Dirección predeterminada</div>
                                                 <button data-address-id="{{ address.id }}"
-                                                    class="px-4 py-2 make-default-address button{{ address.id }} action_btn">Establecer
-                                                    como predeterminado</button>
+                                                    class="px-4 py-2 make-default-address text-sm  button{{ address.id }} action_btn ">Establecer
+                                                    como predeterminado
+                                                </button>
                                                 {% endif %}
                                             </div>
                                             {% empty %}

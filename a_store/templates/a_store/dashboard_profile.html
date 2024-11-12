@@ -5,7 +5,7 @@
 
 <div class="flex min-h-screen">
 
-    <div class="w-64 bg-white shadow-sm min-h-screen">
+    <div class="hidden md:block w-64 bg-white shadow-sm min-h-screen">
         <nav class="mt-6 px-4">
             <a href="#"
                 class="group flex items-center px-3 py-2 text-base font-semibold rounded-md text-gray-600 text-gray-900 hover:bg-gray-50 transition-all duration-200 bg-gray-200">
@@ -173,12 +173,12 @@
                                 </p>
                             </div>
                         </div>
-                        <a class="border-2 p-3 rounded-md text-gray-500 hover:text-gray-700"
+                        <a class="border-2 p-3 rounded-md text-gray-500 hover:text-gray-700 text-center"
                             href="{% url 'profile-edit' %}">Editar Perfil</a>
                     </div>
                     <div class="border-t border-gray-200">
-                        <dl>
-                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dl class="">
+                            <div class="flex items-center justify-between bg-gray-50 p-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500 flex items-center">
                                     <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -198,8 +198,7 @@
                                 </dd>
                                 {% endif %}
                             </div>
-                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-
+                            <div class="bg-white p-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500 flex items-center">
                                     <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -209,11 +208,11 @@
                                     </svg>
                                     Correo electrónico
                                 </dt>
-                                <dd class="flex justify-between mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                <dd class="flex flex-col md:flex-row md:items-center gap-4 mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                     <p id="email-address" class="m-0">
                                         {% if user.email %}{{ user.email }}{% else %}No Email{% endif %}
                                     </p>
-                                    <div class="space-x-4">
+                                    <div class="flex md:block space-x-4">
                                         <a href="{% url 'profile-emailverify' %}"
                                             class="font-medium text-blue-600 hover:underline">
                                             {% if not user.emailaddress_set.first.verified %}Verifica{% endif %}
@@ -227,7 +226,7 @@
                                     </div>
                                 </dd>
                             </div>
-                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <div class="flex items-center justify-between bg-gray-50 p-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500 flex items-center">
                                     <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -247,7 +246,7 @@
                                 </dd>
                                 {% endif %}
                             </div>
-                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            <div class="flex items-center justify-between bg-white p-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500 flex items-center">
                                     <svg class="h-5 w-5 text-gray-400 mr-2" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
