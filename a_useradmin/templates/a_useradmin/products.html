@@ -5,7 +5,7 @@
 {% block content %}
 <div class="flex min-h-screen bg-gray-50">
     <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-sm">
+    <div class="hidden md:block w-64 bg-white shadow-sm">
         <div class="px-4 py-6">
             <div class="flex items-center gap-4 ">
                 <img src="{% static 'images/logo-black.svg' %}" alt="E-commerce" class="h-8">
@@ -35,30 +35,30 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 p-8">
-        <div class="flex justify-between items-center mb-8">
-            <div>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="sm:flex sm:items-center sm:justify-between mb-8">
+            <div class="mb-4 sm:mb-0">
                 <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
                 <p class="text-sm text-gray-500">Gestiona todos tus productos desde aquí</p>
             </div>
-            <a href="" class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
+            <a href="{% url 'add-product' %}" class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out">
                 Crear Producto
             </a>
         </div>
-
-        <main class="flex-1 p-6">
-            <div class="flex items-center gap-4 mb-6">
-                <select id="status-filter" class="border rounded px-2 py-1">
+    
+        <main>
+            <div class="mb-6">
+                <select id="status-filter" class="w-full sm:w-auto border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">Todos los Estados</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
                 </select>
             </div>
-
+    
             <div class="space-y-4">
                 {% for product in all_products %}
-                <div class="flex items-center justify-between rounded-lg border p-4 bg-white">
-                    <div class="flex items-center gap-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4 bg-white">
+                    <div class="flex items-center gap-4 mb-4 sm:mb-0">
                         <img src="{{ product.image.url }}" alt="{{ product.name }}"
                             class="w-20 h-20 object-cover rounded-lg">
                         <div>
@@ -66,20 +66,26 @@
                             <p class="text-sm text-gray-500">$ {{ product.price|formato_precio }}</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-40">
-                        {% if product.status == True %}
-                        <span class="p-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Activo</span>
-                        {% else %}
-                        <span class="p-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Inactivo</span>
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
+                        {% if product.product_status == 'published' %}
+                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Publicado</span>
+                        {% elif product.product_status == 'draft' %}
+                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Borrador</span>
+                        {% elif product.product_status == 'disabled' %}
+                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inhabilitado</span>
+                        {% elif product.product_status == 'rejected' %}
+                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rechazado</span>
+                        {% elif product.product_status == 'in_review' %}
+                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">En revisión</span>
                         {% endif %}
                         <span class="text-sm text-gray-500">{{ product.date|date:'d M, Y' }}</span>
-                        <div class="space-x-3">
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm">
-                                Edit
-                            </button>
-                            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm">
-                                Delete
-                            </button>
+                        <div class="flex gap-2">
+                            <a href="{% url 'edit-product' product.pid %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm transition duration-300 ease-in-out">
+                                Editar
+                            </a>
+                            <a href="{% url 'delete-product' product.pid %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm transition duration-300 ease-in-out">
+                                Eliminar
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -87,5 +93,7 @@
             </div>
         </main>
     </div>
+
+    
 </div>
 {% endblock %}

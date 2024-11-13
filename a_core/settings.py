@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     # Apps
     'a_store',
     'a_users',
+    'a_useradmin',
 ]
 
 SITE_ID = 1

@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.contrib.auth.decorators import user_passes_test
 from allauth.account.utils import send_email_confirmation
 from django.contrib.auth.decorators import login_required
 from allauth.account.views import LoginView
@@ -11,29 +10,27 @@ from django.contrib import messages
 from a_store.models import *
 from .forms import *
 import json
-from django.db.models import Sum
-import datetime
 
 
 # Create your views here.
 
 
 
-def profile_view(request, username=None):
-    if username:
-        profile = get_object_or_404(User, username=username).profile
-    else:
-        try:
-            profile = request.user.profile
-        except:
-            return redirect_to_login(request.get_full_path())
+# def profile_view(request, username=None):
+#     if username:
+#         profile = get_object_or_404(User, username=username).profile
+#     else:
+#         try:
+#             profile = request.user.profile
+#         except:
+#             return redirect_to_login(request.get_full_path())
         
     
-    context = {
-        'profile': profile
-    }
+#     context = {
+#         'profile': profile
+#     }
         
-    return render(request, 'a_users/profile.html', context)
+#     return render(request, 'a_users/profile.html', context)
     
     
 @login_required
@@ -127,52 +124,3 @@ def profile_delete_view(request):
     
     
     return render(request, 'a_users/profile_delete.html')
-
-
-
-# USERADMIN
-
-
-def admin_required(user):
-    return user.is_superuser
-
-@user_passes_test(admin_required)
-def dashboard(request):
-    revenue = CartOrder.objects.aggregate(price=Sum('price'))
-    total_orders_count = CartOrder.objects.all()
-    all_products = Product.objects.all()
-    all_categories = Category.objects.all()
-    new_customers = User.objects.all().order_by('-id')
-    latest_orders = CartOrder.objects.all()
-    
-    this_month = datetime.datetime.now().month
-    
-    monthly_revenue = CartOrder.objects.filter(order_date__month=this_month).aggregate(price=Sum('price'))
-    
-    context = {
-    'revenue': revenue,
-    'total_orders_count': total_orders_count,
-    'all_products': all_products,
-    'all_categories': all_categories,
-    'new_customers': new_customers,
-    'latest_orders': latest_orders,
-    'this_month': this_month,
-    'monthly_revenue': monthly_revenue,
-    }
-    
-    return render(request, 'a_users/dashboard.html', context)
-
-
-
-@user_passes_test(admin_required)
-def products(request):
-    all_products = Product.objects.all()
-    all_categories = Category.objects.all()
-    
-    context = {
-    'all_products': all_products,
-    'all_categories': all_categories,
-    }
-    
-    return render(request, 'a_users/products.html', context)
-    

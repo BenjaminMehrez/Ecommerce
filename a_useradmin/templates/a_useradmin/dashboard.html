@@ -7,14 +7,14 @@
 
 <div class="flex min-h-screen bg-gray-50">
     <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-sm">
+    <div class="hidden md:block w-64 bg-white shadow-sm">
         <div class="px-4 py-6">
             <div class="flex items-center gap-4 ">
                 <img src="{% static 'images/logo-black.svg' %}" alt="E-commerce" class="h-8">
                 <h2 class="flex mt-2">E-commerce</h2>
             </div>
             <nav class="mt-6 space-y-2">
-                <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
+                <a href="#" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
@@ -38,9 +38,6 @@
                 <h1 class="text-2xl font-semibold text-gray-900">Panel</h1>
                 <p class="text-sm text-gray-500">Todos los datos sobre tu negocio aquí</p>
             </div>
-            <a href="" class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-                Crear Producto
-            </a>
         </div>
 
         <!-- Metrics Grid -->
@@ -117,7 +114,7 @@
         <!-- Recent Orders -->
         <div class="bg-white rounded-lg shadow-sm">
             <div class="p-6">
-                <h2 class="text-lg font-semibold text-gray-900">Recent Orders</h2>
+                <h2 class="text-lg font-semibold text-gray-900">Ordenes Reciente</h2>
                 <div class="mt-4">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
@@ -155,7 +152,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <a href="#" class="text-green-600 hover:text-green-900">View details</a>
+                                    <a href="{% url 'order-detail' order.id %}" class="text-green-600 hover:text-green-900">Ver datalles</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -165,6 +162,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 

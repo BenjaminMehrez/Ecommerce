@@ -11,17 +11,17 @@ if settings.ENVIRONMENT == 'production':
     
 
 STATUS_CHOICE = (
-    ("processing", "Processing"),
-    ("shipped", "Shipped"),
-    ("delivered", "Delivered"),
+    ("processing", "Procesando"),
+    ("shipped", "Enviado"),
+    ("delivered", "Entregado"),
 )
 
 STATUS = (
-    ("draft", "Draft"),
-    ("disabled", "Disabled"),
-    ("rejected", "Rejected"),
-    ("in_review", "In Review"),
-    ("published", "Published"),
+    ("draft", "Borrador"),
+    ("disabled", "Inhabilitado"),
+    ("rejected", "Rechazado"),
+    ("in_review", "En revisión"),
+    ("published", "Publicado"),
 )
 
 
@@ -147,9 +147,9 @@ class Product(models.Model):
         return self.title
     
     def get_precentage(self):
-        new_price = (self.price / self.old_price) * 100
+        new_price = ((self.old_price - self.price) / self.old_price) * 100
         return new_price
-    
+
     
 class ProductImages(models.Model):
     if settings.ENVIRONMENT == 'production':

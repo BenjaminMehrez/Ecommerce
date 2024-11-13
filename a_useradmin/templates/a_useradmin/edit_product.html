@@ -1,0 +1,156 @@
+{% extends 'layouts/blank.html' %}
+{% load price_filters %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="flex bg-gray-50 ">
+    <!-- Sidebar -->
+    <div class="hidden md:block  w-64 bg-white shadow-sm">
+        <div class="px-4 py-6">
+            <div class="flex items-center gap-4 ">
+                <img src="{% static 'images/logo-black.svg' %}" alt="E-commerce" class="h-8">
+                <h2 class="flex mt-2">E-commerce</h2>
+            </div>
+            <nav class="mt-6 space-y-2">
+                <a href="{% url 'dashboard-admin' %}"
+                    class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    Panel
+                </a>
+                <a href="{% url 'products' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    Productos
+                </a>
+                <!-- Add other navigation items similarly -->
+            </nav>
+        </div>
+    </div>
+
+    <div class="min-w-2/5 mx-auto lg:ml-40 mt-14 mb-20 p-6 bg-white shadow-lg rounded-lg">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">Editar Producto</h1>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label for="{{ form.category.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.category.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="{{ form.product_status.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Estado del Producto</label>
+                    {{ form.product_status }}
+                    {% if form.product_status.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.product_status.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+    
+                <div>
+                    <label for="{{ form.vendor.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Vendedor</label>
+                    {{ form.vendor }}
+                    {% if form.vendor.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.vendor.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div>
+                <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.title.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+    
+            <div>
+                <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.description.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+    
+            <div>
+                <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Imagen</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.image.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+    
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="{{ form.price.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
+                    {{ form.price }}
+                    {% if form.price.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.price.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="{{ form.old_price.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Precio viejo</label>
+                    {{ form.old_price }}
+                    {% if form.old_price.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.old_price.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div>
+                <label for="{{ form.stock.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+                {{ form.stock }}
+                {% if form.stock.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.stock.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+    
+            <div>
+                <label for="{{ form.specifications.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Especificaciones</label>
+                {{ form.specifications }}
+                {% if form.specifications.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.specifications.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+    
+            <div>
+                <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Etiquetas</label>
+                {{ form.tags }}
+                {% if form.tags.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.tags.errors|join:", " }}</p>
+                {% endif %}
+            </div>
+    
+            <div class="flex items-center">
+                <label for="{{ form.featured.id_for_label }}" class="mr-2 block text-sm font-medium text-gray-700">Presentado</label>
+                {% if form.featured.errors %}
+                <p class="text-red-500 text-xs ml-2">{{ form.featured.errors|join:", " }}</p>
+                {% endif %}
+                {{ form.featured }}
+            </div>
+            
+            <div class="pt-6">
+                <button
+                    class="w-full md:w-auto px-6 py-3 bg-blue-600 text-white font-medium text-sm rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+                    Actualizar Producto
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
