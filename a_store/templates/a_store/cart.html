@@ -105,17 +105,17 @@
                     </div>
                     <div class="space-y-2">
                         <label for="number" class="block text-sm font-medium text-gray-700">Número:</label>
-                        <input type="text" id="number" name="number" placeholder="3323" required value="{{ address.number }}"
+                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="number" name="number" placeholder="3323" required value="{{ address.number }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                     <div class="space-y-2">
                         <label for="level" class="block text-sm font-medium text-gray-700">Piso:</label>
-                        <input type="text" id="level" name="level" placeholder="5" value="{{ address.level }}" 
+                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="level" name="level" placeholder="5" value="{{ address.level }}" 
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                     <div class="space-y-2">
                         <label for="departament" class="block text-sm font-medium text-gray-700">Departamento:</label>
-                        <input type="text" id="departament" name="departament" placeholder="41" value="{{ address.departament }}" 
+                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="departament" name="departament" placeholder="41" value="{{ address.departament }}" 
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                     <div class="space-y-2">
@@ -135,7 +135,7 @@
                     </div>
                     <div class="space-y-2">
                         <label for="mobile" class="block text-sm font-medium text-gray-700">Celular:</label>
-                        <input type="text" id="mobile" name="mobile" placeholder="23198321" required value="{{ address.mobile }}"
+                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="mobile" name="mobile" placeholder="23198321" required value="{{ address.mobile }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                 </div>

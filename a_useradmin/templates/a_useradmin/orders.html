@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="flex min-h-screen bg-gray-50">
-    <!-- Sidebar -->
+
     <div class="hidden md:block w-64 bg-white shadow-sm">
         <div class="px-4 py-6">
             <div class="flex items-center gap-4 ">
@@ -14,7 +14,7 @@
                 <h2 class="flex mt-2">E-commerce</h2>
             </div>
             <nav class="mt-6 space-y-2">
-                <a href="" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
+                <a href="{% url 'dashboard-admin' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
@@ -24,7 +24,7 @@
                     <img class="w-5 h-5 mr-3" src="{% static 'images/logo-black.svg' %}" alt="">
                     Productos
                 </a>
-                <a href="{% url 'orders' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                <a href="" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
                     <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -46,90 +46,44 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex justify-between items-center mb-8">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
             <div>
-                <h1 class="text-2xl font-semibold text-gray-900">Panel</h1>
-                <p class="text-sm text-gray-500">Todos los datos sobre tu negocio aquí</p>
+                <h1 class="text-2xl font-semibold text-gray-900">Lista de Ordenes</h1>
+                <p class="text-sm text-gray-500">Gestiona todos tus pedidos desde aquí</p>
             </div>
-        </div>
-
-        <!-- Metrics Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <!-- Revenue Card -->
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <div class="flex items-center">
-                    <div class="p-2 bg-green-50 rounded-full">
-                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Ganancia</p>
-                        {% if revenue.price == 0 %}
-                        <p class="text-lg font-semibold text-gray-900">$ 0</p>
-                        {% else %}
-                        <p class="text-lg font-semibold text-gray-900">$ {{ revenue.price|formato_precio }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Orders Card -->
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <div class="flex items-center">
-                    <div class="p-2 bg-blue-50 rounded-full">
-                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Ordenes</p>
-                        <p class="text-lg font-semibold text-gray-900">{{ total_orders_count.count }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Products Card -->
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <div class="flex items-center">
-                    <div class="p-2 bg-orange-50 rounded-full">
-                        <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Productos</p>
-                        <p class="text-lg font-semibold text-gray-900">{{ all_products.count }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Monthly Earning Card -->
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <div class="flex items-center">
-                    <div class="p-2 bg-purple-50 rounded-full">
-                        <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <div class="ml-4">
-                        <p class="text-sm font-medium text-gray-500">Ganancias mensuales</p>
-                        {% if monthly_revenue.price == 0 %}
-                        <p class="text-lg font-semibold text-gray-900">$ 0</p>
-                        {% else %}
-                        <p class="text-lg font-semibold text-gray-900">$ {{ monthly_revenue.price|formato_precio }}</p>
-                        {% endif %}
-                    </div>
+            <div class="mt-4 sm:mt-0">
+                <div class="relative">
+                    <input type="text" placeholder="Search order ID" class="pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
             </div>
         </div>
-
-        <!-- Recent Orders -->
+    
+        <!-- Filters -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <div class="w-full sm:w-64">
+                <input type="text" placeholder="Search..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+            <div class="flex gap-4 w-full sm:w-auto">
+                <select class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>Status</option>
+                    <option>Pending</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                </select>
+                <select class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option>Show 20</option>
+                    <option>Show 50</option>
+                    <option>Show 100</option>
+                </select>
+            </div>
+        </div>
+    
+        <!-- Table -->
         <div class="bg-white rounded-lg shadow-sm">
             <div class="p-6">
-                <h2 class="text-lg font-semibold text-gray-900">Ordenes Reciente</h2>
+                <h2 class="text-lg font-semibold text-gray-900">Ordenes</h2>
                 <div class="mt-4">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
@@ -146,7 +100,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            {% for order in latest_orders %}
+                            {% for order in orders %}
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.sku }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.first_name}}</td>

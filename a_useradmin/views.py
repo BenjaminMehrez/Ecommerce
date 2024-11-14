@@ -114,3 +114,24 @@ def delete_product(request, pid):
     
     
     return render(request, 'a_useradmin/delete_product.html', {'product': product})
+
+
+@user_passes_test(admin_required)
+def orders(request):
+    orders = CartOrder.objects.all()
+    context = {
+        'orders': orders
+    }
+    
+    return render(request, 'a_useradmin/orders.html', context)
+
+
+def order_detail(request, id):
+    order = CartOrder.objects.get(id=id)
+    order_items = CartOrderItems.objects.filter(order=order)
+    context = {
+        'order_items': order_items,
+        'order': order
+    }
+    
+    return render(request, 'a_useradmin/order_detail.html', context)

@@ -20,7 +20,7 @@ from django.core import serializers
 
 
 def home(request):
-    products = Product.objects.filter(product_status='published', featured=True)
+    products = Product.objects.filter(product_status='publicado', featured=True)
 
     context = {
         'products': products
@@ -30,7 +30,7 @@ def home(request):
 
 
 def product_list_view(request):
-    products = Product.objects.filter(product_status='published')
+    products = Product.objects.filter(product_status='publicado')
 
     context = {
         'products': products
@@ -51,7 +51,7 @@ def category_list_view(request):
 
 def category_product_list_view(request, cid):
     category = Category.objects.get(cid=cid)
-    products = Product.objects.filter(product_status='published', category=category)
+    products = Product.objects.filter(product_status='publicado', category=category)
     
     context = {
         'category': category,
@@ -72,7 +72,7 @@ def vendor_list_view(request):
 
 def vendor_detail_view(request, vid):
     vendor = Vendor.objects.get(vid=vid)
-    products = Product.objects.filter(vendor=vendor, product_status='published')
+    products = Product.objects.filter(vendor=vendor, product_status='publicado')
 
     context = {
         'vendor': vendor,
@@ -112,7 +112,7 @@ def product_detail_view(request, pid):
 
 
 def tag_list_view(request, tag_slug=None):
-    products = Product.objects.filter(product_status='published').order_by('-id')
+    products = Product.objects.filter(product_status='publicado').order_by('-id')
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
@@ -148,7 +148,7 @@ def filter_product(request):
     min_price = request.GET['min_price']
     max_price = request.GET['max_price']
     
-    products = Product.objects.filter(product_status='published').order_by('-id').distinct()
+    products = Product.objects.filter(product_status='publicado').order_by('-id').distinct()
     
     
     products = products.filter(price__gte=min_price)
@@ -322,7 +322,7 @@ def save_checkout_info(request):
                 )
             
         return redirect('checkout', order.oid)       
-    return redirect('checkout', order.oid)       
+    return redirect('cart')       
 
 
 

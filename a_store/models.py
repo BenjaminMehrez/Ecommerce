@@ -11,17 +11,17 @@ if settings.ENVIRONMENT == 'production':
     
 
 STATUS_CHOICE = (
-    ("processing", "Procesando"),
-    ("shipped", "Enviado"),
-    ("delivered", "Entregado"),
+    ("procesando", "Procesando"),
+    ("enviado", "Enviado"),
+    ("entregado", "Entregado"),
 )
 
 STATUS = (
-    ("draft", "Borrador"),
-    ("disabled", "Inhabilitado"),
-    ("rejected", "Rechazado"),
-    ("in_review", "En revisión"),
-    ("published", "Publicado"),
+    ("borrador", "Borrador"),
+    ("inhabilitado", "Inhabilitado"),
+    ("rechazado", "Rechazado"),
+    ("en_revisión", "En revisión"),
+    ("publicado", "Publicado"),
 )
 
 
@@ -121,7 +121,7 @@ class Product(models.Model):
     tags = TaggableManager(blank=True)
     # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
     
-    product_status = models.CharField(choices=STATUS, max_length=10, default='in_review')
+    product_status = models.CharField(choices=STATUS, max_length=20, default='en_revisión')
     stock = models.PositiveIntegerField(default='8')
 
     status = models.BooleanField(default=True)
@@ -196,7 +196,7 @@ class CartOrder(models.Model):
     
     paid_status = models.BooleanField(default=False)
     order_date = models.DateTimeField(auto_now_add=True)
-    product_status = models.CharField(choices=STATUS_CHOICE, max_length=30, default='processing')
+    product_status = models.CharField(choices=STATUS_CHOICE, max_length=30, default='procesando')
     sku = ShortUUIDField(null=True, blank=True, unique=True, length=5, max_length=20, prefix='SKU', alphabet='1234567890')
     oid = ShortUUIDField(null=True, blank=True, unique=True, length=5, max_length=20, alphabet='1234567890')
     

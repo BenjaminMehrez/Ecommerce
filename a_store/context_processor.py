@@ -15,7 +15,7 @@ def default(request):
         wishlist =  0
           
     try:
-        address = Address.objects.get(user=request.user)
+        address = Address.objects.get(user=request.user, status=True)
     except:
         address = None
     
