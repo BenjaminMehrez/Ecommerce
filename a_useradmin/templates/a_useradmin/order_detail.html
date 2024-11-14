@@ -63,16 +63,18 @@
             </div>
 
             <!-- Status and Save Button -->
-            <div class="mb-8 flex justify-end space-x-4">
+            <form method="POST" action="{% url 'change-order-status' order.oid %}" class="mb-8 flex justify-end space-x-4">
+                {% csrf_token %}
                 <select name="status" class="rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                    <option value="procesando" {% if order.status == 'procesando' %}selected{% endif %}>Procesando</option>
-                    <option value="enviado" {% if order.status == 'enviado' %}selected{% endif %}>Enviado</option>
-                    <option value="entregado" {% if order.status == 'entregado' %}selected{% endif %}>Entregado</option>
+                    <option value="procesando">Cambiar Estado</option>
+                    <option value="procesando">Procesando</option>
+                    <option value="enviado">Enviado</option>
+                    <option value="entregado">Entregado</option>
                 </select>
                 <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
                     Guardar
                 </button>
-            </div>
+            </form>
 
             <!-- Info Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

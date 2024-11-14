@@ -2,6 +2,7 @@ from django.db.models import Sum
 import datetime
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from a_store.models import *
 from .forms import *
 from django.contrib import messages
@@ -126,6 +127,7 @@ def orders(request):
     return render(request, 'a_useradmin/orders.html', context)
 
 
+@user_passes_test(admin_required)
 def order_detail(request, id):
     order = CartOrder.objects.get(id=id)
     order_items = CartOrderItems.objects.filter(order=order)
@@ -135,3 +137,19 @@ def order_detail(request, id):
     }
     
     return render(request, 'a_useradmin/order_detail.html', context)
+
+
+
+@user_passes_test(admin_required)
+def change_order_status(request, oid):
+    order = CartOrder.objects.get(oid=oid)
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        order.product_status = status
+        order.save()
+        messages.success(request, f'El estado de orden fue cambiado a {status}')
+        
+    return redirect('order-detail', order.id)
+
+
+
