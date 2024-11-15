@@ -6,14 +6,16 @@
 <section class="container mx-auto px-4 py-12 md:py-24">
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {% for product in products %}
-        <article
-            class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0"
-            _="on load transition my opacity to 1 over 0.3 seconds">
+        <article class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
             {% if product.image %}
             <a href="{% url 'product-detail' product.pid %}">
                 <div class="aspect-square overflow-hidden">
-                    <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
+                    {% if product.old_price %}
+                    <span class="absolute bg-white text-gray-900 text-md font-semibold m-3 p-3 rounded border-gray-600">
+                        -{{ product.get_precentage|floatformat:0 }}%
+                    </span>
+                    {% endif %}
+                    <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
                 </div>
             </a>
             {% endif %}
@@ -33,10 +35,6 @@
                             {% if product.old_price %}
                             <div class="flex items-center gap-2">
                                 <span class="text-sm text-gray-500 line-through">$ {{ product.old_price|formato_precio }}</span>
-                                <span
-                                    class="inline-block bg-red-100 rounded-full px-2 py-1 text-xs font-semibold text-red-600">
-                                    -{{ product.get_precentage|floatformat:0 }}%
-                                </span>
                             </div>
                             {% endif %}
                         </div>

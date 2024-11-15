@@ -15,10 +15,10 @@
                 <!-- Main Image Display -->
                 <div class="carousel-main relative w-full overflow-hidden rounded-lg">
                     {% if product.old_price %}
-                    <span class="absolute bg-red-200 text-red-900 text-sm font-semibold m-3 p-3 rounded-md">-{{product.get_precentage|floatformat:0 }}%</span>
+                    <span class="absolute bg-white text-gray-900 text-md font-semibold m-3 p-3 rounded border-gray-600">-{{product.get_precentage|floatformat:0 }}%</span>
                     {% endif %}
                     <img id="main-image" src="{{ product.image.url }}" alt="Imagen principal del producto" 
-                        class="object-cover w-full h-full transition-opacity duration-300">
+                        class="object-cover w-full h-full transition-transform duration-300 hover:scale-150">
                 </div>
             
                 <!-- Thumbnail Navigation -->
