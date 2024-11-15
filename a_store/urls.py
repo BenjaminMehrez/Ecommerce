@@ -28,6 +28,9 @@ urlpatterns = [
     # Tags
     path('products/tag/<slug:tag_slug>/', tag_list_view, name='tags'),
     
+    # Reviews
+    path('ajax-add-review/<int:pid>/', ajax_add_review, name='ajax-add-review'),
+    
     # Search
     path('search/', search_view, name='search'),
     

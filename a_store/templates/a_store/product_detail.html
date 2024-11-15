@@ -50,9 +50,11 @@
                 <div class="flex justify-between">
                     <h1 class="text-3xl font-bold">{{ product.title }}</h1>
                     {% if product.id in wishlist_product_ids %}
-                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img src="{% static 'images/heart-black.svg' %}" alt="wishlist"></button>
+                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img
+                            src="{% static 'images/heart-black.svg' %}" alt="wishlist"></button>
                     {% else%}
-                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img src="{% static 'images/heart.svg' %}" alt="wishlist"></button>
+                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img
+                            src="{% static 'images/heart.svg' %}" alt="wishlist"></button>
                     {% endif %}
                 </div>
                 <p class="text-gray-600">SKU: {{ product.sku }}</p>
@@ -64,31 +66,114 @@
                     <span class="font-semibold">Categorias:</span>
                     {% for tag in product.tags.all %}
                     <a href="{% url 'tags' tag.slug %}"
-                        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 hover:bg-blue-500 hover:text-white transition duration-200">#{{tag.name }}</a>
+                        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 hover:bg-blue-500 hover:text-white transition duration-200">#{{tag.name}}</a>
                     {% endfor %}
                 </div>
                 <div class="flex items-baseline space-x-4">
-                    <span class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
+                    <span
+                        class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">$
+                        {{ product.price|formato_precio }}</span>
                     {% if product.old_price %}
                     <span class="text-xl text-gray-500 line-through">$ {{ product.old_price|formato_precio }}</span>
-                    <span class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
+                    <span
+                        class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
                     {% endif %}
                 </div>
-                <input type="number" inputmode="numeric" pattern="[0-9]*" value="1" id="product-quantity" class="w-20 mb-10 product-quantity-{{ product.id }}">
+                <input type="number" inputmode="numeric" pattern="[0-9]*" value="1" id="product-quantity"
+                    class="w-20 mb-10 product-quantity-{{ product.id }}">
                 <div>
                     <!-- <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16"> -->
                     <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
                     <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
                     <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
                     <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
-                    <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+                    <div id="error-notification"
+                        class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg"
+                        role="alert">
                         <strong class="font-bold">Error:</strong>
                         <span class="block sm:inline">Producto ya agregado</span>
                     </div>
                     <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar a Carrito</button>
+                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar
+                        a Carrito</button>
                 </div>
             </div>
+
+            <div class="comment-list">
+                <h4 class="text-lg font-semibold mb-4">Comentarios ({{ reviews.count }})</h4>
+
+                <div class="flex items-center mb-6">
+                    <div class="text-yellow-400 text-2xl">
+                        <!-- Generar estrellas llenas y vacías según el promedio -->
+                        {% for i in "12345" %}
+                            {% if i <= average_rating.rating|floatformat:0 %}
+                                &#9733; <!-- Estrella llena -->
+                            {% else %}
+                                &#9734; <!-- Estrella vacía -->
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="ml-2 text-gray-700 text-lg">{{ average_rating.rating|floatformat:1 }} de 5.0</span>
+                </div>
+
+                {% if reviews.exists %}
+                <div class="comment-list2">
+                    {% for r in reviews %}
+                    <div class="single-comment flex justify-between mb-8 p-4 bg-gray-100 rounded-lg shadow-sm transition">
+                        <div class="user flex items-center space-x-4">
+                            <div class="thumb">
+                                <img src="{{ request.user.profile.image.url }}" alt="Avatar de {{ r.user.username }}" class="w-12 h-12 object-cover rounded-full" />
+                            </div>
+                            <span class="font-semibold text-brand hover:underline">
+                                {{ r.user.username|title }}
+                            </span>
+                        </div>
+                        <div class="desc">
+                            <div class="flex items-center mb-2 space-x-4">
+                                <span class="text-xs text-gray-500">{{ r.date|date:"d M, Y" }}</span>
+                            </div>
+                            <p class="mt-4 mb-4 text-gray-700">{{ r.review }}</p>
+                            <div class="text-yellow-400 text-xl">
+                                {% for star in "12345" %}
+                                    {% if forloop.counter <= r.rating %}
+                                        &#9733; <!-- Estrella llena -->
+                                    {% else %}
+                                        &#9734;  <!-- Estrella vacía -->
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="comment-list2">
+                </div>
+                <p class="text-gray-500 mt-4" id="hide-text">No hay comentarios aún. Sé el primero en comentar.</p>
+                {% endif %}
+            </div>
+            <div id="success-notification"
+                class="hidden fixed top-20 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg"
+                role="alert">
+                <span class="block sm:inline">Comentario Agregado</span>
+            </div>
+            {% if request.user.is_authenticated %}
+            {% if make_review %}
+            <form class="hide-form" method="POST" action="{% url 'ajax-add-review' product.id %}" id="commentForm">
+                {% csrf_token %}
+                <label>
+                    Comentario
+                    {{ review_form.review }}
+                </label>
+                <div>
+                    Calificar
+                    {{ review_form.rating }}
+                </div>
+                <button class="p-2">Enviar</button>
+            </form>
+            {% endif %}
+            {% endif %}
+
         </div>
 
     </div>
@@ -118,121 +203,177 @@
 
 <script>
 
-$(document).ready(function() {
-    
-
-    // ADD PRODUCT TO CART
-
-    $(".add-to-cart-btn").on("click", function () {
-
-        let this_val = $(this)
-        let index = this_val.attr('data-index')
-
-        let quantity = $('.product-quantity-' + index).val()
-        let product_title = $('.product-title-' + index).val()
-
-        let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
-
-        let product_pid = $('.product-pid-' + index).val()
-        let product_image = $('.product-image-' + index).val()
-
-        console.log('Quantity:', quantity);
-        console.log('Title:', product_title);
-        console.log('price:', product_price);
-        console.log('id:', product_id);
-        console.log('Pid:', product_pid);
-        console.log('Image:', product_image);
-        console.log('Index:', index);
-        console.log('Current Element:', this_val);
+    $(document).ready(function () {
 
 
-        $.ajax({
-            url: '/add-to-cart',
-            data: {
-                'id': product_id,
-                'pid': product_pid,
-                'image': product_image,
-                'qty': quantity,
-                'title': product_title,
-                'price': product_price
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                console.log('Product adding');
+        // ADD PRODUCT TO CART
 
-            },
+        $(".add-to-cart-btn").on("click", function () {
 
-            success: function(res) {
-                this_val.html('Producto agregado')
+            let this_val = $(this)
+            let index = this_val.attr('data-index')
 
-                console.log('Producto agreagdo al cart');
-                $('.cart-items-count').text(res.totalcartitems)
+            let quantity = $('.product-quantity-' + index).val()
+            let product_title = $('.product-title-' + index).val()
 
-            },
-            
-            error: function() {
-                // Selecciona la notificación de error
-                const errorNotification = $('#error-notification');
-                
-                // Muestra la notificación con un efecto fade-in
-                errorNotification.fadeIn();
+            let product_id = $('.product-id-' + index).val()
+            let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
 
-                // Desaparece la notificación después de 3 segundos
-                setTimeout(function() {
-                    errorNotification.fadeOut();
-                }, 3000);
-            }
+            let product_pid = $('.product-pid-' + index).val()
+            let product_image = $('.product-image-' + index).val()
 
-        })
-    })
+            // console.log('Quantity:', quantity);
+            // console.log('Title:', product_title);
+            // console.log('price:', product_price);
+            // console.log('id:', product_id);
+            // console.log('Pid:', product_pid);
+            // console.log('Image:', product_image);
+            // console.log('Index:', index);
+            // console.log('Current Element:', this_val);
 
 
-    // ADD PRODUCT TO WISHLIST
+            $.ajax({
+                url: '/add-to-cart',
+                data: {
+                    'id': product_id,
+                    'pid': product_pid,
+                    'image': product_image,
+                    'qty': quantity,
+                    'title': product_title,
+                    'price': product_price
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log('Product adding');
 
-    $(document).on('click', '.add-to-wishlist', function() {
-        let product_id = $(this).attr('data-product-item')
-        let this_val = $(this)
+                },
 
-        console.log('id:', product_id);
-        console.log('this:', this_val);
+                success: function (res) {
+                    this_val.html('Producto agregado')
 
+                    console.log('Producto agreagdo al cart');
+                    $('.cart-items-count').text(res.totalcartitems)
 
-        $.ajax({
-            url: '/add-to-wishlist',
-            data: {
-                'id': product_id,
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                console.log('agregando....');
-                
-            },
-            
-            success: function(response) {
-                this_val.html('<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M16.5 3c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"></path> </g> </g></svg>')
-                if (response.bool === true){
-                    location.reload()
+                },
+
+                error: function () {
+                    // Selecciona la notificación de error
+                    const errorNotification = $('#error-notification');
+
+                    // Muestra la notificación con un efecto fade-in
+                    errorNotification.fadeIn();
+
+                    // Desaparece la notificación después de 3 segundos
+                    setTimeout(function () {
+                        errorNotification.fadeOut();
+                    }, 3000);
                 }
-                
-            },
 
-            error: function() {
-                window.location.href = "{% url 'account_login' %}"
-            }
+            })
         })
-        
 
+
+        // ADD PRODUCT TO WISHLIST
+
+        $(document).on('click', '.add-to-wishlist', function () {
+            let product_id = $(this).attr('data-product-item')
+            let this_val = $(this)
+
+            // console.log('id:', product_id);
+            // console.log('this:', this_val);
+
+
+            $.ajax({
+                url: '/add-to-wishlist',
+                data: {
+                    'id': product_id,
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log('agregando....');
+
+                },
+
+                success: function (response) {
+                    this_val.html('<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="0" fill="none" width="24" height="24"></rect> <g> <path d="M16.5 3c-1.862 0-3.505.928-4.5 2.344C11.005 3.928 9.362 3 7.5 3 4.462 3 2 5.462 2 8.5c0 5.72 6.5 10.438 10 12.85 3.5-2.412 10-7.13 10-12.85C22 5.462 19.538 3 16.5 3z"></path> </g> </g></svg>')
+                    if (response.bool === true) {
+                        location.reload()
+                    }
+
+                },
+
+                error: function () {
+                    window.location.href = "{% url 'account_login' %}"
+                }
+            })
+
+
+
+        })
+
+
+        const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'];
+
+        // ADD COMMENT
+
+        $('#commentForm').submit(function (e) {
+            e.preventDefault()
+
+            let dt = new Date()
+            let time = dt.getDate() + " " + monthNames[dt.getUTCMonth()] + ', ' + dt.getFullYear()
+            
+            $.ajax({
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                method: $(this).attr('method'),
+                dataType: 'json',
+
+                success: async function (res) {
+
+                    if (res.bool == true) {
+
+                        const errorNotification = $('#success-notification');
+                        $('.hide-form').hide()
+                        $('#hide-text').hide()
+                        errorNotification.fadeIn();
+
+                        await setTimeout(function () {
+                            errorNotification.fadeOut();
+                        }, 3000);
+
+                        let _html = '<div class="single-comment flex justify-between mb-8 p-4 bg-gray-100 rounded-lg shadow-sm">'
+                        _html +=        '<div class="user flex items-center space-x-4">'
+                        _html +=            '<div class="thumb">'
+                        _html +=                '<img src="https://www.svgrepo.com/show/442075/avatar-default-symbolic.svg" class="w-12 h-12 object-cover rounded-full"/>'
+                        _html +=            '</div>'
+                        _html +=            '<span class="font-semibold text-brand hover:underline">' + res.context.user + ' </span>'
+                        _html +=        '</div>'
+                        _html +=        '<div class="desc">'
+                        _html +=            '<div class="flex items-center mb-2 space-x-4">'
+                        _html +=                '<span class="text-xs text-gray-500">'+ time +'</span>'
+                        _html +=            '</div>'
+                        _html +=            '<p class="mt-4 mb-4 text-gray-700">'+ res.context.review +'</p>'
+                        _html +=            '<div class="text-yellow-400 text-xl">'
+                                                for (let i = 0; i <= res.context.rating; i++) {
+                                                                _html += '&#9733'
+                                                            }
+                        _html +=            '</div>'
+                        _html +=        '</div>'
+                        _html +=    '</div>'
+
+                        $('.comment-list2').prepend(_html)
+                         
+                    }
+
+                }
+
+            })
+
+        })
 
     })
-
-})
 
 
 </script>
 
 {% endblock %}
-
-
-
-

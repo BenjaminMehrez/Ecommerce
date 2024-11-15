@@ -153,3 +153,17 @@ def change_order_status(request, oid):
 
 
 
+def shop_page(request):
+    products = Product.objects.all()
+    revenue = CartOrder.objects.aggregate(price=Sum('price'))
+    total_sales = CartOrderItems.objects.filter(order__paid_status=True).aggregate(qty=Sum("qty"))
+    
+    context = {
+        'products': products,
+        'revenue': revenue,
+        'total_sales': total_sales,
+    }
+    
+    return render(request, 'a_useradmin/shop_page.html', context)
+
+

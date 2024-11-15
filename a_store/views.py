@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 import calendar
 from django.db.models.functions import ExtractMonth
 from django.core import serializers
+from .forms import *
 
 # Create your views here.
 
@@ -85,7 +86,6 @@ def vendor_detail_view(request, vid):
 def product_detail_view(request, pid):
     product = get_object_or_404(Product, pid=pid)
     products = Product.objects.filter(category=product.category).exclude(pid=pid)
-    p_images = product.p_images.all
     
     try:
         wishlist_items = Wishlist.objects.filter(user=request.user)  # Obtener la lista de deseos del usuario actual
@@ -99,10 +99,27 @@ def product_detail_view(request, pid):
     # Getting overage review
     average_rating = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
     
+    # Product Review form
+    review_form = ProductReviewForm()
+    
+    
+    make_review = True
+    
+    if request.user.is_authenticated:
+        user_review_count = ProductReview.objects.filter(user=request.user, product=product).count()
+        
+        if user_review_count > 0:
+            make_review = False
+    
+    
+    p_images = product.p_images.all()
+    
     context = {
         'product': product,
         'p_images': p_images,
+        'review_form': review_form,
         'average_rating': average_rating,
+        'make_review': make_review,
         'reviews': reviews,
         'products': products,
         'wishlist_product_ids': wishlist_product_ids,
@@ -123,6 +140,31 @@ def tag_list_view(request, tag_slug=None):
         'tag': tag,
     }
     return render(request, 'a_store/tag.html', context)
+
+
+def ajax_add_review(request, pid):
+    product = Product.objects.get(pk=pid)
+    user = request.user
+    
+    review = ProductReview.objects.create(
+        user=user,
+        product=product,
+        review= request.POST['review'],
+        rating= request.POST['rating'],
+    )
+
+    context = {
+        'user': user.username,
+        'review': request.POST['review'],
+        'rating': request.POST['rating']
+    }
+    
+    average_reviews = ProductReview.objects.filter(product=product).aggregate(rating=Avg('rating'))
+    return JsonResponse({
+        'bool': True,
+        'context': context,
+        'average_reviews': average_reviews,
+    })
 
 
 def search_view(request):
