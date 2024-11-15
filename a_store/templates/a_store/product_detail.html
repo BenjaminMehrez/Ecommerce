@@ -133,12 +133,10 @@
                                 <span class="text-xs text-gray-500">{{ r.date|date:"d M, Y" }}</span>
                             </div>
                             <p class="mt-4 mb-4 text-gray-700">{{ r.review }}</p>
-                            <div class="text-yellow-400 text-xl">
+                            <div class="text-yellow-400 text-xl text-end">
                                 {% for star in "12345" %}
                                     {% if forloop.counter <= r.rating %}
                                         &#9733; <!-- Estrella llena -->
-                                    {% else %}
-                                        &#9734;  <!-- Estrella vacía -->
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -353,9 +351,9 @@
                         _html +=                '<span class="text-xs text-gray-500">'+ time +'</span>'
                         _html +=            '</div>'
                         _html +=            '<p class="mt-4 mb-4 text-gray-700">'+ res.context.review +'</p>'
-                        _html +=            '<div class="text-yellow-400 text-xl">'
-                                                for (let i = 0; i <= res.context.rating; i++) {
-                                                                _html += '&#9733'
+                        _html +=            '<div class="text-yellow-400 text-xl text-end">'
+                                                for (let i = 0; i < res.context.rating; i++) {
+                                                                _html += '<span class="p-0.5">&#9733</span>'
                                                             }
                         _html +=            '</div>'
                         _html +=        '</div>'

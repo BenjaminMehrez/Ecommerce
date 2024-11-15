@@ -33,8 +33,23 @@ from .models import *
         
         
 class ProductReviewForm(forms.ModelForm):
-    review = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Agrega un comentario...'}))
+    review = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Agrega un comentario...',
+            'class': 'w-full p-3 bg-gray-50 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 resize-none',
+            'rows': 4
+        }),
+        label=''
+    )
     
+    rating = forms.ChoiceField(
+        choices=[(str(i), f"{i} estrellas") for i in range(1, 6)],
+        widget=forms.Select(attrs={
+            'class': 'w-full md:w-auto p-2 bg-gray-50 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500'
+        }),
+        label='Calificación'
+    )
+
     class Meta:
         model = ProductReview
         fields = ['review', 'rating']
