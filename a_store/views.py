@@ -112,11 +112,11 @@ def product_detail_view(request, pid):
             make_review = False
     
     
-    p_images = product.p_images.all()
+    p_image = product.p_images.all()
     
     context = {
         'product': product,
-        'p_images': p_images,
+        'p_image': p_image,
         'review_form': review_form,
         'average_rating': average_rating,
         'make_review': make_review,

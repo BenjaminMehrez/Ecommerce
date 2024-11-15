@@ -6,58 +6,56 @@
 
 
 <div class="container mx-auto px-4 py-8 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
-    <div class="bg-white rounded-lg shadow-lg p-6 max-w-6xl mx-auto mb-8">
-        <div class="grid md:grid-cols-2 gap-8">
+
+    <div class="bg-white rounded-lg shadow-lg max-w-6xl mx-auto mb-8">
+        
+        <div class="grid md:grid-cols-2">
             <!-- Image Carousel -->
-            <div x-data="{ activeSlide: 0 }" class="relative">
-                <div class="overflow-hidden rounded-lg">
-                    <div class="flex transition-transform duration-300 ease-in-out"
-                        :style="{ transform: `translateX(-${activeSlide * 100}%)` }">
-                        {% for p in p_images %}
-                        <img src="{{ p.images.url }}" alt="{{ product.title }} - Image {{ forloop.counter }}"
-                            class="w-full h-96 object-cover flex-shrink-0">
-                        {% endfor %}
-                    </div>
+            <div class="product-carousel">
+                <!-- Main Image Display -->
+                <div class="carousel-main relative w-full overflow-hidden rounded-lg">
+                    {% if product.old_price %}
+                    <span class="absolute bg-red-200 text-red-900 text-sm font-semibold m-3 p-3 rounded-md">-{{product.get_precentage|floatformat:0 }}%</span>
+                    {% endif %}
+                    <img id="main-image" src="{{ product.image.url }}" alt="Imagen principal del producto" 
+                        class="object-cover w-full h-full transition-opacity duration-300">
                 </div>
-                <button
-                    @click="activeSlide = (activeSlide - 1 + {{ product.image|length }}) % {{ product.image|length }}"
-                    class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Previous image">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button @click="activeSlide = (activeSlide + 1) % {{ product.image|length }}"
-                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Next image">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke="currentColor"
-                        class="h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                    {% for p in p_images %}
-                    <button @click="activeSlide = {{ forloop.counter0 }}" class="w-3 h-3 rounded-full"
-                        :class="{ 'bg-blue-500': activeSlide === {{ forloop.counter0 }}, 'bg-gray-300': activeSlide !== {{ forloop.counter0 }} }"
-                        aria-label="Go to image {{ forloop.counter }}"></button>
+            
+                <!-- Thumbnail Navigation -->
+                <div class="carousel-thumbnails flex justify-center mt-4 gap-4 overflow-x-auto p-2 md:p-0">
+                    <!-- Main Product Thumbnail -->
+                    <div class="thumbnail cursor-pointer w-auto h-auto max-w-20 border-2 border-gray-200 rounded-md hover:border-gray-500 transition">
+                        <img src="{{ product.image.url }}" alt="Miniatura del producto" 
+                            class="object-cover w-full h-full rounded-md">
+                    </div>
+            
+                    <!-- Additional Images -->
+                    {% for p in p_image %}
+                    <div class="thumbnail cursor-pointer w-auto h-auto max-w-20 border-2 border-gray-200 rounded-md hover:border-gray-500 transition">
+                        <img src="{{ p.images.url }}" alt="Miniatura del producto" 
+                            class="object-cover w-full h-full rounded-md">
+                    </div>
                     {% endfor %}
                 </div>
             </div>
 
             <!-- Product Information -->
-            <div class="space-y-6">
-                <div class="flex justify-between">
-                    <h1 class="text-3xl font-bold">{{ product.title }}</h1>
-                    {% if product.id in wishlist_product_ids %}
-                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img
-                            src="{% static 'images/heart-black.svg' %}" alt="wishlist"></button>
-                    {% else%}
-                    <button class="w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img
-                            src="{% static 'images/heart.svg' %}" alt="wishlist"></button>
+            <div class="flex flex-col justify-between space-y-6 p-6">
+                <div class="flex justify-between items-center mt-6 md:mt-0">
+                    <h1 class="text-3xl font-bold text-gray-800">{{ product.title }}</h1>
+                    {% if request.user.is_authenticated %}
+                        {% if product.id in wishlist_product_ids %}
+                        <button class="pb-4 w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img
+                                src="{% static 'images/heart-black.svg' %}" alt="wishlist"></button>
+                        {% else%}
+                        <button class="pb-4 w-8 bg-transparent add-to-wishlist" data-product-item="{{ product.id }}"><img
+                                src="{% static 'images/heart.svg' %}" alt="wishlist"></button>
+                        {% endif %}
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="w-8 bg-transparent"><img
+                        src="{% static 'images/heart.svg' %}" alt="wishlist"></a>
                     {% endif %}
                 </div>
-                <p class="text-gray-600">SKU: {{ product.sku }}</p>
                 <p class="text-gray-600">Stock: <span
                         class="font-semibold {% if product.stock > 0 %}text-green-600{% else %}text-red-600{% endif %}">{% if product.stock > 0 %}En Stock ({{ product.stock }}){% else %}Out of Stock{% endif %}</span>
                 </p>
@@ -66,17 +64,13 @@
                     <span class="font-semibold">Categorias:</span>
                     {% for tag in product.tags.all %}
                     <a href="{% url 'tags' tag.slug %}"
-                        class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 hover:bg-blue-500 hover:text-white transition duration-200">#{{tag.name}}</a>
+                        class="inline-block bg-gray-600 rounded-full px-3 py-1 text-sm font-semibold text-white hover:bg-gray-900 transition duration-200">#{{tag.name}}</a>
                     {% endfor %}
                 </div>
-                <div class="flex items-baseline space-x-4">
-                    <span
-                        class="text-3xl font-bold text-blue-600 current-price current-product-price-{{ product.id }}">$
-                        {{ product.price|formato_precio }}</span>
+                <div class="flex flex-col items-start space-x-4">
+                    <span class="text-3xl font-bold current-price current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
                     {% if product.old_price %}
-                    <span class="text-xl text-gray-500 line-through">$ {{ product.old_price|formato_precio }}</span>
-                    <span
-                        class="inline-block bg-red-100 text-red-800 text-sm font-semibold px-2.5 py-0.5 rounded">-{{product.get_precentage|floatformat:0 }}%</span>
+                    <span class="text-xl text-gray-400 pl-3 line-through">$ {{ product.old_price|formato_precio }}</span>
                     {% endif %}
                 </div>
                 <input type="number" inputmode="numeric" pattern="[0-9]*" value="1" id="product-quantity"
@@ -94,16 +88,19 @@
                         <span class="block sm:inline">Producto ya agregado</span>
                     </div>
                     <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                        class="add-to-cart-btn w-full bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar
+                        class="add-to-cart-btn w-full bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar
                         a Carrito</button>
                 </div>
             </div>
 
-            <div class="comment-list">
-                <h4 class="text-lg font-semibold mb-4">Comentarios ({{ reviews.count }})</h4>
+        </div>
 
-                <div class="flex items-center mb-6">
-                    <div class="text-yellow-400 text-2xl">
+        <div class="border-t mt-10">
+            <div class="comment-list p-6 md:p-8 rounded-lg space-y-8">
+                <h4 class="text-lg md:text-xl font-semibold mb-4 text-gray-800">Comentarios ({{ reviews.count }})</h4>
+
+                <div class="flex items-center mb-4 md:mb-6">
+                    <div class="flex text-yellow-400 text-xl md:text-2xl">
                         <!-- Generar estrellas llenas y vacías según el promedio -->
                         {% for i in "12345" %}
                             {% if i <= average_rating.rating|floatformat:0 %}
@@ -113,33 +110,55 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <span class="ml-2 text-gray-700 text-lg">{{ average_rating.rating|floatformat:1 }} de 5.0</span>
+                    <span class="ml-2 text-gray-700 text-base md:text-lg">{{ average_rating.rating|floatformat:1 }} de 5.0</span>
                 </div>
 
+                {% if request.user.is_authenticated %}
+                    {% if make_review %}
+                        <form class="hide-form mt-8 space-y-4" method="POST" action="{% url 'ajax-add-review' product.id %}" id="commentForm">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="review" class="block text-gray-700 font-medium">Comentario</label>
+                                    {{ review_form.review }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="rating" class="block text-gray-700 font-medium">Calificar</label>
+                                    {{ review_form.rating }}
+                                </div>
+                                <button class="w-full md:w-auto bg-gray-700 text-white py-2 px-4 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-150">Enviar</button>
+                            </form>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'account_login' %}" class="block hover:underline text-center text-gray-500" id="hide-text">Inicia sesión para poder comentar</a>
+                {% endif %}
+
                 {% if reviews.exists %}
-                <div class="comment-list2">
+
+                <div class="comment-list2 space-y-6">
                     {% for r in reviews %}
-                    <div class="single-comment flex justify-between mb-8 p-4 bg-gray-100 rounded-lg shadow-sm transition">
-                        <div class="user flex items-center space-x-4">
-                            <div class="thumb">
-                                <img src="{{ request.user.profile.image.url }}" alt="Avatar de {{ r.user.username }}" class="w-12 h-12 object-cover rounded-full" />
+                    <div class="single-comment flex flex-col md:flex-row md:justify-between p-4 md:p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition duration-150 ease-in-out">
+                        <div class="user flex items-center space-x-4 mb-4 md:mb-0">
+                            <div class="avatar w-12 h-12 md:w-14 md:h-14">
+                                <img src="https://www.svgrepo.com/show/442075/avatar-default-symbolic.svg"  class="w-full h-full object-cover rounded-full" />
                             </div>
-                            <span class="font-semibold text-brand hover:underline">
+                            <span class="font-semibold text-gray-700 hover:underline">
                                 {{ r.user.username|title }}
                             </span>
                         </div>
-                        <div class="desc">
-                            <div class="flex items-center mb-2 space-x-4">
-                                <span class="text-xs text-gray-500">{{ r.date|date:"d M, Y" }}</span>
+                        <div class="desc w-full md:ml-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-gray-500">{{ r.date|date:"d M, Y" }}</span>
                             </div>
-                            <p class="mt-4 mb-4 text-gray-700">{{ r.review }}</p>
-                            <div class="text-yellow-400 text-xl text-end">
+                            <div class="flex text-yellow-400 text-lg">
                                 {% for star in "12345" %}
                                     {% if forloop.counter <= r.rating %}
                                         &#9733; <!-- Estrella llena -->
+                                    {% else %}
+                                        &#9734; <!-- Estrella vacía -->
                                     {% endif %}
                                 {% endfor %}
                             </div>
+                            <p class="text-gray-700 leading-relaxed">{{ r.review }}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -147,30 +166,14 @@
                 {% else %}
                 <div class="comment-list2">
                 </div>
-                <p class="text-gray-500 mt-4" id="hide-text">No hay comentarios aún. Sé el primero en comentar.</p>
+                <div class="mt-4">
+                    <p class="text-center text-gray-500" id="hide-text">No hay comentarios aún. Sé el primero en comentar.</p>
+                </div>
                 {% endif %}
             </div>
-            <div id="success-notification"
-                class="hidden fixed top-20 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg"
-                role="alert">
+            <div id="success-notification" class="hidden fixed top-20 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg" role="alert">
                 <span class="block sm:inline">Comentario Agregado</span>
             </div>
-            {% if request.user.is_authenticated %}
-            {% if make_review %}
-            <form class="hide-form" method="POST" action="{% url 'ajax-add-review' product.id %}" id="commentForm">
-                {% csrf_token %}
-                <label>
-                    Comentario
-                    {{ review_form.review }}
-                </label>
-                <div>
-                    Calificar
-                    {{ review_form.rating }}
-                </div>
-                <button class="p-2">Enviar</button>
-            </form>
-            {% endif %}
-            {% endif %}
 
         </div>
 
@@ -200,6 +203,17 @@
 
 
 <script>
+
+    // Seleccionar elementos
+    const mainImage = document.getElementById('main-image');
+    const thumbnails = document.querySelectorAll('.thumbnail img');
+
+    // Cambiar imagen principal al hacer clic en miniaturas
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            mainImage.src = thumb.src;
+        });
+    });
 
     $(document).ready(function () {
 
@@ -339,23 +353,27 @@
                             errorNotification.fadeOut();
                         }, 3000);
 
-                        let _html = '<div class="single-comment flex justify-between mb-8 p-4 bg-gray-100 rounded-lg shadow-sm">'
-                        _html +=        '<div class="user flex items-center space-x-4">'
-                        _html +=            '<div class="thumb">'
-                        _html +=                '<img src="https://www.svgrepo.com/show/442075/avatar-default-symbolic.svg" class="w-12 h-12 object-cover rounded-full"/>'
+                        let _html = '<div class="single-comment flex flex-col md:flex-row md:justify-between p-4 md:p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition duration-150 ease-in-out">'
+                        _html +=        '<div class="user flex items-center space-x-4 mb-4 md:mb-0">'
+                        _html +=            '<div class="avatar w-12 h-12 md:w-14 md:h-14">'
+                        _html +=                '<img src="https://www.svgrepo.com/show/442075/avatar-default-symbolic.svg" class="w-full h-full object-cover rounded-full"/>'
                         _html +=            '</div>'
-                        _html +=            '<span class="font-semibold text-brand hover:underline">' + res.context.user + ' </span>'
+                        _html +=            '<span class="font-semibold text-gray-700 hover:underline">' + res.context.user + ' </span>'
                         _html +=        '</div>'
-                        _html +=        '<div class="desc">'
-                        _html +=            '<div class="flex items-center mb-2 space-x-4">'
-                        _html +=                '<span class="text-xs text-gray-500">'+ time +'</span>'
+                        _html +=        '<div class="desc w-full md:ml-6">'
+                        _html +=            '<div class="flex items-center justify-between mb-2">'
+                        _html +=                '<span class="text-sm text-gray-500">'+ time +'</span>'
                         _html +=            '</div>'
-                        _html +=            '<p class="mt-4 mb-4 text-gray-700">'+ res.context.review +'</p>'
-                        _html +=            '<div class="text-yellow-400 text-xl text-end">'
+                        _html +=            '<div class="flex text-yellow-400 text-lg">'
                                                 for (let i = 0; i < res.context.rating; i++) {
-                                                                _html += '<span class="p-0.5">&#9733</span>'
-                                                            }
+                                                    _html += '<span class="p-0.5">&#9733</span>'
+                                                }
+                                                for (let i = res.context.rating; i < 5; i++) {
+                                                    _html += '<span class="p-0.5">&#9734;</span>'; // Estrella vacía
+                                                }
+                            
                         _html +=            '</div>'
+                        _html +=            '<p class="text-gray-700 leading-relaxed">'+ res.context.review +'</p>'
                         _html +=        '</div>'
                         _html +=    '</div>'
 

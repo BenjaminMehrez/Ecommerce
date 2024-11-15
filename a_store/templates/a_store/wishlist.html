@@ -46,9 +46,9 @@
                                     Agregar al carrito
                                 </button>
                             </div>
-                            <button data-wishlist-product="{{ w.id }}" class="delete-wishlist-product w-full sm:w-auto flex items-center justify-center bg-red-100 text-red-600 rounded-lg py-2 px-4 hover:bg-red-200 transition duration-150 ease-in-out">
-                                <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            <button data-wishlist-product="{{ w.id }}" class="delete-wishlist-product inline-flex items-center justify-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110">
+                                <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
                                 </svg>
                                 Eliminar
                             </button>
@@ -72,7 +72,6 @@
     <strong class="font-bold">Error:</strong>
     <span class="block sm:inline">Producto ya agregado</span>
 </div>
-
 
 
 <script>
