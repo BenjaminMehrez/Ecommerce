@@ -1,3 +1,4 @@
+{% load price_filters %}
 <div x-data="{ isOpen: false }" x-cloak class="w-full container mx-auto p-4 mt-8 md:mt-20">
 
     <button @click="isOpen = !isOpen"
@@ -58,8 +59,8 @@
                     min="{{ min_max_price.price__min }}" max="{{ min_max_price.price__max }}"
                     oninput="max_price.value=this.value">
                 <div class="flex justify-between text-sm text-gray-600">
-                    <span>Min: ${{ min_max_price.price__min }}</span>
-                    <span>Max: ${{ min_max_price.price__max }}</span>
+                    <span>Min: $ {{ min_max_price.price__min|formato_precio }}</span>
+                    <span>Max: $ {{ min_max_price.price__max|formato_precio }}</span>
                 </div>
 
                 <div class="flex items-center space-x-2">
