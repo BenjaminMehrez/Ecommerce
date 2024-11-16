@@ -14,7 +14,7 @@
             <a href="{% url 'product-detail' product.pid %}">
                 <div class="aspect-square overflow-hidden">
                     {% if product.old_price %}
-                    <span class="absolute bg-white text-gray-900 text-md font-semibold m-3 p-3 rounded border-gray-600">-{{ product.get_precentage|floatformat:0 }}%
+                    <span class="absolute bg-gray-900 text-white text-md font-semibold m-3 p-2 rounded border-gray-600">-{{ product.get_precentage|floatformat:0 }}%
                     </span>
                     {% endif %}
                     <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">

@@ -6,7 +6,7 @@ from taggit.managers import TaggableManager
 from django.conf import settings
 
 
-if settings.ENVIRONMENT == 'production':
+if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
     from cloudinary.models import CloudinaryField
     
 
@@ -42,7 +42,7 @@ def user_directory_path(instance, filename):
 class Category(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, prefix='cat', alphabet='abcdefgh12345')
     title = models.CharField(max_length=100, default='Sneaker')
-    if settings.ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
         image = CloudinaryField(default='category.jpg')
     else:    
         image = models.ImageField(upload_to='category', default='category.jpg')
@@ -66,7 +66,7 @@ class Vendor(models.Model):
     vid = ShortUUIDField(unique=True, length=10, max_length=20, prefix='ven', alphabet='abcdefgh12345')
     
     title = models.CharField(max_length=100, default='Nestify')
-    if settings.ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
         image = CloudinaryField(default='vendor.jpg')
         cover_image = CloudinaryField(default='vendor.jpg')
     else:
@@ -107,7 +107,7 @@ class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, related_name='product')
     
     title = models.CharField(max_length=100, default='Nike Air Force 1')
-    if settings.ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
         image = CloudinaryField(default='product.jpg')
     else:
         image = models.ImageField(upload_to=user_directory_path, default='product.jpg')
@@ -152,7 +152,7 @@ class Product(models.Model):
 
     
 class ProductImages(models.Model):
-    if settings.ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
         images = CloudinaryField(default='product.jpg')
     else:
         images = models.ImageField(upload_to="product-images", default='product.jpg')

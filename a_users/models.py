@@ -4,7 +4,7 @@ from django.templatetags.static import static
 from django.conf import settings
 
 
-if settings.ENVIRONMENT == 'production':
+if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
     from cloudinary.models import CloudinaryField
 
 # Create your models here.
@@ -12,7 +12,7 @@ if settings.ENVIRONMENT == 'production':
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    if settings.ENVIRONMENT == 'production':
+    if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY != True:
         image = CloudinaryField(null=True, blank=True) # blank signify that can is empty, null can save something empty   
     else:
         image = models.ImageField(upload_to='avatars/', null=True, blank=True) # blank signify that can is empty, null can save something empty   
