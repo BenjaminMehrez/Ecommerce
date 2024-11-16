@@ -19,56 +19,54 @@
                 </div>
             </a>
             {% endif %}
-            <a href="{% url 'product-detail' product.pid %}">
-                <div class="p-5">
-                    <h3 class="font-bold text-gray-800 text-xl mb-2 line-clamp-2">{{ product.title }}</h3>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span
-                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
-                        <span
-                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
-                    </div>
-                    <div class="flex items-center justify-between pr-5">
-                        <div class="space-y-1">
-                            <span
-                                class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
-                            {% if product.old_price %}
-                            <div class="flex items-center gap-2">
-                                <span class="text-sm text-gray-500 line-through">$ {{ product.old_price|formato_precio }}</span>
-                            </div>
-                            {% endif %}
-                        </div>
-            </a>
-            <div class="add-cart space-x-2">
-                <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
-                <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
-                <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
-                <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
-                <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
-                <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
-                    <strong class="font-bold">Error:</strong>
-                    <span class="block sm:inline">Producto ya agregado</span>
+            <div class="p-5 pb-7 space-y-4">
+                <h3 class="font-bold text-gray-800 text-xl mb-2 line-clamp-2">{{ product.title }}</h3>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span
+                        class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
+                    <span
+                        class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
                 </div>
-                <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                    class="add-to-cart-btn relative inline-flex items-center justify-center p-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
-                    role="button">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                        </path>
-                    </svg>
-                </button>
+                <div class="flex items-center justify-between pr-5">
+                    <div class="space-y-1">
+                        <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
+                        {% if product.old_price %}
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm text-gray-500 ml-4 line-through">$ {{ product.old_price|formato_precio }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="add-cart space-x-2">
+                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
+                        <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
+                        <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
+                        <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
+                        <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
+                        <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+                            <strong class="font-bold">Error:</strong>
+                            <span class="block sm:inline">Producto ya agregado</span>
+                        </div>
+                        <button id="add-to-cart-btn" data-index="{{ product.id }}"
+                            class="add-to-cart-btn relative inline-flex items-center justify-center p-3 rounded-md bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200"
+                            role="button">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-    </div>
-    </div>
-
-
-    </article>
-    {% endfor %}
+        </article>
+        {% endfor %}
     </div>
 </section>
 
+<div class="absolute top-2/4 left-2/4" hx-trigger="load">
+    <img alt="Result loading..." class="htmx-indicator loader" src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/abfa05c49acf005b8b1e0ef8eb25a67a7057eb20/svg-smil/ring-resize.svg"/>
+</div>
 
 <script>
 
