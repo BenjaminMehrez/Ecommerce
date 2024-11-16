@@ -1,6 +1,6 @@
 {% load static %}
 {% if request.resolver_match.url_name != 'account_login' and request.resolver_match.url_name != 'account_signup' %}
-<header x-data="{ mobilenavOpen: false, mobilesearchOpen: false }" class="bg-white shadow-md top-0 z-40 sticky">
+<header x-data="{ mobilenavOpen: false, mobilesearchOpen: false }" x-cloak class="bg-white shadow-md top-0 z-40 sticky">
     <div class="md:grid grid-cols-9 items-center xl:container m-auto sticky md:pr-10 h-16">
             <div class="flex justify-between items-center m-auto px-4 pt-2 md:pt-0">
                 <div class="flex">
@@ -51,7 +51,7 @@
         
         
             <nav class="hidden md:grid col-start-4 lg:col-start-3 grid-flow-col justify-center space-x-4">
-                <div x-data="{ open: false }" class="relative">
+                <div x-data="{ open: false }" class="relative" >
                     <button @click="open = !open" @click.away="open = false"
                         class="bg-transparent text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium inline-flex items-center">
                         Categorias

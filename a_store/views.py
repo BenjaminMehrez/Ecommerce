@@ -21,7 +21,7 @@ from .forms import *
 
 
 def home(request):
-    products = Product.objects.filter(product_status='publicado', featured=True)
+    products = Product.objects.filter(product_status='publicado', featured=True).order_by('-date')
 
     context = {
         'products': products
@@ -31,7 +31,7 @@ def home(request):
 
 
 def product_list_view(request):
-    products = Product.objects.filter(product_status='publicado')
+    products = Product.objects.filter(product_status='publicado').order_by('-date')
 
     context = {
         'products': products
@@ -52,7 +52,7 @@ def category_list_view(request):
 
 def category_product_list_view(request, cid):
     category = Category.objects.get(cid=cid)
-    products = Product.objects.filter(product_status='publicado', category=category)
+    products = Product.objects.filter(product_status='publicado', category=category).order_by('-date')
     
     context = {
         'category': category,
@@ -73,7 +73,7 @@ def vendor_list_view(request):
 
 def vendor_detail_view(request, vid):
     vendor = Vendor.objects.get(vid=vid)
-    products = Product.objects.filter(vendor=vendor, product_status='publicado')
+    products = Product.objects.filter(vendor=vendor, product_status='publicado').order_by('-date')
 
     context = {
         'vendor': vendor,
