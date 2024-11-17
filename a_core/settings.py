@@ -180,6 +180,12 @@ USE_TZ = True  # para manejar automáticamente las zonas horarias
 USE_L10N = True  
 USE_I18N = True
 
+# COOKIEBOT
+
+CSRF_COOKIE_SECURE = True  # Si usas HTTPS
+SESSION_COOKIE_SECURE = True  # Si usas HTTPS
+CSRF_COOKIE_HTTPONLY = True
+
 
 
 
