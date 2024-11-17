@@ -1,52 +1,67 @@
 {% extends 'layouts/blank.html' %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div
-            class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+    <div class="relative sm:max-w-4xl sm:mx-auto">
+        <!-- Fondo decorativo -->
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
         </div>
-        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <div class="max-w-md mx-auto">
-                <div>
-                    <h1 class="text-2xl font-semibold">Contact Us</h1>
-                </div>
-                <div class="divide-y divide-gray-200">
+        <!-- Contenedor principal -->
+        <div class="relative bg-white shadow-lg sm:rounded-3xl p-6 sm:p-12">
+            <div class="max-w-full mx-auto">
+                <!-- Título -->
+                <div class="text-center">
+                    <h1 class="text-3xl font-semibold text-gray-800">Contáctanos</h1>
                     <h2 class="text-green-600" id="message-response"></h2>
-                    <form action="" method="post" id="contact-form"
-                        class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                        {% csrf_token %}
-                        <div class="flex flex-col gap-6">
-                            <label for="full_name">
-                                Nombre Completo
-                                <input type="text" id="full_name" name="full_name" placeholder="Lionel Messi">
-                            </label>
-                            <label for="email">
-                                Email
-                                <input type="email" id="email" name="email" placeholder="email">
-                            </label>
-                            <label for="phone">
-                                Celular
-                                <input type="text" id="phone" name="phone" placeholder="phone">
-                            </label>
-                            <label for="subject">
-                                Subject
-                                <input type="text" id="subject" name="subject" placeholder="subject">
-                            </label>
-                            <label for="message">
-                                Mensaje
-                                <input type="text" id="message" name="message" placeholder="message">
-                            </label>
-                        </div>
-                        <div class="relative">
-                            <button class="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
-                        </div>
-                    </form>
+                    <p class="mt-2 text-gray-600" id="contact-p">Completa el formulario y nos pondremos en contacto contigo</p>
                 </div>
+                <!-- Formulario -->
+                <form action="" method="post" id="contact-form" 
+                    class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-8">
+                    {% csrf_token %}
+                    <!-- Nombre Completo -->
+                    <div class="flex flex-col">
+                        <label for="full_name" class="text-sm font-medium text-gray-600">Nombre Completo</label>
+                        <input type="text" id="full_name" name="full_name" placeholder="Lionel Messi" required
+                            class="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <!-- Email -->
+                    <div class="flex flex-col">
+                        <label for="email" class="text-sm font-medium text-gray-600">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required
+                            class="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <!-- Teléfono -->
+                    <div class="flex flex-col">
+                        <label for="phone" class="text-sm font-medium text-gray-600">Teléfono</label>
+                        <input type="number" inputmode="numeric" pattern="[0-9]*" id="phone" name="phone" placeholder="123-456-7890" required
+                            class="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <!-- Asunto -->
+                    <div class="flex flex-col">
+                        <label for="subject" class="text-sm font-medium text-gray-600">Asunto</label>
+                        <input type="text" id="subject" name="subject" placeholder="Consulta general" required
+                            class="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <!-- Mensaje -->
+                    <div class="sm:col-span-2 flex flex-col">
+                        <label for="message" class="text-sm font-medium text-gray-600">Mensaje</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Escribe tu mensaje aquí" required
+                            class="mt-1 p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                    </div>
+                    <!-- Botón de envío -->
+                    <div class="sm:col-span-2 flex justify-center">
+                        <button type="submit" 
+                            class="w-full sm:w-auto bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-gray-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition">
+                            Enviar
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="absolute top-2/4 left-2/4" hx-trigger="load">
     <img alt="Result loading..." class="htmx-indicator loader" src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/abfa05c49acf005b8b1e0ef8eb25a67a7057eb20/svg-smil/ring-resize.svg"/>
@@ -89,6 +104,7 @@
 
                 success: function(response) {
                     $('#contact-form').hide()
+                    $('#contact-p').hide()
                     $('#message-response').html('Mensaje Enviado !!!')
 
                     
