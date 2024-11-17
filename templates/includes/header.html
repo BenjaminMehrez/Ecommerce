@@ -20,7 +20,7 @@
                     <a href="{% url 'cart' %}"
                         class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
+                            xmlns="https://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
                             </path>
@@ -31,7 +31,7 @@
                     <a href="{% url 'wishlist' %}"
                         class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
+                            xmlns="https://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
                             </path>
@@ -55,7 +55,7 @@
                     <button @click="open = !open" @click.away="open = false"
                         class="bg-transparent text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium inline-flex items-center">
                         Categorias
-                        <svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
                             viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd"
                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -89,7 +89,7 @@
                 <form action="{% url 'search' %}" method="GET" class="relative">
                   <input type="search" name="q" placeholder="Buscar productos..." class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" />
                   <button class="bg-transparent absolute inset-y-0 left-0 flex items-center pl-3">          
-                      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                      <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                   </button>
                 </form>
             </div>
@@ -109,7 +109,7 @@
                 <a href="{% url 'cart' %}"
                     class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
+                        xmlns="https://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
                         </path>
@@ -120,7 +120,7 @@
                 <a href="{% url 'wishlist' %}"
                     class="relative inline-flex items-center justify-center p-2 text-gray-700 transition-colors duration-200 hover:text-gray-900">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
+                        xmlns="https://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
                         </path>
@@ -141,7 +141,7 @@
 					<nav class="md:hidden mb-5">
 						<div x-data="{ open: true }" class="relative">
 							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
-								<svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
+								<svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
 									viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd"
 										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -190,7 +190,7 @@
                           <nav class="md:hidden">
                             <div x-data="{ open: false }" class="relative">
                                 <a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
-                                    <svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
+                                    <svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd"
                                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -230,7 +230,7 @@
 					<nav class="md:hidden mb-5">
 						<div x-data="{ open: true }" class="relative">
 							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
-								<svg class=" h-5 w-5" :class="{'rotate-180': open}" xmlns="http://www.w3.org/2000/svg"
+								<svg class=" h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
 									viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd"
 										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
