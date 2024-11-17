@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     # Others
     "django_htmx",
     'django.contrib.humanize',
+    'admin_honeypot',
     'taggit',
     # Apps
     'a_store',
@@ -130,7 +131,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'a_core.wsgi.application'
 
 
-POSTGRES_LOCALLY = True
+POSTGRES_LOCALLY = False
 
 
 # SETTING DATABASE
@@ -138,7 +139,7 @@ POSTGRES_LOCALLY = True
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY != True:
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.parse(env('DATABASE_URL'))
@@ -200,7 +201,7 @@ MEDIA_URL = 'media/'
 
 
 # Media server
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY != True:
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     cloudinary.config(
         cloud_name= env('CLOUD_NAME'),
@@ -236,7 +237,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 
-ACCOUNT_USERNAME_BACKLIST = [ 'admin', 'accounts', 'profile']
+ACCOUNT_USERNAME_BACKLIST = [ 'admin', 'accounts', 'profile', 'jefe']
 
 
 JAZZMIN_SETTINGS = {

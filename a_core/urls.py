@@ -21,7 +21,8 @@ from django.conf import settings
 # from a_users.views import profile_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('jefe/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('',  include('a_store.urls')),
     path('users/', include('a_users.urls')),
