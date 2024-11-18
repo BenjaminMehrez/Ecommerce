@@ -70,10 +70,9 @@
 </div>
 
 
-<div class="absolute top-2/4 left-2/4" hx-trigger="load">
-    <img alt="Result loading..." class="htmx-indicator loader" src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/abfa05c49acf005b8b1e0ef8eb25a67a7057eb20/svg-smil/ring-resize.svg"/>
+<div id="spinner" class="absolute top-2/4 left-2/4" hx-trigger="load">
+    <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
 </div>
-
 
 
 <script>

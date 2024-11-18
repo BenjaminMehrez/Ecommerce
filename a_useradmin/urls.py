@@ -11,4 +11,6 @@ urlpatterns = [
     path('orders/', orders, name='orders'),
     path('order-detail/<id>/', order_detail, name='order-detail'),
     path('change_order_status/<oid>/', change_order_status, name='change-order-status'),
+    # path('shop_page/', shop_page, name='shop-page'),
+    path('reviews/', reviews, name='reviews'),
 ]

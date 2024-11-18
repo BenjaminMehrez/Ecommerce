@@ -1,0 +1,101 @@
+{% extends 'layouts/blank.html' %}
+{% load price_filters %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="flex min-h-screen bg-gray-50">
+
+    <div class="hidden md:block w-64 bg-white shadow-sm">
+        <div class="px-4 py-6">
+            <div class="flex items-center gap-4 ">
+                <img src="{% static 'images/logo-black.svg' %}" alt="E-commerce" class="h-8">
+                <h2 class="flex mt-2">E-commerce</h2>
+            </div>
+            <nav class="mt-6 space-y-2">
+                <a href="" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Panel
+                </a>
+                <a href="{% url 'products' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                    <img class="w-5 h-5 mr-3" src="{% static 'images/logo-black.svg' %}" alt="">
+                    Productos
+                </a>
+                <a href="{% url 'orders' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path d="M3.17004 7.43994L12 12.5499L20.77 7.46991" stroke="#292D32" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12 21.6099V12.5399" stroke="#292D32" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                            <path
+                                d="M9.92999 2.48L4.59 5.45003C3.38 6.12003 2.39001 7.80001 2.39001 9.18001V14.83C2.39001 16.21 3.38 17.89 4.59 18.56L9.92999 21.53C11.07 22.16 12.94 22.16 14.08 21.53L19.42 18.56C20.63 17.89 21.62 16.21 21.62 14.83V9.18001C21.62 7.80001 20.63 6.12003 19.42 5.45003L14.08 2.48C12.93 1.84 11.07 1.84 9.92999 2.48Z"
+                                stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M17 13.24V9.58002L7.51001 4.09998" stroke="#292D32" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                    </svg>
+                    Ordenes
+                </a>
+                <a href="{% url 'reviews' %}" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
+                    <svg class="w-5 h-5 mr-3" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>start-favorite</title> <desc>Created with Sketch Beta.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"> <g id="Icon-Set" sketch:type="MSLayerGroup" transform="translate(-152.000000, -879.000000)" fill="#000000"> <path d="M168,903.21 L160.571,907.375 L161.989,898.971 L155.594,892.442 L164.245,891.317 L168,883.313 L171.722,891.317 L180.344,892.54 L174.011,899.002 L175.335,907.406 L168,903.21 L168,903.21 Z M184,891.244 L172.962,889.56 L168,879 L163.038,889.56 L152,891.244 L159.985,899.42 L158.095,911 L168,905.53 L177.905,911 L176.015,899.42 L184,891.244 L184,891.244 Z" id="start-favorite" sketch:type="MSShapeGroup"> </path> </g> </g> </g></svg>
+                    Calificaciones
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6">Reviews</h1>
+        <p class="text-gray-600 mb-6">Manage all product reviews</p>
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">S/N</th>
+                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Productos</th>
+                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Nombre</th>
+                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Comentario</th>
+                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Calificacion</th>
+                        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    {% for review in reviews %}
+                    <tr>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ forloop.counter }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ review.product.title }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ review.user.username|title }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ review.review }}</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ review.rating }} Estrellas</td>
+                        <td class="px-4 py-2 text-sm text-gray-700">{{ review.date|date:"d M, Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-2 text-sm text-center text-gray-700">No reviews found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+
+
+<div id="spinner" class="absolute top-2/4 left-2/4" hx-trigger="load">
+    <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
