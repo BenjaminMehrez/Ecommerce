@@ -129,19 +129,19 @@
                         class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-gray-700 text-xs font-medium text-white">{% if wishlist == 0 %}0{% else %}{{ wishlist.count }}{% endif %}</span>
                 </a>
             </div>
-            <nav x-show="mobilenavOpen" x-cloak class="md:!grid grid col-start-9 col-end-10 md:justify-center bg-white h-screen w-screen md:h-auto md:w-auto -mt-20 md:mt-0 absolute md:relative z-[-1]"
+            <nav x-show="mobilenavOpen" x-cloak class="md:!grid grid col-start-9 col-end-10 md:justify-center bg-white h-screen w-screen md:h-auto md:w-auto md:mt-0 absolute md:relative z-[-1]"
             x-transition:enter="duration-300 ease-out"
-            x-transition:enter-start="opacity-0 translate-x-96"
-            x-transition:enter-end="opacity-100 translate-x-0"
+            x-transition:enter-start=" translate-x-96"
+            x-transition:enter-end=" translate-x-0"
             x-transition:leave="duration-300 ease-in"
-            x-transition:leave-start="opacity-100 translate-x-0"
-            x-transition:leave-end="opacity-0 translate-x-96">
-                <ul class="flex flex-col items-end mt-40 md:mt-0 px-10 md:px-0 text-xl md:text-sm h-full md:flex-row -translate-y-10 md:translate-y-0">
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="translate-x-96">
+                <ul class="flex flex-col items-end mt-24 md:mt-0 px-10 md:px-0 text-xl md:text-sm h-full md:flex-row -translate-y-10 md:translate-y-0">
                     {% if request.user.is_authenticated %}
 					<nav class="md:hidden mb-5">
-						<div x-data="{ open: true }" class="relative">
+						<div x-data="{ open: false }" class="relative">
 							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
-								<svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
+								<svg class="ml-1 h-5 w-5 transition-transform duration-500" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
 									viewBox="0 0 20 20" fill="currentColor">
 									<path fill-rule="evenodd"
 										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -190,7 +190,7 @@
                           <nav class="md:hidden">
                             <div x-data="{ open: false }" class="relative">
                                 <a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
-                                    <svg class="ml-1 h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
+                                    <svg class="ml-1 h-5 w-5 transition-transform duration-500 " :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd"
                                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -222,13 +222,16 @@
                                 </div>
                             </div>
                         </nav>
+                        {% if request.user.is_superuser %}
+                        <a href="{% url 'dashboard-admin' %}" class="md:hidden hover:underline" role="menuitem">Adminstracion</a>
+                        {% endif %}
 						<li><a href="{% url 'contact' %}" class="md:hidden hover:underline">Ayuda</a></li>
 						<li><a href="{% url 'contact' %}" class="md:hidden hover:underline">Contactanos</a></li>
 						<li><a href="{% url 'account_logout' %}" class="md:hidden hover:underline">Cerrar Sesion</a></li>
 					</div>
                     {% else %}
 					<nav class="md:hidden mb-5">
-						<div x-data="{ open: true }" class="relative">
+						<div x-data="{ open: false }" class="relative">
 							<a @click="open = !open" @click.away="dropdownOpen = false" class="flex items-center justify-end gap-2 select-none">
 								<svg class=" h-5 w-5" :class="{'rotate-180': open}" xmlns="https://www.w3.org/2000/svg"
 									viewBox="0 0 20 20" fill="currentColor">
@@ -264,7 +267,7 @@
 						<li class="min-w-20 md:ml-5 lg:ml-16"><a class="hover:underline" href="{% url 'account_login' %}">Inicia sesión</a></li>
                     	<li><a class="hover:underline" href="{% url 'account_signup' %}?next={% url 'profile-onboarding' %}">Regístrate</a></li>
 						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Ayuda</a></li>
-						<li><a href="{% url 'product-list' %}" class="md:hidden hover:underline">Contactanos</a></li>
+						<li><a href="{% url 'contact' %}" class="md:hidden hover:underline">Contactanos</a></li>
 					</div>
                     {% endif %}
                 </ul>

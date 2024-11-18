@@ -74,4 +74,78 @@
     <img alt="Result loading..." class="htmx-indicator loader" src="https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/abfa05c49acf005b8b1e0ef8eb25a67a7057eb20/svg-smil/ring-resize.svg"/>
 </div>
 
+
+
+<script>
+
+    $(".add-to-cart-btn").on("click", function () {
+
+        let this_val = $(this)
+        let index = this_val.attr('data-index')
+
+        let quantity = $('.product-quantity-' + index).val()
+        let product_title = $('.product-title-' + index).val()
+
+        let product_id = $('.product-id-' + index).val()
+        let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
+
+        let product_pid = $('.product-pid-' + index).val()
+        let product_image = $('.product-image-' + index).val()
+
+        // console.log('Quantity:', quantity);
+        // console.log('Title:', product_title);
+        // console.log('price:', product_price);
+        // console.log('id:', product_id);
+        // console.log('Pid:', product_pid);
+        // console.log('Image:', product_image);
+        // console.log('Index:', index);
+        // console.log('Current Element:', this_val);
+
+
+        $.ajax({
+            url: '/add-to-cart',
+            data: {
+                'id': product_id,
+                'pid': product_pid,
+                'image': product_image,
+                'qty': quantity,
+                'title': product_title,
+                'price': product_price
+            },
+            dataType: 'json',
+            beforeSend: function() {
+                // console.log('Product adding');
+
+            },
+
+            success: function(res) {
+                this_val.html(`
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z" fill="currentColor"/>
+                        </svg>
+                `);
+
+                // console.log('Producto agreagdo al cart');
+                $('.cart-items-count').text(res.totalcartitems)
+
+            },
+
+            error: function() {
+                // Selecciona la notificación de error
+                const errorNotification = $('#error-notification');
+                
+                // Muestra la notificación con un efecto fade-in
+                errorNotification.fadeIn();
+
+                // Desaparece la notificación después de 3 segundos
+                setTimeout(function() {
+                    errorNotification.fadeOut();
+                }, 3000);
+            }
+        })
+    })
+
+</script>
+
+
 {% endblock %}

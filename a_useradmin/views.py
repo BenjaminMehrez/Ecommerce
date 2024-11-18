@@ -21,7 +21,7 @@ def dashboard(request):
     all_products = Product.objects.all()
     all_categories = Category.objects.all()
     new_customers = User.objects.all().order_by('-id')
-    latest_orders = CartOrder.objects.all()
+    latest_orders = CartOrder.objects.all().order_by('-order_date')
     
     this_month = datetime.datetime.now().month
     
@@ -119,7 +119,7 @@ def delete_product(request, pid):
 
 @user_passes_test(admin_required)
 def orders(request):
-    orders = CartOrder.objects.all()
+    orders = CartOrder.objects.all().order_by('-order_date')
     context = {
         'orders': orders
     }
