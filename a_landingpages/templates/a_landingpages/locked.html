@@ -1,0 +1,11 @@
+{% extends 'a_landingpages/base.html' %}
+
+{% block content %}
+
+<form method="POST" class="flex text-center items-center m-auto justify-center max-w-2xl">
+    {% csrf_token %}
+    {{ form }}
+    <button class="ml-2 p-4 bg-white text-black">Enter</button>
+</form>
+
+{% endblock %}

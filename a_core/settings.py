@@ -30,6 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
+STAGING = env('STAGING')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -92,6 +93,7 @@ INSTALLED_APPS = [
     'a_store',
     'a_users',
     'a_useradmin',
+    'a_landingpages',
 ]
 
 SITE_ID = 1
@@ -107,6 +109,8 @@ MIDDLEWARE = [
     "django_htmx.middleware.HtmxMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "a_landingpages.middleware.landingpage_middleware",
+    
 ]
 
 ROOT_URLCONF = 'a_core.urls'

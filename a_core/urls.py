@@ -27,6 +27,7 @@ urlpatterns = [
     path('',  include('a_store.urls')),
     path('users/', include('a_users.urls')),
     path('useradmin/', include('a_useradmin.urls')),
+    path('_/', include('a_landingpages.urls')),
     # path('@<username>/', profile_view, name='profile'),
 ]
 
