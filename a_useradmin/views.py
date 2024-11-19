@@ -54,6 +54,21 @@ def products(request):
     
     return render(request, 'a_useradmin/products.html', context)
     
+
+@user_passes_test(admin_required)
+def products_filter(request, status):
+    if status == "all":
+        products = Product.objects.all()
+    else:
+        products = Product.objects.filter(product_status=status)
+    all_products = Product.objects.values('product_status').distinct()
+    
+    context = {
+    'products': products,
+    'all_products': all_products,
+    }
+    
+    return render(request, 'a_useradmin/products_status.html', context)
     
     
 @user_passes_test(admin_required)

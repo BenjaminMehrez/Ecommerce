@@ -20,7 +20,7 @@ STATUS = (
     ("borrador", "Borrador"),
     ("inhabilitado", "Inhabilitado"),
     ("rechazado", "Rechazado"),
-    ("en_revisión", "En revisión"),
+    ("en_revision", "En revisión"),
     ("publicado", "Publicado"),
 )
 
@@ -121,7 +121,7 @@ class Product(models.Model):
     tags = TaggableManager(blank=True)
     # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
     
-    product_status = models.CharField(choices=STATUS, max_length=20, default='en_revisión')
+    product_status = models.CharField(choices=STATUS, max_length=20, default='en_revision')
     stock = models.PositiveIntegerField(default='8')
 
     status = models.BooleanField(default=True)
