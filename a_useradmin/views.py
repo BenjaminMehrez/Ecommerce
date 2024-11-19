@@ -76,21 +76,23 @@ def add_product(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES)
         if form.is_valid():
-            new_form = form.save(commit=False)
-            new_form.user = request.user
-            new_form.save()
-            form.save_m2m()
-            
-            messages.success(request, 'Producto Agregado')
+            # Guardar el producto principal
+            new_product = form.save(commit=False)
+            new_product.user = request.user
+            new_product.save()
+
+            # Procesar las imágenes adicionales
+            images = request.FILES.getlist('images')  # Obtener la lista de imágenes
+            for image in images:
+                ProductImages.objects.create(product=new_product, images=image)
+
+            form.save_m2m()  # Guardar relaciones Many-to-Many
+            messages.success(request, 'Producto agregado exitosamente')
             return redirect('products')
     else:
         form = AddProductForm()
-        
-    
-    context = {
-        'form': form
-    }
-    
+
+    context = {'form': form}
     return render(request, 'a_useradmin/add_product.html', context)
 
 

@@ -1,12 +1,14 @@
 from django import forms
-from a_store.models import Product
+from a_store.models import *
 
 class AddProductForm(forms.ModelForm):
+    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}), required=False)
+
     class Meta:
         model = Product
         fields = [
             'title',
-            'image',
+            'image',  # Imagen principal
             'description',
             'category',
             'price',
@@ -42,7 +44,7 @@ class AddProductForm(forms.ModelForm):
         })
 
         self.fields['image'].widget.attrs.update({
-            'class': "w-full text-gray-700 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500",
+            'class': "w-full text-gray-700 px-3 py-2 rounded-lg focus:outline-none",
         })
 
         self.fields['price'].widget.attrs.update({
