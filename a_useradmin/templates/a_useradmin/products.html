@@ -66,7 +66,7 @@
     
         <main>
             <nav class="justify-center space-x-4">
-                <div x-data="{ open: false }" class="relative">
+                <div x-data="{ open: false }" x-cloak class="relative">
                     <button @click="open = !open" @click.outside="open = false"
                         class="bg-white border mb-3 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md font-medium inline-flex items-center">
                         Filtrar
@@ -89,11 +89,21 @@
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                 role="menuitem">Todas las categorías</a>
                             <div class="border-b border-gray-100"></div>
-                            {% for product in all_products %}
-                            <a href="{% url 'products-filter' product.product_status|slugify %}"
+                            <a href="{% url 'products-filter' 'publicado' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">{{ product.product_status|title }}</a>
-                            {% endfor %}
+                                role="menuitem">Publicado</a>
+                            <a href="{% url 'products-filter' 'inhabilitado' %}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem">Inhabilitado</a>
+                            <a href="{% url 'products-filter' 'en_revision' %}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem">En Revisión</a>
+                            <a href="{% url 'products-filter' 'borrador' %}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem">Borrador</a>
+                            <a href="{% url 'products-filter' 'rechazado' %}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                role="menuitem">Rechazado</a>
                         </div>
                     </div>
                 </div>

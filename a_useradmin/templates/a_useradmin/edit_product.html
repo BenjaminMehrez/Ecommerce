@@ -33,119 +33,129 @@
         </div>
     </div>
 
-    <div class="min-w-2/5 mx-auto lg:ml-40 mt-14 mb-20 p-6 bg-white shadow-lg rounded-lg">
-        <h1 class="text-3xl font-bold text-gray-900 mb-8">Editar Producto</h1>
-        
-        <form method="post" enctype="multipart/form-data" class="space-y-6">
+    <div class="container mx-auto mt-14 mb-20">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8 ml-4">Crear Nuevo Producto</h1>
+
+        <form method="post" enctype="multipart/form-data" class="flex flex-col lg:flex-row px-6">
             {% csrf_token %}
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                    <label for="{{ form.category.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
-                    {{ form.category }}
-                    {% if form.category.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.category.errors|join:", " }}</p>
-                    {% endif %}
+            <div class="space-y-6 bg-white shadow-lg rounded-lg p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label for="{{ form.category.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Categoría</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.category.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.product_status.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Estado del Producto</label>
+                        {{ form.product_status }}
+                        {% if form.product_status.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.product_status.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+        
+                    <div>
+                        <label for="{{ form.vendor.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Vendedor</label>
+                        {{ form.vendor }}
+                        {% if form.vendor.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.vendor.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
                 </div>
                 
                 <div>
-                    <label for="{{ form.product_status.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Estado del Producto</label>
-                    {{ form.product_status }}
-                    {% if form.product_status.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.product_status.errors|join:", " }}</p>
+                    <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.title.errors|join:", " }}</p>
                     {% endif %}
                 </div>
-    
+        
                 <div>
-                    <label for="{{ form.vendor.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Vendedor</label>
-                    {{ form.vendor }}
-                    {% if form.vendor.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.vendor.errors|join:", " }}</p>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.description.errors|join:", " }}</p>
                     {% endif %}
                 </div>
-            </div>
+        
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="{{ form.price.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
+                        {{ form.price }}
+                        {% if form.price.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.price.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        <label for="{{ form.old_price.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Precio viejo</label>
+                        {{ form.old_price }}
+                        {% if form.old_price.errors %}
+                            <p class="text-red-500 text-xs mt-1">{{ form.old_price.errors|join:", " }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+        
+                <div>
+                    <label for="{{ form.stock.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+                    {{ form.stock }}
+                    {% if form.stock.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.stock.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+        
+                <div>
+                    <label for="{{ form.specifications.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Especificaciones</label>
+                    {{ form.specifications }}
+                    {% if form.specifications.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.specifications.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+        
+                <div>
+                    <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Etiquetas</label>
+                    {{ form.tags }}
+                    {% if form.tags.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.tags.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+        
+                <div class="flex items-center">
+                    <label for="{{ form.featured.id_for_label }}" class="mr-2 block text-sm font-medium text-gray-700">Presentado</label>
+                    {% if form.featured.errors %}
+                    <p class="text-red-500 text-xs ml-2">{{ form.featured.errors|join:", " }}</p>
+                    {% endif %}
+                    {{ form.featured }}
+                </div>
             
-            <div>
-                <label for="{{ form.title.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Título</label>
-                {{ form.title }}
-                {% if form.title.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.title.errors|join:", " }}</p>
-                {% endif %}
             </div>
-    
-            <div>
-                <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                {{ form.description }}
-                {% if form.description.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.description.errors|join:", " }}</p>
-                {% endif %}
-            </div>
-    
-            <div>
-                <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Imagen</label>
-                {{ form.image }}
-                {% if form.image.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.image.errors|join:", " }}</p>
-                {% endif %}
-            </div>
-    
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div class="space-y-6 bg-white shadow-lg rounded-lg p-6">
                 <div>
-                    <label for="{{ form.price.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
-                    {{ form.price }}
-                    {% if form.price.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.price.errors|join:", " }}</p>
+                    <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Imagen de Portada</label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                        <p class="text-red-500 text-xs mt-1">{{ form.image.errors|join:", " }}</p>
                     {% endif %}
                 </div>
-                
                 <div>
-                    <label for="{{ form.old_price.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Precio viejo</label>
-                    {{ form.old_price }}
-                    {% if form.old_price.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.old_price.errors|join:", " }}</p>
-                    {% endif %}
+                    <label for="id_images" class="block text-sm font-medium text-gray-700 mb-1">Agrega Imágenes adicionales:</label>
+                    <input type="file" name="images" id="id_images" multiple>
+                </div>
+                <div class="pt-6">
+                    <button
+                        class="w-full md:w-auto px-6 py-3 bg-blue-600 text-white font-medium text-sm rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+                        Actualizar Producto
+                    </button>
                 </div>
             </div>
-    
-            <div>
-                <label for="{{ form.stock.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
-                {{ form.stock }}
-                {% if form.stock.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.stock.errors|join:", " }}</p>
-                {% endif %}
-            </div>
-    
-            <div>
-                <label for="{{ form.specifications.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Especificaciones</label>
-                {{ form.specifications }}
-                {% if form.specifications.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.specifications.errors|join:", " }}</p>
-                {% endif %}
-            </div>
-    
-            <div>
-                <label for="{{ form.tags.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Etiquetas</label>
-                {{ form.tags }}
-                {% if form.tags.errors %}
-                    <p class="text-red-500 text-xs mt-1">{{ form.tags.errors|join:", " }}</p>
-                {% endif %}
-            </div>
-    
-            <div class="flex items-center">
-                <label for="{{ form.featured.id_for_label }}" class="mr-2 block text-sm font-medium text-gray-700">Presentado</label>
-                {% if form.featured.errors %}
-                <p class="text-red-500 text-xs ml-2">{{ form.featured.errors|join:", " }}</p>
-                {% endif %}
-                {{ form.featured }}
-            </div>
-            
-            <div class="pt-6">
-                <button
-                    class="w-full md:w-auto px-6 py-3 bg-blue-600 text-white font-medium text-sm rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
-                    Actualizar Producto
-                </button>
-            </div>
+
         </form>
+
     </div>
 
 </div>
