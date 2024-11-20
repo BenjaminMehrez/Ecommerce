@@ -87,8 +87,8 @@
                         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                             <a href="{% url 'products-filter' 'all' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">Todas las categorías</a>
-                            <div class="border-b border-gray-100"></div>
+                                role="menuitem">Todas los productos</a>
+                            <div class="border-b border-gray-200"></div>
                             {% for product in all_products %}
                             <a href="{% url 'products-filter' product.product_status|slugify %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"

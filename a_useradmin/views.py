@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from a_store.models import *
 from .forms import *
 from django.contrib import messages
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -68,7 +70,7 @@ def products_filter(request, status):
     'all_products': all_products,
     }
     
-    return render(request, 'a_useradmin/products_status.html', context)
+    return render(request, 'a_useradmin/products_filter.html', context)
     
     
 @user_passes_test(admin_required)
@@ -147,6 +149,42 @@ def orders(request):
     }
     
     return render(request, 'a_useradmin/orders.html', context)
+
+
+@user_passes_test(admin_required)
+def orders_filter(request, status):
+    if status == "all":
+        orders = CartOrder.objects.all().order_by('-order_date')
+    elif status == 'True' or status == 'False':
+        orders = CartOrder.objects.filter(paid_status=status).order_by('-order_date')
+    else:
+        orders = CartOrder.objects.filter(product_status=status).order_by('-order_date')
+        
+    all_orders = CartOrder.objects.values('product_status').distinct()
+    
+    context = {
+        'orders': orders,
+        'all_orders': all_orders,
+    }
+    
+    return render(request, 'a_useradmin/orders_filter.html', context)
+
+
+@user_passes_test(admin_required)
+def orders_search(request):
+    query = request.GET.get('qorder')
+    
+    if query:
+        orders = CartOrder.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(sku__icontains=query))
+    else:
+        orders = CartOrder.objects.all()
+    
+    context = {
+        'orders': orders,
+        'query': query,
+    }
+    
+    return render(request, 'a_useradmin/search.html', context)
 
 
 @user_passes_test(admin_required)

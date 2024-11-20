@@ -3,8 +3,11 @@
 {% load static %}
 
 {% block content %}
+{% spaceless %}
+
+
 <div class="flex min-h-screen bg-gray-50">
-    <!-- Sidebar -->
+
     <div class="hidden md:block w-64 bg-white shadow-sm">
         <div class="px-4 py-6">
             <div class="flex items-center gap-4 ">
@@ -14,19 +17,15 @@
             <nav class="mt-6 space-y-2">
                 <a href="{% url 'dashboard-admin' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
                     Panel
                 </a>
-                <a href="{% url 'products' %}"
-                    class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
+                <a href="{% url 'products' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
                     <img class="w-5 h-5 mr-3" src="{% static 'images/logo-black.svg' %}" alt="">
-
                     Productos
                 </a>
-                <a href="{% url 'orders' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
+                <a href="" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
                     <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -52,19 +51,18 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="sm:flex sm:items-center sm:justify-between mb-8">
-            <div class="mb-4 sm:mb-0">
-                <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
-                <p class="text-sm text-gray-500">Gestiona todos tus productos desde aquí</p>
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+            <div>
+                <h1 class="text-2xl font-semibold text-gray-900">Lista de Ordenes</h1>
+                <p class="text-sm text-gray-500">Gestiona todos tus pedidos desde aquí</p>
             </div>
-            <a href="{% url 'add-product' %}" class="inline-flex items-center px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out">
-                Crear Producto
-            </a>
         </div>
     
-        <main>
+        <!-- Filters -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 gap-4">
             <nav class="justify-center space-x-4">
                 <div x-data="{ open: false }" x-cloak class="relative">
                     <button @click="open = !open" @click.outside="open = false"
@@ -85,76 +83,97 @@
                         x-transition:leave-end="transform opacity-0 scale-95"
                         class="absolute mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                         <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                            <a href="{% url 'products-filter' 'all' %}"
+                            <a href="{% url 'orders-filter' 'all' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">Todas los productos</a>
+                                role="menuitem">Todas las ordenes</a>
                             <div class="border-b border-gray-200"></div>
-                            <a href="{% url 'products-filter' 'publicado' %}"
+                            <a href="{% url 'orders-filter' 'False' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">Publicado</a>
-                            <a href="{% url 'products-filter' 'borrador' %}"
+                                role="menuitem">Sin Pagar</a>
+                                <a href="{% url 'orders-filter' 'True' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">Borrador</a>
-                            <a href="{% url 'products-filter' 'en_revision' %}"
+                                role="menuitem">Pagado</a>
+                            <div class="border-b border-gray-200"></div>
+                            <a href="{% url 'orders-filter' 'entregado' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">En Revisión</a>
-                            <a href="{% url 'products-filter' 'rechazado' %}"
+                                role="menuitem">Entregado</a>
+                            <a href="{% url 'orders-filter' 'enviado' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">Rechazado</a>
-                            <a href="{% url 'products-filter' 'inhabilitado' %}"
+                                role="menuitem">Enviado</a>
+                            <a href="{% url 'orders-filter' 'procesando' %}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem">Inhabilitado</a>
-                        </div>
+                                role="menuitem">Procesando</a>
+                            </div>
                     </div>
                 </div>
             </nav>
-            
-    
-            <div class="space-y-4">
-                {% for product in all_products %}
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-lg border p-4 bg-white">
-                    <div class="flex items-center gap-4 mb-4 sm:mb-0">
-                        <img src="{{ product.image.url }}" alt="{{ product.name }}"
-                            class="w-20 h-20 object-cover rounded-lg">
-                        <div>
-                            <h2 class="font-semibold">{{ product.title }}</h2>
-                            <p class="text-sm text-gray-500">$ {{ product.price|formato_precio }}</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8">
-                        {% if product.product_status == 'publicado' %}
-                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Publicado</span>
-                        {% elif product.product_status == 'borrador' %}
-                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Borrador</span>
-                        {% elif product.product_status == 'inhabilitado' %}
-                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inhabilitado</span>
-                        {% elif product.product_status == 'rechazado' %}
-                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rechazado</span>
-                        {% elif product.product_status == 'en_revision' %}
-                        <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">En revisión</span>
-                        {% endif %}
-                        <span class="text-sm text-gray-500">{{ product.date|date:'d M, Y' }}</span>
-                        <div class="flex gap-2">
-                            <a href="{% url 'edit-product' product.pid %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm transition duration-300 ease-in-out">
-                                Editar
-                            </a>
-                            <a href="{% url 'delete-product' product.pid %}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-1 px-2 rounded text-sm transition duration-300 ease-in-out">
-                                Eliminar
-                            </a>
-                        </div>
-                    </div>
+            <form action="{% url 'orders-search' %}" method="GET" class="relative">
+                <input type="search" name="qorder" placeholder="Buscar ordenes..." class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" />
+                <button class="bg-transparent absolute inset-y-0 left-0 flex items-center pl-3">          
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+            </form>
+        </div>
+
+        {% if orders %}
+        <div class="bg-white rounded-lg shadow-sm">
+            <div class="p-6">
+                <h2 class="text-lg font-semibold text-gray-900">Ordenes</h2>
+                <div class="mt-4">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Apellido</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Celular</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado del Producto</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado de Pago</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ver Detalles</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for order in orders %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.sku }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.first_name}}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.last_name}}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ order.phone }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ order.order_date }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">{{ order.product_status|title }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if order.paid_status == True %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        Pagado
+                                    </span>
+                                    {% else %}
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Sin Pagar
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <a href="{% url 'order-detail' order.id %}" class="text-green-600 hover:text-green-900">Ver datalles</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                {% endfor %}
             </div>
-        </main>
+        </div>
+        {% else %}
+            <p>No se encontraron órdenes para "{{ query }}".</p>
+        {% endif %}
+        
     </div>
 
-    
 </div>
 
 
-<div id="spinner" class="absolute top-2/4 left-2/4" hx-trigger="load">
-    <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
-</div>
+
+{% endspaceless %}
+
 
 {% endblock %}
