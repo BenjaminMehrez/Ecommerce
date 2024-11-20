@@ -162,7 +162,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-500">
-                                    <a href="{% url 'order-detail' order.id %}" class="text-green-600 hover:text-green-900">Ver detalles</a>
+                                    <a href="{% url 'order-detail-admin' order.id %}" class="text-green-600 hover:text-green-900">Ver detalles</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -229,7 +229,7 @@
                                                 {{ order.paid_status|yesno:"Pagado,Pendiente de pago" }}
                                             </span>
                                         </div>
-                                        <a href="{% url 'order-detail' order.id %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        <a href="{% url 'order-detail-admin' order.id %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                             Ver detalles
                                         </a>
                                     </div>

@@ -5,7 +5,7 @@
 
 {% load static %}
 
-<div class="container mx-auto px-4 md:px-6 lg:px-8 py-8">
+<div class="container mx-auto px-4 md:px-6 lg:px-8 py-8 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
     <h1 class="text-2xl md:text-3xl font-bold mb-6">Tu carrito</h1>
     {% if cart_data %}
         <p class="text-base md:text-lg mb-4">Tienes {{ totalcartitems }} producto{{ totalcartitems|pluralize }} en el carrito</p>
@@ -54,13 +54,13 @@
                             </td>
                             <td class="mx-auto md:m-0 px-4 md:px-6 py-6 md:py-4 text-md font-medium">
                                 <div class="flex space-x-4">
-                                    <button data-product="{{ product_id }}" class="update-product bg-blue-600 py-3 px-3">
+                                    <button data-product="{{ product_id }}" class="update-product bg-blue-600 py-3 px-8">
                                         <span class="sr-only">Actualizar</span>
                                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                         </svg>
                                     </button>
-                                    <button data-product="{{ product_id }}" class="group relative delete-product flex h-10 w-10 flex-col items-center justify-center overflow-hidden rounded-xl border-2 border-red-800 bg-red-600 hover:bg-red-900">
+                                    <button data-product="{{ product_id }}" class="group relative delete-product flex py-3 px-8 flex-col items-center justify-center overflow-hidden rounded-md  bg-red-600 hover:bg-red-900">
                                         <svg viewBox="0 0 1.625 1.625" class="absolute -top-7 fill-white delay-100 group-hover:top-6 group-hover:animate-[spin_1.4s] group-hover:duration-1000" height="15" width="15">
                                             <path d="M.471 1.024v-.52a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099h-.39c-.107 0-.195 0-.195-.195"></path>
                                             <path d="M1.219.601h-.163A.1.1 0 0 1 .959.504V.341A.033.033 0 0 0 .926.309h-.26a.1.1 0 0 0-.098.098v.618c0 .054.044.098.098.098h.487a.1.1 0 0 0 .098-.099v-.39a.033.033 0 0 0-.032-.033"></path>
