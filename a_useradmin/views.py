@@ -175,7 +175,7 @@ def orders_search(request):
     query = request.GET.get('qorder')
     
     if query:
-        orders = CartOrder.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(sku__icontains=query))
+        orders = CartOrder.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(oid__icontains=query))
     else:
         orders = CartOrder.objects.all()
     
@@ -228,7 +228,7 @@ def change_order_status(request, oid):
 
 
 def reviews(request):
-    reviews = ProductReview.objects.all()
+    reviews = ProductReview.objects.all().order_by('-date')
     
     context = {
         'reviews': reviews,
