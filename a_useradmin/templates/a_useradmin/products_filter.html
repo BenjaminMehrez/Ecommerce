@@ -64,7 +64,7 @@
             </a>
         </div>
     
-        <main>
+        <main class="opacity-0" _="on load transition my opacity to 1 over 0.5 seconds">
             <nav class="justify-center space-x-4">
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" @click.outside="open = false"
@@ -139,7 +139,6 @@
         </main>
     </div>
 
-    
 </div>
 
 
