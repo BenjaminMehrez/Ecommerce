@@ -41,6 +41,7 @@ def create_preference(order):
         },
         "auto_return": "approved",
         "external_reference": str(order.oid),  # ID único para identificar el pedido
+        "statement_descriptor": "Test Ecommerce",
     }
 
     preference = sdk.preference().create(preference_data)
