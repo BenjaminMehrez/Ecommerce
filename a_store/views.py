@@ -619,6 +619,18 @@ def ajax_contaxt(request):
     return JsonResponse({'data': data})
 
 
+def cookies_settings(request):
+    return render(request, 'a_store/cookies_settings.html')
+
+def terms_of_service(request):
+    return render(request, 'a_store/terms_of_service.html')
+
+def privacy_policy(request):
+    return render(request, 'a_store/privacy_policy.html')
+
+
+
+
 def about_us(request):
     pass
 
@@ -626,10 +638,3 @@ def about_us(request):
 def purchase_guide(request):
     pass
 
-
-def privacy_policy(request):
-    pass
-
-
-def terms_of_service(request):
-    pass

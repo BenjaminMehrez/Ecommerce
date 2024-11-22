@@ -1,0 +1,184 @@
+{% extends 'layouts/blank.html' %}
+
+{% block content %}
+
+
+<main class="container mx-auto p-8">
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4" id="politica-de-cookies">¿Qué son las cookies?</h2>
+        <p class="text-sm leading-relaxed">
+            Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web.
+            Estos archivos permiten que el sitio web recuerde tus acciones y preferencias (como inicio de sesión,
+            idioma, tamaño de fuente y otras preferencias) durante un periodo de tiempo, para que no tengas que volver a
+            configurarlas cada vez que regreses.
+        </p>
+    </section>
+
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">¿Qué tipos de cookies utilizamos?</h2>
+        <ul class="list-disc ml-6 space-y-2">
+            <li><strong>Cookies esenciales:</strong> Estas cookies son necesarias para el funcionamiento del sitio web y
+                no pueden ser desactivadas. Por ejemplo, cookies relacionadas con la autenticación de usuarios o la
+                gestión de la seguridad.</li>
+            <li><strong>Cookies de funcionalidad:</strong> Nos permiten recordar tus preferencias para mejorar tu
+                experiencia (por ejemplo, el idioma o la región).</li>
+            <li><strong>Cookies analíticas:</strong> Estas cookies nos ayudan a analizar el tráfico del sitio web y cómo
+                los usuarios interactúan con el contenido. Utilizamos herramientas como Google Analytics.</li>
+            <li><strong>Cookies de marketing:</strong> Utilizadas para mostrar anuncios relevantes a los usuarios,
+                basados en sus intereses y comportamientos.</li>
+        </ul>
+    </section>
+
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">¿Cómo puedes gestionar las cookies?</h2>
+        <p class="text-sm leading-relaxed">
+            Puedes gestionar tus preferencias de cookies desde nuestra página de <a href="#configuracion-de-cookies"
+                class="text-blue-500 underline">Configuración de Cookies</a>.
+            También puedes configurar tu navegador para bloquear o eliminar cookies.
+            A continuación, te mostramos enlaces a las guías de los navegadores más populares:
+        </p>
+        <ul class="list-disc ml-6 mt-4">
+            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank"
+                    class="text-blue-500 underline">Google Chrome</a></li>
+            <li><a href="https://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-sitios-web" target="_blank"
+                    class="text-blue-500 underline">Mozilla Firefox</a></li>
+            <li><a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" target="_blank"
+                    class="text-blue-500 underline">Apple Safari</a></li>
+            <li><a href="https://support.microsoft.com/es-es/microsoft-edge" target="_blank"
+                    class="text-blue-500 underline">Microsoft Edge</a></li>
+        </ul>
+    </section>
+
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">¿Cuánto tiempo se almacenan las cookies?</h2>
+        <p class="text-sm leading-relaxed">
+            La duración de las cookies en tu dispositivo puede variar según su propósito. Algunas cookies se eliminan
+            automáticamente
+            cuando cierras el navegador (cookies de sesión), mientras que otras pueden permanecer en tu dispositivo
+            hasta que las elimines
+            manualmente (cookies persistentes).
+        </p>
+    </section>
+
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Cookies de terceros</h2>
+        <p class="text-sm leading-relaxed">
+            En algunas páginas de nuestro sitio, se pueden usar cookies de terceros, como las de Google Analytics, para
+            recopilar información
+            anónima sobre el uso del sitio. No controlamos la configuración de estas cookies, por lo que te recomendamos
+            consultar las políticas
+            de cookies de estos terceros en sus sitios web.
+        </p>
+    </section>
+
+    <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Cambios en esta política</h2>
+        <p class="text-sm leading-relaxed">
+            Esta política puede ser actualizada en cualquier momento para reflejar cambios en el uso de cookies o en los
+            requisitos legales.
+            Te recomendamos visitar esta página periódicamente para estar informado.
+        </p>
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-semibold mb-4">Contacto</h2>
+        <p class="text-sm leading-relaxed">
+            Si tienes preguntas sobre esta política de cookies, puedes contactarnos en:
+        </p>
+        <p class="text-sm leading-relaxed font-semibold">
+            Correo electrónico: <a href="mailto:soporte@ejemplo.com"
+                class="text-blue-500 underline">soporte@ejemplo.com</a>
+        </p>
+    </section>
+
+    <div class="container mx-auto py-8">
+        <h1 class="text-2xl font-bold mb-4" id="configuracion-de-cookies">Configuración de Cookies</h1>
+
+        <!-- Política de Cookies -->
+        <section class="mb-8">
+            <h2 class="text-xl font-semibold mb-2">Nuestra Política de Cookies</h2>
+            <p class="text-sm leading-relaxed">
+                Este sitio utiliza cookies para garantizar su funcionamiento y mejorar tu experiencia. Puedes aceptar
+                todas
+                las cookies o personalizar tu configuración.
+                Las cookies que usamos incluyen:
+            </p>
+            <ul class="list-disc ml-6 mt-2">
+                <li><strong>Cookies esenciales:</strong> Necesarias para el funcionamiento del sitio.</li>
+                <li><strong>Cookies analíticas:</strong> Nos ayudan a analizar el uso del sitio.</li>
+                <li><strong>Cookies de marketing:</strong> Utilizadas para mostrar anuncios personalizados.</li>
+            </ul>
+            <p class="mt-4 text-sm">
+                Para más información, consulta nuestra <a href="#politica-de-cookies"
+                    class="underline text-blue-500">Política de Cookies</a>.
+            </p>
+        </section>
+
+        <!-- Configuración de Cookies -->
+        <section class="">
+            <h2 class="text-xl font-semibold mb-4">Gestionar Preferencias de Cookies</h2>
+            <form id="cookie-form" class="">
+                <div class="space-y-5 mb-5">
+                    <div class="flex sm:gap-2">
+                        <label class="">Cookies esenciales (siempre habilitadas)</label>
+                        <input type="checkbox" name="essential" checked disabled class="w-8 md:w-5">
+                    </div>
+                    <div class="flex gap-2">
+                        <label class="">Cookies analíticas</label>
+                        <input type="checkbox" name="analytics" id="analytics" class="w-8 md:w-5">
+                    </div>
+                    <div class="flex gap-2">
+                        <label class="">Cookies de marketing</label>
+                        <input type="checkbox" name="marketing" id="marketing" class="w-8 md:w-5">
+                    </div>
+                </div>
+                <button id="save-preferences" class="bg-blue-600 text-white px-4 py-2 rounded">
+                    Guardar preferencias
+                </button>
+                <div id="success-notification"
+                    class="hidden fixed top-20 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg"
+                    role="alert">
+                    <span class="block sm:inline">Tus preferencias han sido guardadas.</span>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('cookie-form');
+        const savePreferencesButton = document.getElementById('save-preferences');
+
+        // Variables de los checkboxes
+        const analyticsCheckbox = document.getElementById('analytics');
+        const marketingCheckbox = document.getElementById('marketing');
+
+        // Cargar preferencias guardadas
+        const savedPreferences = JSON.parse(localStorage.getItem('cookiePreferences')) || {};
+        if (analyticsCheckbox) analyticsCheckbox.checked = savedPreferences.analytics || false;
+        if (marketingCheckbox) marketingCheckbox.checked = savedPreferences.marketing || false;
+
+        // Guardar preferencias al pulsar el botón
+        savePreferencesButton.addEventListener('click', () => {
+            const preferences = {
+                essential: true, // Siempre habilitadas
+                analytics: analyticsCheckbox ? analyticsCheckbox.checked : false,
+                marketing: marketingCheckbox ? marketingCheckbox.checked : false,
+            };
+
+            localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+            const errorNotification = $('#success-notification');
+
+            errorNotification.fadeIn();
+
+            setTimeout(function () {
+                errorNotification.fadeOut();
+            }, 3000);
+
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% if request.resolver_match.url_name != 'account_login' and request.resolver_match.url_name != 'account_signup' %}
+<div id="cookie-banner" class="fixed bottom-0 left-0 w-full text-gray-800 border shadow-lg bg-white z-50">
+    <div class="flex flex-col md:flex-row items-center md:justify-between gap-4 p-6 pt-8 font-medium">
+        <p class="text-md">
+            Usamos cookies para mejorar tu experiencia y analizar el tráfico de nuestro sitio.
+            Puedes aceptar todas las cookies o gestionar tus preferencias. Consulta nuestra
+            <a href="{% url 'cookies-settings' %}" class="underline text-blue-400 hover:text-blue-300">Política de Cookies</a>.
+        </p>
+        <div class="flex font-bold items-center gap-5">
+            <button id="accept-cookies" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded text-sm">
+                Aceptar Todas
+            </button>
+            <a href="{% url 'cookies-settings' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded text-sm">
+                Configuración
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('cookie-banner');
+        const acceptButton = document.getElementById('accept-cookies');
+
+        // Verificar si ya se ha dado consentimiento
+        if (localStorage.getItem('cookieConsent') === 'true') {
+            banner.style.display = 'none';
+        }
+
+        // Aceptar todas las cookies
+        acceptButton.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'true');
+            banner.style.display = 'none';
+            console.log('Todas las cookies aceptadas');
+        });
+    });
+</script>
+

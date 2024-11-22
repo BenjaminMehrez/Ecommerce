@@ -68,5 +68,12 @@ urlpatterns = [
     path('add-to-wishlist/', add_to_wishlist, name='add-to-wishlist'),
     path('delete-wishlist/', delete_wishlist, name='delete-wishlist'),
     
+    # COOKIES
+    path('cookies-settings/', cookies_settings, name='cookies-settings'),
     
+    # OTHERS
+    path('terms-of-service/', terms_of_service, name='terms-of-service'),
+    path('privacy-policy/', privacy_policy, name='privacy-policy'),
+    
+
 ]
