@@ -16,6 +16,8 @@ import calendar
 from django.db.models.functions import ExtractMonth
 from django.core import serializers
 from .forms import *
+from .mercadopago import create_preference
+
 
 # Create your views here.
 
@@ -396,10 +398,14 @@ def checkout(request, oid):
         else:
             messages.warning(request, 'No existe el cupon')
             return redirect('checkout', order.oid)
-        
+    
+    preference = create_preference(order)
+    
     context = {
         'order':order,
         'order_items': order_items,
+        'preference_id': preference['id'],
+        'init_point': preference['init_point']
     }
 
     print(order.price)
