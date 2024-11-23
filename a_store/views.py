@@ -7,16 +7,14 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib import messages
 from a_users.models import *
-from django.urls import reverse
-from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from paypal.standard.forms import PayPalPaymentsForm
 from django.contrib.auth.decorators import login_required
 import calendar
 from django.db.models.functions import ExtractMonth
 from django.core import serializers
 from .forms import *
 from .mercadopago import create_preference
+from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -25,9 +23,23 @@ from .mercadopago import create_preference
 def home(request):
     products = Product.objects.filter(product_status='publicado', featured=True).order_by('-date')
 
+
+    paginator = Paginator(products, 4)
+    page = int(request.GET.get('page', 1))
+    
+    try:
+        products = paginator.page(page)
+    except:
+        return HttpResponse('')
+
+
     context = {
-        'products': products
+        'products': products,
+        'page': page,
     }
+    
+    if request.htmx:
+        return render(request, 'snippets/loop_home_products.html', context)
 
     return render(request, 'a_store/home.html', context)
 

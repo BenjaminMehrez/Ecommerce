@@ -45,10 +45,11 @@ def profile_edit_view(request):
             form.save()
             
             if request.user.emailaddress_set.get(primary=True).verified:
-                return redirect('dashboard-profile')
-            else:
                 messages.success(request, 'Perfil actualizado')
                 return redirect('dashboard-profile')
+            else:
+                messages.success(request, 'Perfil creado')
+                return redirect('home')
                 
         
     if request.path == reverse('profile-onboarding'):

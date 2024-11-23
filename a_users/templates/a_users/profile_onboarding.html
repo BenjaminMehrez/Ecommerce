@@ -1,45 +1,100 @@
 {% extends 'layouts/c.html' %}
-{% load static  %}
-{% block title %}Completa tu Profile | {% endblock %}
+{% load static %}
+{% block title %}Editar Perfil | {% endblock %}
 
 {% block content %}
 
-<h1 class="mb-2">Completa tu Perfil</h1>
-<div class="text-center flex flex-col items-center">
-    <img id="avatar" class="w-36 h-36 rounded-full object-cover mb-4" src="{{ user.profile.avatar }}" />
-    <div class="text-center max-w-md">
-        <h1 id="realname">{{ user.profile.name }}</h1>
-        <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+
+<div class="bg-gray-100 min-h-screen py-12 px-4 sm:px-6 lg:px-8 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+    <div class="max-w-3xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-gradient-to-r from-gray-500 to-gray-600 py-6 px-8">
+            <h1 class="text-3xl font-bold text-white">Completa tu perfil</h1>
+        </div>
+
+        <form method="post" enctype="multipart/form-data" class="p-10 space-y-8">
+            {% csrf_token %}
+
+            <div class="max-w-md mx-auto bg-white rounded-xl shadow-lg overflow-hidden md:max-w-2xl p-5">
+                <div class="flex flex-col md:flex-row justify-evenly items-center">
+                    <div class="md:shrink-0">
+                        {% if user.profile.image %}
+                            <img id="avatar" class="h-32 w-32 object-cover rounded-full border-4 border-gray-200" src="{{ user.profile.image.url }}" alt="Current profile photo">
+                        {% else %}
+                            <div id="avatar-placeholder" class="h-32 w-32 rounded-full bg-gray-100 flex items-center justify-center">
+                                <span class="text-gray-500 text-4xl font-bold">{{ user.username|make_list|first|upper }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col items-center mt-4 md:mt-0 md:ml-6">
+                        <div class="mt-8 mb-2 flex items-center justify-center">
+                            <label for="{{ form.image.id_for_label }}" class="ml-3 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer">
+                                {{ form.image }}
+                                <span>Upload a file</span>
+                            </label>
+                        </div>
+                        {% if form.image.errors %}
+                            <p class="mt-2 text-sm text-red-600" id="{{ form.image.id_for_label }}-error">
+                                {{ form.image.errors|join:", " }}
+                            </p>
+                        {% endif %}
+                        <p class="mt-1 text-sm text-gray-500" id="{{ form.image.id_for_label }}-description">
+                            PNG, JPG, GIF up to 10MB
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="space-y-2 ">
+                <h4 id="realname">{{ user.profile.name }}</h4>
+                <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+            </div>
+
+            <label for="">
+                Nombre Completo
+                {{ form.full_name }}
+            </label>
+            <label for="">
+                Celular
+                {{ form.phone }}
+            </label>
+
+            <label for="">
+                Información
+                {{ form.bio }}                
+            </label>
+
+            <div class="flex flex-col space-y-10">
+                <div class="flex flex-col gap-6 text-center">
+                    <button class="w-40 p-3 rounded-md">Guardar</button>
+                    <a class="w-40 p-3 rounded-md bg-gray-600 text-white font-medium" href="{% url 'home' %}">Saltar</a>
+                </div>
+            </div>
+
+        </form>
+
+
     </div>
 </div>
-<form method="POST" enctype="multipart/form-data">
-    <p>Informacion Personal </p>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <br>
-    <p>Direccion</p>
-    {{ shipping_form.as_p }}
-    <button type="submit" >Guardar</button>
-    <a class="button secondaryAction ml-1" href="{% url 'home' %}">Saltar</a>
-</form>
+
 
 <div id="spinner" class="absolute top-2/4 left-2/4" hx-trigger="load">
     <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
 </div>
 
 <script>
-    
+
     // This updates the avatar
     const fileInput = document.querySelector('input[type="file"]');
 
     fileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    const image = document.querySelector('#avatar');
+        const file = event.target.files[0];
+        const image = document.querySelector('#avatar');
 
-    if (file && file.type.includes('image')) {
-        const url = URL.createObjectURL(file);
-        image.src = url;
-    }
+        if (file && file.type.includes('image')) {
+            const url = URL.createObjectURL(file);
+            image.src = url;
+        }
     });
 
     // This updates the name
@@ -47,7 +102,7 @@
     const realnameOutput = document.getElementById('realname');
 
     realnameInput.addEventListener('input', (event) => {
-    realnameOutput.innerText = event.target.value;
+        realnameOutput.innerText = event.target.value;
     });
 
 </script>
