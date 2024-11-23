@@ -956,6 +956,10 @@ video {
   margin-top: 2rem;
 }
 
+.mt-12 {
+  margin-top: 3rem;
+}
+
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1133,10 +1137,6 @@ video {
 
 .w-64 {
   width: 16rem;
-}
-
-.w-7 {
-  width: 1.75rem;
 }
 
 .w-8 {
@@ -1385,6 +1385,10 @@ video {
   justify-content: space-between;
 }
 
+.justify-around {
+  justify-content: space-around;
+}
+
 .justify-evenly {
   justify-content: space-evenly;
 }
@@ -1599,6 +1603,11 @@ video {
   border-color: transparent;
 }
 
+.border-white {
+  --tw-border-opacity: 1;
+  border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
+}
+
 .\!bg-gray-800 {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1)) !important;
@@ -1811,6 +1820,10 @@ video {
   padding: 1.5rem;
 }
 
+.p-7 {
+  padding: 1.75rem;
+}
+
 .p-8 {
   padding: 2rem;
 }
@@ -1984,10 +1997,6 @@ video {
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pl-2 {
-  padding-left: 0.5rem;
 }
 
 .text-left {
@@ -2326,11 +2335,6 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.brightness-50 {
-  --tw-brightness: brightness(.5);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -2658,22 +2662,90 @@ input[name="remember"] {
 .slider {
   aspect-ratio: 10 / 16;
   width: screen;
+  /* Usar el ancho de la pantalla */
   height: auto;
   position: relative;
   display: flex;
-  overflow: scroll;
+  overflow-x: scroll;
   scroll-snap-type: x mandatory;
 }
 
-.slider img {
-  width: 100%;
-  left: 0;
-  position: sticky;
-  -o-object-fit: cover;
-     object-fit: cover;
-  border-radius: 5px;
+.slide {
+  min-width: 100%;
+  /* Cada slide ocupa el 100% del ancho del slider */
   scroll-snap-align: center;
-  border-radius: 0;
+}
+
+.img1 {
+  background-image: linear-gradient(0deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.6)),url('../images/portadmovil1.jpg');
+  background-size: cover;
+  /* Asegura que la imagen cubra completamente el contenedor */
+  background-position: center;
+  /* Centra la imagen dentro del contenedor */
+  background-repeat: no-repeat;
+  /* Evita que la imagen se repita */
+  width: 100%;
+  /* Ancho completo del contenedor */
+  height: 100%;
+  /* Altura completa del contenedor */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Sombra suave para destacar la imagen */
+}
+
+.img2 {
+  background-image: linear-gradient(0deg,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),url('../images/portadmovil2.jpg');
+  background-size: cover;
+  /* Asegura que la imagen cubra completamente el contenedor */
+  background-position: center;
+  /* Centra la imagen dentro del contenedor */
+  background-repeat: no-repeat;
+  /* Evita que la imagen se repita */
+  width: 100%;
+  /* Ancho completo del contenedor */
+  height: 100%;
+  /* Altura completa del contenedor */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Sombra suave para destacar la imagen */
+}
+
+.img3 {
+  background-image: linear-gradient(0deg,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.8)),url('../images/portadmovil3.jpg');
+  background-size: cover;
+  /* Asegura que la imagen cubra completamente el contenedor */
+  background-position: center;
+  /* Centra la imagen dentro del contenedor */
+  background-repeat: no-repeat;
+  /* Evita que la imagen se repita */
+  width: 100%;
+  /* Ancho completo del contenedor */
+  height: 100%;
+  /* Altura completa del contenedor */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Sombra suave para destacar la imagen */
+}
+
+.img4 {
+  background-image: linear-gradient(0deg,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.7)),url('../images/portadmovil4.jpg');
+  background-size: cover;
+  /* Asegura que la imagen cubra completamente el contenedor */
+  background-position: center;
+  /* Centra la imagen dentro del contenedor */
+  background-repeat: no-repeat;
+  /* Evita que la imagen se repita */
+  width: 100%;
+  /* Ancho completo del contenedor */
+  height: 100%;
+  /* Altura completa del contenedor */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* Sombra suave para destacar la imagen */
 }
 
 @media (min-width: 1280px) {
@@ -2827,6 +2899,16 @@ input[name="remember"] {
 .hover\:bg-red-900:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(127 29 29 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-white:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:text-black:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
 .hover\:text-blue-300:hover {
@@ -3564,4 +3646,3 @@ input[name="remember"] {
     justify-content: flex-end;
   }
 }
-
