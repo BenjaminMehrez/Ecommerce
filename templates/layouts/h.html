@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block layout %}
+
+<content class="block w-full">
+
+    <video autoplay muted class="object-cover portada">
+        <source src="{% static 'images/portada.mp4' %}" type="video/mp4">
+        Tu navegador no soporta reproducción de video.
+    </video>
+    
+    {% block content %} 
+    {% endblock %}
+
+</content>
+
+{% endblock %}

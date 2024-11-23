@@ -95,3 +95,16 @@ input[name="remember"] {
 .alert-success { @apply bg-emerald-600 }
 .alert-warning { @apply bg-orange-600 }
 .alert-danger { @apply bg-red-600 }
+
+
+.portada{
+    height: 41dvh;
+    width: 100dvw;
+}
+
+@media (min-width: 768px){
+    .portada{
+        height: 75dvh;
+        width: 100dvw;
+    }
+}
