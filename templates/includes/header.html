@@ -100,9 +100,9 @@
             x-transition:leave="duration-300 ease-in"
             x-transition:leave-start="opacity-100 translate-x-0"
             x-transition:leave-end="opacity-0 -translate-x-96">
-                        <form class="flex mt-6 justify-center px-4" method="GET" action="{% url 'search' %}">
-                            <input class="p-2 search text-black outline-0" type="text" name="q" placeholder="Buscar" value="{{ query }}">
-                            <button class="p-2 bg-gray-200 search-lupa hover:bg-gray-300"><img class="w-7" src="{% static 'images/search-black.svg' %}" alt="search"></button>
+                        <form class="flex mt-6 justify-center px-6" method="GET" action="{% url 'search' %}">
+                            <input class="p-2 pl-4 search text-black outline-0" type="text" name="q" placeholder="Buscar" value="{{ query }}">
+                            <button class="p-2 px-4 bg-gray-200 search-lupa hover:bg-gray-300"><img class="w-8" src="{% static 'images/search-black.svg' %}" alt="search"></button>
                         </form> 
             </nav>
             <div class="hidden md:grid grid-flow-col col-start-7 col-end-9 lg:col-start-8 justify-center xl:justify-end">

@@ -4,14 +4,24 @@
 
 <content class="block w-full mb-44">
 
-    <video autoplay muted class="object-cover portada">
+    <section class="slider brightness-50 md:hidden">
+        <img src="{% static 'images/portadmovil1.jpg' %}">
+        <img src="{% static 'images/portadmovil2.jpg' %}">
+        <img src="{% static 'images/portadmovil3.jpg' %}">
+        <img src="{% static 'images/portadmovil4.jpg' %}">
+    </section>
+
+    
+    <video autoplay muted class="hidden md:block object-cover portada">
         <source src="{% static 'images/portada.mp4' %}" type="video/mp4">
         Tu navegador no soporta reproducción de video.
     </video>
-    
-    {% block content %} 
+
+    {% block content %}
     {% endblock %}
 
 </content>
+
+
 
 {% endblock %}

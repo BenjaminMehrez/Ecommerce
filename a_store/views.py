@@ -24,7 +24,7 @@ def home(request):
     products = Product.objects.filter(product_status='publicado', featured=True).order_by('-date')
 
 
-    paginator = Paginator(products, 4)
+    paginator = Paginator(products, 8)
     page = int(request.GET.get('page', 1))
     
     try:

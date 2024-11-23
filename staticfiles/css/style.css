@@ -836,6 +836,10 @@ video {
   margin-bottom: 10rem;
 }
 
+.mb-44 {
+  margin-bottom: 11rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
@@ -952,10 +956,6 @@ video {
   margin-top: 2rem;
 }
 
-.mb-44 {
-  margin-bottom: 11rem;
-}
-
 .line-clamp-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -1067,10 +1067,6 @@ video {
   height: 100vh;
 }
 
-.h-36 {
-  height: 9rem;
-}
-
 .max-h-48 {
   max-height: 12rem;
 }
@@ -1161,10 +1157,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-36 {
-  width: 9rem;
 }
 
 .min-w-20 {
@@ -1427,10 +1419,6 @@ video {
 
 .gap-8 {
   gap: 2rem;
-}
-
-.gap-7 {
-  gap: 1.75rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -1827,10 +1815,6 @@ video {
   padding: 2rem;
 }
 
-.p-12 {
-  padding: 3rem;
-}
-
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -1982,6 +1966,10 @@ video {
   padding-top: 2.5rem;
 }
 
+.pt-12 {
+  padding-top: 3rem;
+}
+
 .pt-2 {
   padding-top: 0.5rem;
 }
@@ -1998,8 +1986,8 @@ video {
   padding-top: 2rem;
 }
 
-.pt-12 {
-  padding-top: 3rem;
+.pl-2 {
+  padding-left: 0.5rem;
 }
 
 .text-left {
@@ -2338,6 +2326,11 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.brightness-50 {
+  --tw-brightness: brightness(.5);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -2652,6 +2645,35 @@ input[name="remember"] {
 
 .image-product{
   width: 360px;
+}
+
+.search{
+  border-radius: 10px 0 0 10px;
+}
+
+.search-lupa {
+  border-radius: 0 10px 10px 0;
+}
+
+.slider {
+  aspect-ratio: 10 / 16;
+  width: screen;
+  height: auto;
+  position: relative;
+  display: flex;
+  overflow: scroll;
+  scroll-snap-type: x mandatory;
+}
+
+.slider img {
+  width: 100%;
+  left: 0;
+  position: sticky;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+  scroll-snap-align: center;
+  border-radius: 0;
 }
 
 @media (min-width: 1280px) {
@@ -3466,10 +3488,6 @@ input[name="remember"] {
     grid-column-end: 8;
   }
 
-  .lg\:col-end-7 {
-    grid-column-end: 7;
-  }
-
   .lg\:ml-16 {
     margin-left: 4rem;
   }
@@ -3546,3 +3564,4 @@ input[name="remember"] {
     justify-content: flex-end;
   }
 }
+

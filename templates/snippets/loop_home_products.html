@@ -1,4 +1,4 @@
-<fade-in class="flex flex-wrap justify-center gap-6 container mx-auto pt-6 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+<fade-in class="flex flex-col items-center md:flex-row flex-wrap justify-center gap-6 container mx-auto pt-6 opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
 
 {% for product in products %}
     
@@ -6,7 +6,7 @@
     
 {% endfor %}
 
-<div hx-get="{% url 'home' %}?page={{ page|add:1 }}"
+<div class="flex" hx-get="{% url 'home' %}?page={{ page|add:1 }}"
     hx-trigger="revealed"
     hx-target="this"
     hx-swap="outerHTML">
