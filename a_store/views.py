@@ -2,12 +2,14 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.db.models import Avg, Count
 from taggit.models import Tag
 from .models import *
+import json
 from django.db.models import Q
 from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.contrib import messages
 from a_users.models import *
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 import calendar
 from django.db.models.functions import ExtractMonth
 from django.core import serializers
@@ -282,8 +284,6 @@ def delete_item_from_cart(request):
 
 
 
-
-
 def update_cart(request):
     product_id = str(request.GET['id'])
     product_qty = request.GET['qty']
@@ -425,7 +425,43 @@ def checkout(request, oid):
     return render(request, 'a_store/checkout.html', context)
 
 
-@login_required
+@csrf_exempt  # Asegúrate de permitir que Mercado Pago haga peticiones sin un token CSRF
+def payment_notification(request):
+    if request.method == "POST":
+        try:
+            # Cargar la notificación enviada por Mercado Pago
+            data = json.loads(request.body)
+
+            # Obtener el ID del pago y el estado del pago
+            payment_id = data["data"]["id"]
+            payment_status = data["data"]["status"]
+            external_reference = data["data"]["external_reference"]  # Aquí se usa el external_reference para obtener la orden
+
+            # Buscar la orden correspondiente
+            order = CartOrder.objects.get(oid=external_reference)
+
+            # Actualizar el estado de la orden según el estado del pago
+            if payment_status == "approved":
+                order.paid_status = True  # Marcar como pagada
+            elif payment_status == "rejected":
+                order.paid_status = False  # Pagada fallida
+            elif payment_status == "pending":
+                order.paid_status = False  # El pago está pendiente
+
+            # Guardar la orden con la actualización del estado
+            order.save()
+
+            # Responder con un JSON que confirma la recepción
+            return JsonResponse({"status": "success"})
+
+        except Exception as e:
+            print(f"Error al procesar la notificación: {e}")
+            return JsonResponse({"status": "error"}, status=400)
+
+    else:
+        return JsonResponse({"status": "error"}, status=400)
+
+
 def payment_success_view(request, oid):
     order = CartOrder.objects.get(oid=oid)
     if order.paid_status == False:
@@ -439,7 +475,6 @@ def payment_success_view(request, oid):
     return render(request, 'a_store/payment_success.html', context)
 
 
-@login_required
 def payment_failed_view(request):
     return render(request, 'a_store/payment_failed.html')
 

@@ -2,7 +2,7 @@
 {% if request.resolver_match.url_name != 'account_login' and request.resolver_match.url_name != 'account_signup' %}
 <header x-data="{ mobilenavOpen: false, mobilesearchOpen: false }" x-cloak class="bg-white shadow-md top-0 z-40 sticky">
     <nav class="grid lg:grid-cols-8 grid-rows-1 items-center h-8 bg-black">
-        <a class="font-bold text-white hover:underline grid lg:col-start-4 lg:col-end-6 justify-center" href="{% url 'product-list' %}">Descuentos hasta un 67%</a>
+        <a class="font-bold text-white hover:underline grid lg:col-start-4 lg:col-end-6 justify-center" href="{% url 'product-list' %}">Descuentos hasta un 50%</a>
         <div class="hidden lg:flex text-sm flex-row col-start-7 col-span-2 justify-end gap-5 pr-5">
             <a class="text-white hover:underline" href="{% url 'contact' %}">Contacto</a>
             <a class="text-white hover:underline" href="{% url 'terms-of-service' %}">Términos y Condiciones</a>
