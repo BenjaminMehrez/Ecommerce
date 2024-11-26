@@ -42,6 +42,8 @@ def user_directory_path(instance, filename):
 class Category(models.Model):
     cid = ShortUUIDField(unique=True, length=10, max_length=20, prefix='cat', alphabet='abcdefgh12345')
     title = models.CharField(max_length=100, default='Sneaker')
+    description = models.CharField(max_length=100, default='lo mejor de lo mejor')
+    detail = models.CharField(max_length=100, default='lomejor de lomejor')
     if settings.ENVIRONMENT == 'production' or settings.POSTGRES_LOCALLY == True:
         image = CloudinaryField(default='category.jpg')
     else:    

@@ -125,7 +125,7 @@ input[name="remember"] {
 
 .slider {
     aspect-ratio: 10 / 16;
-    width: screen; /* Usar el ancho de la pantalla */
+    width: 100%; 
     height: auto;
     position: relative;
     display: flex;
@@ -134,54 +134,11 @@ input[name="remember"] {
 }
 
 .slide {
-    min-width: 100%; /* Cada slide ocupa el 100% del ancho del slider */
+    min-width: 100%; 
     scroll-snap-align: center;
 }
 
-.img1 {
-    background-image: linear-gradient(0deg,
-    rgba(0, 0, 0, 0.6),
-    rgba(0, 0, 0, 0.6)),url('../images/portadmovil1.jpg');
-    background-size: cover; /* Asegura que la imagen cubra completamente el contenedor */
-    background-position: center; /* Centra la imagen dentro del contenedor */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    width: 100%; /* Ancho completo del contenedor */
-    height: 100%; /* Altura completa del contenedor */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para destacar la imagen */
-}
-
-.img2 {
-    background-image: linear-gradient(0deg,
-    rgba(0, 0, 0, 0.7),
-    rgba(0, 0, 0, 0.7)),url('../images/portadmovil2.jpg');
-    background-size: cover; /* Asegura que la imagen cubra completamente el contenedor */
-    background-position: center; /* Centra la imagen dentro del contenedor */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    width: 100%; /* Ancho completo del contenedor */
-    height: 100%; /* Altura completa del contenedor */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para destacar la imagen */
-}
-
-.img3 {
-    background-image: linear-gradient(0deg,
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 0.8)),url('../images/portadmovil3.jpg');
-    background-size: cover; /* Asegura que la imagen cubra completamente el contenedor */
-    background-position: center; /* Centra la imagen dentro del contenedor */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    width: 100%; /* Ancho completo del contenedor */
-    height: 100%; /* Altura completa del contenedor */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para destacar la imagen */
-}
-
-.img4 {
-    background-image: linear-gradient(0deg,
-    rgba(0, 0, 0, 0.7),
-    rgba(0, 0, 0, 0.7)),url('../images/portadmovil4.jpg');
-    background-size: cover; /* Asegura que la imagen cubra completamente el contenedor */
-    background-position: center; /* Centra la imagen dentro del contenedor */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
-    width: 100%; /* Ancho completo del contenedor */
-    height: 100%; /* Altura completa del contenedor */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para destacar la imagen */
+.imgp {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    filter: brightness(.3);
 }
