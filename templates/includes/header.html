@@ -12,7 +12,7 @@
             <div class="flex justify-between items-center m-auto px-4 pt-2 md:pt-0">
                 <div class="flex">
                     <a href="/" class="flex items-center gap-2">
-                      <img class="h-12 w-auto" src="{% static 'images/logo-black.svg' %}" alt="Logo">
+                      <img class="h-12 w-auto" src="{% static 'images/logo-black.png' %}" alt="Logo">
                       <span class="hidden sm:block text-lg font-bold text-gray-900">Ecommerce</span>
                     </a>
                 </div>
@@ -20,7 +20,7 @@
                     <a @click="mobilesearchOpen = !mobilesearchOpen && mobilenavOpen == false"
                         class="h-12 w-12 flex items-center justify-center cursor-pointer hover:border-2  rounded-lg">
                         <img x-show="!mobilesearchOpen" class="w-6 h-6 select-none"
-                            src="{% static 'images/search-black.svg' %}" />
+                            src="{% static 'images/search-black.png' %}" />
                         <img x-show="mobilesearchOpen" x-cloak class="w-6 h-6 select-none"
                             src="https://img.icons8.com/small/64/0000/delete-sign.png" />
                     </a>
@@ -109,7 +109,7 @@
             x-transition:leave-end="opacity-0 -translate-x-96">
                         <form class="flex mt-6 justify-center px-6" method="GET" action="{% url 'search' %}">
                             <input class="p-2 pl-4 search text-black outline-0" type="text" name="q" placeholder="Buscar" value="{{ query }}">
-                            <button class="p-2 px-4 bg-gray-200 search-lupa hover:bg-gray-300"><img class="w-8" src="{% static 'images/search-black.svg' %}" alt="search"></button>
+                            <button class="p-2 px-4 bg-gray-200 search-lupa hover:bg-gray-300"><img class="w-6" src="{% static 'images/search-black.png' %}" alt="search"></button>
                         </form> 
             </nav>
             <div class="hidden md:grid grid-flow-col col-start-7 col-end-9 lg:col-start-8 justify-center xl:justify-end">
