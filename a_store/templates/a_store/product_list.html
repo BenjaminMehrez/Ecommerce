@@ -13,53 +13,32 @@
             <a href="{% url 'product-detail' product.pid %}">
                 <div class="aspect-square overflow-hidden">
                     {% if product.old_price %}
-                    <span class="absolute bg-gray-900 text-white text-md font-semibold m-3 p-2 rounded border-gray-600">
-                        -{{ product.get_precentage|floatformat:0 }}%
+                    <span class="absolute bg-gray-900 text-white text-md font-semibold m-3 p-2 rounded border-gray-600">-{{ product.get_precentage|floatformat:0 }}%
                     </span>
                     {% endif %}
-                    <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
+                    <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
+                </div>
+            {% endif %}
+                <div class="flex flex-col items-center py-5 space-y-5">
+                    <h3 class="font-bold text-gray-800 text-xl line-clamp-2">{{ product.title }}</h3>
+                    <div class="flex gap-4 items-center mb-4">
+                        <span
+                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
+                        <span
+                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
+                    </div>
+                    <div class="pr-5">
+                        <div class="flex space-y-1">
+                            <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
+                            {% if product.old_price %}
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-500 ml-4 line-through">$ {{ product.old_price|formato_precio }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </a>
-            {% endif %}
-            <div class="p-5 pb-7 space-y-4">
-                <h3 class="font-bold text-gray-800 text-xl mb-2 line-clamp-2">{{ product.title }}</h3>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
-                    <span class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
-                </div>
-                <div class="flex items-center justify-between pr-5">
-                    <div class="space-y-1">
-                        <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
-                        {% if product.old_price %}
-                        <div class="flex items-center gap-2">
-                            <span class="text-sm text-gray-500 ml-4 line-through">$ {{ product.old_price|formato_precio }}</span>
-                        </div>
-                        {% endif %}
-                    </div>
-                    <div class="add-cart space-x-2">
-                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
-                        <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
-                        <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
-                        <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
-                        <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
-                        <div id="error-notification" class="hidden fixed top-32 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
-                            <strong class="font-bold">Error:</strong>
-                            <span class="block sm:inline">Producto ya agregado</span>
-                        </div>
-                        <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                            class="add-to-cart-btn relative inline-flex items-center justify-center p-3 rounded-md bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200"
-                            role="button">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
         </article>
         {% endfor %}
     </div>
@@ -68,74 +47,6 @@
 <div id="spinner" class="absolute top-2/4 left-2/4" hx-trigger="load">
     <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
 </div>
-<script>
 
-    $(".add-to-cart-btn").on("click", function () {
-
-        let this_val = $(this)
-        let index = this_val.attr('data-index')
-
-        let quantity = $('.product-quantity-' + index).val()
-        let product_title = $('.product-title-' + index).val()
-
-        let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
-        let product_pid = $('.product-pid-' + index).val()
-        let product_image = $('.product-image-' + index).val()
-
-        // console.log('Quantity:', quantity);
-        // console.log('Title:', product_title);
-        // console.log('price:', product_price);
-        // console.log('id:', product_id);
-        // console.log('Pid:', product_pid);
-        // console.log('Image:', product_image);
-        // console.log('Index:', index);
-        // console.log('Current Element:', this_val);
-
-
-        $.ajax({
-            url: '/add-to-cart',
-            data: {
-                'id': product_id,
-                'pid': product_pid,
-                'image': product_image,
-                'qty': quantity,
-                'title': product_title,
-                'price': product_price
-            },
-            dataType: 'json',
-            beforeSend: function () {
-                // console.log('Product adding');
-
-            },
-
-            success: function (res) {
-                this_val.html(`
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="https://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z" fill="currentColor"/>
-                        </svg>
-                `);
-
-                // console.log('Producto agreagdo al cart');
-                $('.cart-items-count').text(res.totalcartitems)
-
-            },
-
-            error: function () {
-                // Selecciona la notificación de error
-                const errorNotification = $('#error-notification');
-
-                // Muestra la notificación con un efecto fade-in
-                errorNotification.fadeIn();
-
-                // Desaparece la notificación después de 3 segundos
-                setTimeout(function () {
-                    errorNotification.fadeOut();
-                }, 3000);
-            }
-        })
-    })
-
-</script>
 
 {% endblock %}

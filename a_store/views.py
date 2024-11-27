@@ -101,7 +101,7 @@ def vendor_detail_view(request, vid):
 
 def product_detail_view(request, pid):
     product = get_object_or_404(Product, pid=pid)
-    products = Product.objects.filter(category=product.category).exclude(pid=pid)
+    products = Product.objects.filter(category=product.category).exclude(pid=pid)[:5]
     
     try:
         wishlist_items = Wishlist.objects.filter(user=request.user)  # Obtener la lista de deseos del usuario actual

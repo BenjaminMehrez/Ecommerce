@@ -234,61 +234,39 @@
     <h3 class="text-2xl font-bold text-gray-700 underline mb-12 text-center">
         Productos Relacionados
     </h3>
-    <div class="flex flex-col justify-center items-center gap-14  m-auto sm:flex-row px-20">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5 gap-6">
         {% for product in products %}
-        <article class="w-80 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+        <article class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
             {% if product.image %}
             <a href="{% url 'product-detail' product.pid %}">
                 <div class="aspect-square overflow-hidden">
                     {% if product.old_price %}
-                    <span class="absolute bg-gray-900 text-white text-md font-semibold m-3 p-2 rounded border-gray-600">
-                        -{{ product.get_precentage|floatformat:0 }}%
+                    <span class="absolute bg-gray-900 text-white text-md font-semibold m-3 p-2 rounded border-gray-600">-{{ product.get_precentage|floatformat:0 }}%
                     </span>
                     {% endif %}
                     <img class="w-full h-full object-cover transition-transform duration-300 hover:scale-105" src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
                 </div>
-            </a>
             {% endif %}
-            <div class="p-5 pb-7 space-y-4">
-                <h3 class="font-bold text-gray-800 text-xl mb-2 line-clamp-2">{{ product.title }}</h3>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span
-                        class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
-                    <span
-                        class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
-                </div>
-                <div class="flex items-center justify-between pr-5">
-                    <div class="space-y-1">
-                        <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
-                        {% if product.old_price %}
-                        <div class="flex items-center gap-2">
-                            <span class="text-sm text-gray-500 ml-4 line-through">$ {{ product.old_price|formato_precio }}</span>
-                        </div>
-                        {% endif %}
+                <div class="flex flex-col items-center py-5 space-y-5">
+                    <h3 class="font-bold text-gray-800 text-xl line-clamp-2">{{ product.title }}</h3>
+                    <div class="flex gap-4 items-center mb-4">
+                        <span
+                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.category}}</span>
+                        <span
+                            class="inline-block bg-gray-100 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">{{product.vendor}}</span>
                     </div>
-                    <div class="add-cart space-x-2">
-                        <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16">
-                        <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
-                        <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
-                        <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
-                        <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
-                        <div id="error-notification" class="hidden fixed top-32 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
-                            <strong class="font-bold">Error:</strong>
-                            <span class="block sm:inline">Producto ya agregado</span>
+                    <div class="pr-5">
+                        <div class="flex space-y-1">
+                            <span class="block text-xl font-bold text-gray-900 current-product-price-{{ product.id }}">$ {{ product.price|formato_precio }}</span>
+                            {% if product.old_price %}
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm text-gray-500 ml-4 line-through">$ {{ product.old_price|formato_precio }}</span>
+                            </div>
+                            {% endif %}
                         </div>
-                        <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                            class="add-to-cart-btn relative inline-flex items-center justify-center p-3 rounded-md bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200"
-                            role="button">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="https://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                                </path>
-                            </svg>
-                        </button>
                     </div>
                 </div>
-            </div>
+            </a>
         </article>
         {% endfor %}
     </div>
