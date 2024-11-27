@@ -57,9 +57,15 @@
                         src="{% static 'images/heart.svg' %}" alt="wishlist"></a>
                     {% endif %}
                 </div>
-                <p class="text-gray-600">Stock: <span
-                        class="font-semibold {% if product.stock > 0 %}text-green-600{% else %}text-red-600{% endif %}">{% if product.stock > 0 %}En Stock ({{ product.stock }}){% else %}Out of Stock{% endif %}</span>
-                </p>
+                <label for="size" class="flex flex-col text-lg font-medium text-gray-700">Talle:
+                    <select id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-black rounded-sm w-16" name="size">
+                        {% for size in p_size %}
+                        {% if size.stock > 0 %}
+                        <option value="{{size.size}}">{{size.size|title}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </label>
                 <p class="text-gray-700">{{ product.description }}</p>
                 <div class="flex flex-wrap gap-2 items-center">
                     <span class="font-semibold">Categorias:</span>
@@ -74,8 +80,11 @@
                     <span class="text-xl text-gray-400 pl-3 line-through">$ {{ product.old_price|formato_precio }}</span>
                     {% endif %}
                 </div>
-                <input type="number" inputmode="numeric" pattern="[0-9]*" value="1" id="product-quantity"
-                    class="w-20 mb-10 product-quantity-{{ product.id }}">
+                <label for="cantidad">
+                    Cantidad:
+                    <input type="number" inputmode="numeric" pattern="[0-9]*" min="1" value="1" id="product-quantity"
+                    class="ml-2 pl-5 py-2 w-16 sm:w-20 text-lg mb-10 bg-transparent border border-black product-quantity-{{ product.id }}">
+                </label>
                 <div>
                     <!-- <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16"> -->
                     <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
@@ -83,14 +92,14 @@
                     <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
                     <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
                     <div id="error-notification"
-                        class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg"
+                        class="hidden fixed top-32 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg"
                         role="alert">
                         <strong class="font-bold">Error:</strong>
                         <span class="block sm:inline">Producto ya agregado</span>
                     </div>
                     <button id="add-to-cart-btn" data-index="{{ product.id }}"
                         class="add-to-cart-btn w-full bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar
-                        a Carrito</button>
+                        al Carrito</button>
                 </div>
 
                 
@@ -114,11 +123,11 @@
             </div>
             <div x-show="open" 
                 x-transition:enter="duration-300 ease-out"
-                x-transition:enter-start="opacity-0 -translate-y-96"
+                x-transition:enter-start="opacity-0 -translate-y-10"
                 x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="duration-200 ease-in"
                 x-transition:leave-start="opacity-100 translate-y-0"
-                x-transition:leave-end="opacity-0 -translate-y-96"
+                x-transition:leave-end="opacity-0 -translate-y-10"
                 class="w-full mt-4 bg-white">
                 <div class="py-1">
                     <p class="text-gray-700 leading-relaxed">
@@ -204,8 +213,11 @@
                 </div>
                 {% endif %}
             </div>
-            <div id="success-notification" class="hidden fixed top-20 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg" role="alert">
+            <div id="success-notification" class="hidden fixed top-32 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg" role="alert">
                 <span class="block sm:inline">Comentario Agregado</span>
+            </div>
+            <div id="Psuccess-notification" class="hidden fixed top-32 right-5 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded shadow-lg" role="alert">
+                <span class="block sm:inline">Producto Agregado</span>
             </div>
 
         </div>
@@ -260,7 +272,7 @@
                         <input type="hidden" class="product-image-{{ product.id }}" value="{{ product.image.url }}">
                         <input type="hidden" class="product-id-{{ product.id }}" value="{{ product.id }}">
                         <input type="hidden" class="product-title-{{ product.id }}" value="{{ product.title }}">
-                        <div id="error-notification" class="hidden fixed top-20 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+                        <div id="error-notification" class="hidden fixed top-32 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
                             <strong class="font-bold">Error:</strong>
                             <span class="block sm:inline">Producto ya agregado</span>
                         </div>
@@ -302,6 +314,17 @@
         });
     });
 
+    $('#sizechange').on('change', function() {
+        const button = $('#add-to-cart-btn');
+        const qty = $('#product-quantity').val(1)
+
+        let buttonText = button.text();
+        buttonText = buttonText.replace('Producto agregado', 'Agregar al Carrito');
+        button.text(buttonText);
+        
+    })
+
+
     $(document).ready(function () {
 
 
@@ -313,6 +336,8 @@
             let index = this_val.attr('data-index')
 
             let quantity = $('.product-quantity-' + index).val()
+            let size = $('.product-size-' + index).val()
+
             let product_title = $('.product-title-' + index).val()
 
             let product_id = $('.product-id-' + index).val()
@@ -329,6 +354,7 @@
             // console.log('Image:', product_image);
             // console.log('Index:', index);
             // console.log('Current Element:', this_val);
+            // console.log('Current Element:', size);
 
 
             $.ajax({
@@ -338,12 +364,13 @@
                     'pid': product_pid,
                     'image': product_image,
                     'qty': quantity,
+                    'size': size,
                     'title': product_title,
                     'price': product_price
                 },
                 dataType: 'json',
                 beforeSend: function () {
-                    console.log('Product adding');
+                    // console.log('Product adding');
 
                 },
 
@@ -356,13 +383,10 @@
                 },
 
                 error: function () {
-                    // Selecciona la notificación de error
                     const errorNotification = $('#error-notification');
 
-                    // Muestra la notificación con un efecto fade-in
                     errorNotification.fadeIn();
 
-                    // Desaparece la notificación después de 3 segundos
                     setTimeout(function () {
                         errorNotification.fadeOut();
                     }, 3000);

@@ -10,7 +10,7 @@
     <div class="hidden md:block w-64 bg-white shadow-sm">
         <div class="px-4 py-6">
             <div class="flex items-center gap-4 ">
-                <img src="{% static 'images/logo-black.svg' %}" alt="E-commerce" class="h-8">
+                <img src="{% static 'images/logo-black.png' %}" alt="E-commerce" class="h-8">
                 <h2 class="flex mt-2">E-commerce</h2>
             </div>
             <nav class="mt-6 space-y-2">
@@ -21,7 +21,7 @@
                     Panel
                 </a>
                 <a href="{% url 'products' %}" class="flex items-center px-4 py-2 text-gray-700 rounded-lg">
-                    <img class="w-5 h-5 mr-3" src="{% static 'images/logo-black.svg' %}" alt="">
+                    <img class="w-5 h-5 mr-3" src="{% static 'images/logo-black.png' %}" alt="">
                     Productos
                 </a>
                 <a href="{% url 'orders' %}" class="flex items-center px-4 py-2 text-gray-900 bg-gray-100 font-medium rounded-lg">
@@ -153,46 +153,44 @@
                 </div>
             </div>
 
-            <!-- Order Items Table -->
-            <div class="bg-white shadow overflow-hidden rounded-lg">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Producto
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Precio
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Cantidad
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                SubTotal
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        {% for item in order_items %}
-                        <tr>
-                            <td class="flex items-center gap-2 px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                <img class="h-10 w-10" src="{{ item.image }}" alt="">
-                                {{ item.item }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                ${{ item.price|formato_precio }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm  text-gray-500">
-                                {{ item.qty }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 text-right">
-                                ${{ item.total|formato_precio }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+            <div class="hidden md:grid md:grid-cols-4 gap-4 items-center font-semibold bg-gray-50 text-gray-700 border-b shadow overflow-hidden rounded-lg">
+                <p class="flex justify-center uppercase text-md">Producto</p>
+                <p class="flex justify-center uppercase text-md">Precio</p>
+                <p class="flex justify-center uppercase text-md">Cantidad</p>
+                <p class="flex justify-center uppercase text-md">Total</p>
             </div>
+          
+              <!-- Mobile-friendly order items -->
+              <div class="divide-y shadow overflow-hidden rounded-lg">
+                {% for order in order_items %}
+                  <div class="bg-white grid grid-cols-1 md:grid-cols-4 gap-4 p-4 items-center">
+                    <div class="flex flex-col items-center justify-between md:justify-center">
+                        <img 
+                          src="{{ order.image }}" 
+                          alt="{{ order.item }}"
+                          class="w-20 h-20 object-cover rounded"/>
+                      <span class="md:hidden font-semibold">Producto:</span>
+                      <span class="text-sm">{{ order.item }}</span>
+                      <p class="text-sm">Talle: {{ order.size|title }}</p>
+                    </div>
+                    <div class="flex justify-between md:justify-center">
+                      <span class="md:hidden font-semibold">Precio:</span>
+                      <span class="text-green-600 text-sm">$ {{ order.price|formato_precio }}</span>
+                    </div>
+                    <div class="flex justify-between md:justify-center">
+                      <span class="md:hidden font-semibold">Cantidad:</span>
+                      <span class="ml-6">{{ order.qty }}</span>
+                    </div>
+                    <div class="flex justify-between md:justify-center">
+                      <span class="md:hidden font-semibold">Subtotal:</span>
+                      <span class="text-sm">$ {{ order.total|formato_precio }}</span>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+
+
 
             <!-- Order Summary -->
             <div class="mt-8">

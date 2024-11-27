@@ -129,10 +129,12 @@ def product_detail_view(request, pid):
     
     
     p_image = product.p_images.all()
+    p_size = product.sizes.all()
     
     context = {
         'product': product,
         'p_image': p_image,
+        'p_size': p_size,
         'review_form': review_form,
         'average_rating': average_rating,
         'make_review': make_review,
@@ -230,25 +232,31 @@ def filter_product(request):
 def add_to_cart(request):
     cart_product = {}
     
-    cart_product[str(request.GET['id'])] = {
+    cart_key = f"{request.GET['id']}-{request.GET['size']}"
+            
+    cart_product[cart_key] = {
         'title': request.GET['title'],
         'qty': request.GET['qty'],
+        'size': request.GET['size'],
         'price': request.GET['price'],
         'image': request.GET['image'],
         'pid': request.GET['pid'],
     }
     
     if 'cart_data_obj' in request.session:
-        if str(request.GET['id']) in request.session['cart_data_obj']:
-            cart_data = request.session['cart_data_obj']
-            cart_data[str(request.GET['id'])]['qty'] = int(cart_product[str(request.GET['id'])])['qty']
-            cart_data.update(cart_data)
+        cart_data = request.session['cart_data_obj']
+        
+        if cart_key in cart_data:
+            cart_data[cart_key]['qty'] += int(cart_product[cart_key]['qty'])
             request.session['cart_data_obj'] = cart_data
-        else:
-            cart_data = request.session['cart_data_obj']
-            cart_data.update(cart_product)
-            request.session['cart_data_obj'] = cart_data
-    
+            return JsonResponse({
+                'success': False,
+                'message': 'El producto ya está en el carrito. Se actualizó la cantidad.',
+                'totalcartitems': len(cart_data)
+            })
+        
+        cart_data.update(cart_product)
+        request.session['cart_data_obj'] = cart_data
     else:
         request.session['cart_data_obj'] = cart_product
     return JsonResponse({'data': request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj'])})
@@ -257,13 +265,25 @@ def add_to_cart(request):
 
 def cart_view(request):
     cart_total_amount = 0
+
     if 'cart_data_obj' in request.session:
-        for p_id, item in request.session['cart_data_obj'].items():
+        cart_data = request.session['cart_data_obj']
+        # Iterar sobre los productos del carrito
+        for p_key, item in cart_data.items():
+            # Sumar precio total basado en cantidad y precio unitario
             cart_total_amount += int(item['qty']) * float(item['price'])
-        return render(request, 'a_store/cart.html', {'cart_data': request.session['cart_data_obj'], 'totalcartitems': len(request.session['cart_data_obj']), 'cart_total_amount':cart_total_amount})
+        
+        # Renderizar la plantilla del carrito
+        return render(request, 'a_store/cart.html', {
+            'cart_data': cart_data,  # Pasar todos los datos del carrito
+            'totalcartitems': len(cart_data),  # Cantidad total de productos únicos
+            'cart_total_amount': cart_total_amount  # Monto total del carrito
+        })
     else:
-        messages.warning(request, 'No hay productos')
+        # Si no hay productos, redirigir al home con un mensaje
+        messages.warning(request, 'No hay productos en el carrito.')
         return redirect('home')
+
 
 
 def delete_item_from_cart(request):
@@ -376,6 +396,7 @@ def save_checkout_info(request):
                     item=item['title'],
                     image=item['image'],
                     qty=item['qty'],
+                    size=item['size'],
                     price=item['price'],
                     total=float(item['qty']) * float(item['price'])
                 )
@@ -570,6 +591,7 @@ def order_datail(request, id):
     
     context = {
         'order_items': order_items,
+        'order': order,
     }
     return render(request, 'a_store/order-detail.html', context)
 

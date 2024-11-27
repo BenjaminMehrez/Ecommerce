@@ -14,7 +14,6 @@ class AddProductForm(forms.ModelForm):
             'price',
             'old_price',
             'specifications',
-            'stock',
             'featured',
             'tags',
             'vendor',
@@ -60,11 +59,6 @@ class AddProductForm(forms.ModelForm):
         self.fields['specifications'].widget.attrs.update({
             'class': default_class + " h-32",
             'placeholder': 'Enter product specifications'
-        })
-
-        self.fields['stock'].widget.attrs.update({
-            'class': default_class,
-            'placeholder': 'Enter stock quantity'
         })
 
         self.fields['featured'].widget.attrs.update({

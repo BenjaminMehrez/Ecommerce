@@ -29,10 +29,11 @@
                                     <div class="flex-shrink-0 h-24 w-24">
                                         <img class="h-24 w-24 rounded-md object-cover" src="{{ item.image }}" alt="{{ item.title }}">
                                     </div>
-                                    <div class="ml-4">
+                                    <div class="flex flex-col ml-4">
                                         <a href="{% url 'product-detail' item.pid %}" class="text-xl font-medium text-gray-900 hover:text-indigo-600">
                                             {{ item.title }}
                                         </a>
+                                        <span>Talle: {{ item.size|title }}</span>
                                     </div>
                                 </div>
                             </td>

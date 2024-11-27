@@ -124,7 +124,6 @@ class Product(models.Model):
     # tags = models.ForeignKey(Tags, on_delete=models.SET_NULL, null=True)
     
     product_status = models.CharField(choices=STATUS, max_length=20, default='en_revision')
-    stock = models.PositiveIntegerField(default='8')
 
     status = models.BooleanField(default=True)
     in_stock = models.BooleanField(default=True)
@@ -166,6 +165,51 @@ class ProductImages(models.Model):
     class Meta:
         verbose_name_plural = 'Product Images'
 
+
+
+class ProductSize(models.Model):
+    SIZES = {
+        "Camperas": (
+            ("s", "S"),
+            ("m", "M"),
+            ("l", "L"),
+            ("xl", "XL"),
+        ),
+        "Remeras": (
+            ("s", "S"),
+            ("m", "M"),
+            ("l", "L"),
+            ("xl", "XL"),
+        ),
+        "Buzos": (
+            ("s", "S"),
+            ("m", "M"),
+            ("l", "L"),
+            ("xl", "XL"),
+        ),
+        "Zapatillas": (
+            ("36", "36"),
+            ("37", "37"),
+            ("38", "38"),
+            ("39", "39"),
+            ("40", "40"),
+        ),
+    }
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="sizes")
+    size = models.CharField(max_length=10)
+    stock = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        # Validación: comprobar que el tamaño es válido para la categoría del producto
+        category_name = self.product.category.title if self.product.category else None
+        valid_sizes = dict(self.SIZES).get(category_name, [])
+        if self.size not in dict(valid_sizes).keys():
+            raise ValueError(f"Invalid size '{self.size}' for category '{category_name}'")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.product.title} - Size {self.size} (Stock: {self.stock})"
 
 
 ############################## CART, ORDER, ORDERITEMS AND ADDRESS ###########################
@@ -216,6 +260,7 @@ class CartOrderItems(models.Model):
     item = models.CharField(max_length=200)
     image = models.CharField(max_length=200)
     qty = models.IntegerField(default=0)
+    size = models.CharField(max_length=10, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default='1.99')
     total = models.DecimalField(max_digits=10, decimal_places=2, default='1.99')
     

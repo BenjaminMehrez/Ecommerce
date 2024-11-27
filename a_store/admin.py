@@ -7,8 +7,13 @@ from .models import *
 class ProductImagesAdmin(admin.TabularInline):
     model = ProductImages
     
+    
+class ProductSizesAdmin(admin.TabularInline):
+    model = ProductSize
+    
+    
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImagesAdmin]
+    inlines = [ProductImagesAdmin, ProductSizesAdmin]
     list_display = ['user', 'title', 'product_image', 'price', 'category', 'vendor', 'featured', 'product_status']
     
 

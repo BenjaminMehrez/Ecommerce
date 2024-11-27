@@ -13,6 +13,7 @@
                         <div class="flex-1">
                             <h3 class="font-semibold">{{ item.item }}</h3>
                             <div class="text-sm text-gray-600">Cantidad: {{ item.qty }}</div>
+                            <div class="text-sm text-gray-600">Talle: {{ item.size|title }}</div>
                             <div class="mt-1">Precio: $ {{ item.price|formato_precio }}</div>
                             <div class="font-medium">Total: ${{ item.total|formato_precio  }}</div>
                         </div>
