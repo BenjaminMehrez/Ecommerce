@@ -7,7 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Django Template">
-    <title>Ecommerce</title>
+    <title>{% block title %}{% endblock %}Ecommerce</title>
+
+    <meta name="description" content="Equipo y ropa deportiva para todos los niveles. Encuentra tus marcas favoritas y mejora tu rendimiento con nuestra tienda online.">
+    <meta name="keywords" content="Zapatillas, Camperas, Buzos, Remeras, Ropa deportiva, deportivo, ropa, ecommerce, tienda online, deporte">
+    <meta name="author" content="Benjamin Mehrez">
+    
+    <meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ request.path }}">
+    <meta property="og:title" content="{% block og-caption %}Ecommerce{% endblock %}">
+    <meta property="og:description" content="{% block og-description %}Equipo y ropa deportiva para todos los niveles. Encuentra tus marcas favoritas y mejora tu rendimiento con nuestra tienda online.{% endblock %}">
+    <meta property="og:image" content="{% block og-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/Ecommerce1200x630.jpg' %}{% endblock %}">
+    <meta name="twitter:image" content="{% block tw-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/Ecommerce600x600.jpg' %}{% endblock %}">
+
+
+
     <link rel="icon"  href="{% static 'images/logo.png' %}">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

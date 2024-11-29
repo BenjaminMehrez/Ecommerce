@@ -1,4 +1,11 @@
 {% extends 'layouts/a.html' %}
+{% block title %}{{product.title}} | {% endblock %}
+{% block og-caption %}{{ product.title }}{% endblock %}
+{% block og-description %}{{ product.description }}{% endblock %}
+{% block og-image %}{{ product.image }}{% endblock %}
+{% block tw-image %}{{ product.image }}{% endblock %}
+
+
 {% load static %}
 {% load price_filters %}
 

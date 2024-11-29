@@ -60,6 +60,10 @@ class Category(models.Model):
         return self.title
     
     
+    def get_absolute_url(self):
+        return f'/category/{self.cid}'
+    
+    
 class Tags(models.Model):
     pass
     
@@ -150,6 +154,10 @@ class Product(models.Model):
     def get_precentage(self):
         new_price = ((self.old_price - self.price) / self.old_price) * 100
         return new_price
+    
+    
+    def get_absolute_url(self):
+        return f'/product/{self.pid}'
 
     
 class ProductImages(models.Model):

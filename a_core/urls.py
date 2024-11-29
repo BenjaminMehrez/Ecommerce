@@ -18,9 +18,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic.base import TemplateView
 # from a_users.views import profile_view
 
+# Sitemaps
+from django.contrib.sitemaps.views import sitemap
+from a_store.sitemaps import *
+sitemaps = {
+    'static': StaticSitemap,
+    'categories': CategorySitemap,
+    'productpages': ProductpageSitemap,
+}
+
 urlpatterns = [
+    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt/', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
     path('jefe/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
