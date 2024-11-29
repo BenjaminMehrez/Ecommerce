@@ -1,7 +1,7 @@
 {% load price_filters %}
 
 {% for product in products %}
-<article class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+<article class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
     {% if product.image %}
     <a href="{% url 'product-detail' product.pid %}">
         <div class="aspect-square overflow-hidden">
