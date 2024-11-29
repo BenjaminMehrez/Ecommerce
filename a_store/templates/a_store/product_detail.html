@@ -2,8 +2,8 @@
 {% block title %}{{product.title}} | {% endblock %}
 {% block og-caption %}{{ product.title }}{% endblock %}
 {% block og-description %}{{ product.description }}{% endblock %}
-{% block og-image %}{{ product.image }}{% endblock %}
-{% block tw-image %}{{ product.image }}{% endblock %}
+{% block og-image %}{{ product.image.url }}{% endblock %}
+{% block tw-image %}{{ product.image.url }}{% endblock %}
 
 
 {% load static %}
