@@ -3,6 +3,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DQB4F1H6CJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DQB4F1H6CJ');
+    </script>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +24,7 @@
     <meta name="author" content="Benjamin Mehrez">
     
     <meta property="og:url" content="http://{{ request.META.HTTP_HOST }}{{ request.path }}">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="{% block og-caption %}Ecommerce{% endblock %}">
     <meta property="og:description" content="{% block og-description %}Equipo y ropa deportiva para todos los niveles. Encuentra tus marcas favoritas y mejora tu rendimiento con nuestra tienda online.{% endblock %}">
     <meta property="og:image" content="{% block og-image %}http://{{ request.META.HTTP_HOST }}{% static 'images/Ecommerce1200x630.jpg' %}{% endblock %}">
