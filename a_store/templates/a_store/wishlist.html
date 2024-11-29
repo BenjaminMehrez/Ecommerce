@@ -8,180 +8,188 @@
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Productos Favoritos</h1>
     {% if wishlist %}
-        <p class="text-lg text-gray-600 mb-6">Tenes {{ wishlist.count }} producto{{ wishlist|pluralize }} en favoritos</p>
-        <div class="space-y-4" id="wishlist-list">
-            {% for w in wishlist %}
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <div class="p-4 sm:p-6">
-                        <div class="flex flex-col sm:flex-row items-center">
-                            <div class="flex-shrink-0 w-full sm:w-32 mb-4 sm:mb-0">
-                                <img class="w-full h-40 sm:h-32 sm:w-32 rounded-lg object-cover" src="{{ w.product.image.url }}" alt="{{ w.product.title }}">
-                            </div>
-                            <div class="flex-grow sm:ml-6 text-center sm:text-left">
-                                <a href="{% url 'product-detail' w.product.pid %}" class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
-                                    {{ w.product.title }}
-                                </a>
-                                <p class="mt-1 text-xl font-semibold text-gray-900 current-price current-product-price-{{ w.product.id }}">$ {{ w.product.price|formato_precio }}</p>
-                                <p class="mt-2">
-                                    {% if w.product.in_stock %}
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            En stock
-                                        </span>
-                                    {% else %}
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                            Sin stock
-                                        </span>
-                                    {% endif %}
-                                </p>
-                            </div>
+    <p class="text-lg text-gray-600 mb-6">Tenes {{ wishlist.count }} producto{{ wishlist|pluralize }} en favoritos</p>
+    <div class="flex flex-col sm:flex-row flex-wrap gap-10 mt-10 mb-40" id="wishlist-list">
+        {% for w in wishlist %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-96 max-h-96">
+            <div class="p-4 sm:p-6">
+                <a href="{% url 'product-detail' w.product.pid %}"
+                    class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
+                    <div class="flex flex-col sm:flex-row items-center">
+                        <div class="flex-shrink-0 w-full sm:w-32 mb-4 sm:mb-0">
+                            <img class="w-full h-40 sm:h-32 sm:w-32 rounded-lg object-cover"
+                                src="{{ w.product.image.url }}" alt="{{ w.product.title }}">
                         </div>
-                        <div class="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                            <div class="mb-4 sm:mb-0">
-                                <input type="hidden" value="1" id="product-quantity-{{ w.product.id }}" class="product-quantity-{{ w.product.id }}">
-                                <input type="hidden" class="product-pid-{{ w.product.id }}" value="{{ w.product.pid }}">
-                                <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
-                                <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
-                                <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
-                                <button id="add-to-cart-btn-{{ w.product.id }}" data-index="{{ w.product.id }}"
-                                    class="add-to-cart-btn w-full inline-flex items-center justify-center p-3 rounded-md bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200">
-                                    Agregar al carrito
-                                </button>
-                            </div>
-                            <button data-wishlist-product="{{ w.id }}" class="delete-wishlist-product inline-flex items-center justify-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110">
-                                <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-5 w-5 mr-2" xmlns="https://www.w3.org/2000/svg">
-                                    <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-                                </svg>
-                                Eliminar
-                            </button>
+                        <div class="flex-grow sm:ml-6 text-center sm:text-left">
+                            <h4>{{ w.product.title }}</h4>
+                            <p class="mt-1 text-xl font-semibold text-gray-900 current-price current-product-price-{{ w.product.id }}">
+                                $ {{ w.product.price|formato_precio }}</p>
+                            <p class="mt-2">
+                                {% if w.product.in_stock %}
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    En stock
+                                </span>
+                                {% else %}
+                                <span
+                                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                    Sin stock
+                                </span>
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
+                </a>
+                <div class="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                    <button data-wishlist-product="{{ w.id }}"
+                        class="delete-wishlist-product inline-flex items-center justify-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110">
+                        <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-5 w-5 mr-2"
+                            xmlns="https://www.w3.org/2000/svg">
+                            <path
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                        </svg>
+                        Eliminar
+                    </button>
                 </div>
-            {% endfor %}
+            </div>
         </div>
+        {% endfor %}
+    </div>
     {% else %}
-        <div class="text-center py-12 my-40">
-            <h2 class="text-2xl font-semibold text-gray-900">No tienes productos favoritos</h2>
-            <p class="mt-2 text-sm text-gray-600">¿Por qué no agregas algunos productos?</p>
-            <a href="{% url 'product-list' %}" class="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                Ir a la tienda
-            </a>
-        </div>
+    <div class="text-center py-12 my-40">
+        <h2 class="text-2xl font-semibold text-gray-900">No tienes productos favoritos</h2>
+        <p class="mt-2 text-sm text-gray-600">¿Por qué no agregas algunos productos?</p>
+        <a href="{% url 'product-list' %}"
+            class="mt-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            Ir a la tienda
+        </a>
+    </div>
     {% endif %}
 </div>
 
-<div id="error-notification" class="hidden fixed top-32 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg" role="alert">
+<div id="error-notification"
+    class="hidden fixed top-32 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg"
+    role="alert">
     <strong class="font-bold">Error:</strong>
     <span class="block sm:inline">Producto ya agregado</span>
 </div>
 
 <div id="spinner" class="absolute top-2/4 left-2/4" hx-trigger="load">
-    <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg"><path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"><animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12" repeatCount="indefinite"/></path></svg>
+    <svg class="htmx-indicator loader" width="35" height="35" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
+        <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25" />
+        <path
+            d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
+            <animateTransform attributeName="transform" type="rotate" dur="0.75s" values="0 12 12;360 12 12"
+                repeatCount="indefinite" />
+        </path>
+    </svg>
 </div>
 
 <script>
 
-$(document).ready(function() {
-    
-
-    // ADD PRODUCT TO CART
-
-    $(".add-to-cart-btn").on("click", function () {
-
-        let this_val = $(this)
-        let index = this_val.attr('data-index')
-
-        let quantity = $('.product-quantity-' + index).val()
-        let product_title = $('.product-title-' + index).val()
-
-        let product_id = $('.product-id-' + index).val()
-        let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
+    $(document).ready(function () {
 
 
-        let product_pid = $('.product-pid-' + index).val()
-        let product_image = $('.product-image-' + index).val()
+        // ADD PRODUCT TO CART
 
-        console.log('Quantity:', quantity);
-        console.log('Title:', product_title);
-        console.log('price:', product_price);
-        console.log('id:', product_id);
-        console.log('Pid:', product_pid);
-        console.log('Image:', product_image);
-        console.log('Index:', index);
-        console.log('Current Element:', this_val);
+        $(".add-to-cart-btn").on("click", function () {
 
+            let this_val = $(this)
+            let index = this_val.attr('data-index')
 
-        $.ajax({
-            url: '/add-to-cart',
-            data: {
-                'id': product_id,
-                'pid': product_pid,
-                'image': product_image,
-                'qty': quantity,
-                'title': product_title,
-                'price': product_price
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                console.log('Product adding');
+            let quantity = $('.product-quantity-' + index).val()
+            let size = $('.product-size-' + index).val()
 
-            },
+            let product_title = $('.product-title-' + index).val()
 
-            success: function(res) {
-                this_val.html('Producto agregado')
+            let product_id = $('.product-id-' + index).val()
+            let product_price = $('.current-product-price-' + index).text().replace(',', '.').replace('.', '').replace('$', '');
 
-                console.log('Producto agreagdo al cart');
-                $('.cart-items-count').text(res.totalcartitems)
+            let product_pid = $('.product-pid-' + index).val()
+            let product_image = $('.product-image-' + index).val()
 
-            },
-            
-            error: function() {
-                // Selecciona la notificación de error
-                const errorNotification = $('#error-notification');
-                
-                // Muestra la notificación con un efecto fade-in
-                errorNotification.fadeIn();
-
-                // Desaparece la notificación después de 3 segundos
-                setTimeout(function() {
-                    errorNotification.fadeOut();
-                }, 3000);
-            }
-
-        })
-    })
+            // console.log('Quantity:', quantity);
+            // console.log('Title:', product_title);
+            // console.log('price:', product_price);
+            // console.log('id:', product_id);
+            // console.log('Pid:', product_pid);
+            // console.log('Image:', product_image);
+            // console.log('Index:', index);
+            // console.log('Current Element:', this_val);
+            // console.log('Current Element:', size);
 
 
-    $(document).on('click', '.delete-wishlist-product', function() {
-        let id = $(this).attr('data-wishlist-product')
-        let this_val = $(this)
+            $.ajax({
+                url: '/add-to-cart',
+                data: {
+                    'id': product_id,
+                    'pid': product_pid,
+                    'image': product_image,
+                    'qty': quantity,
+                    'size': size,
+                    'title': product_title,
+                    'price': product_price
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    // console.log('Product adding');
 
-        console.log(id);
-        console.log(this_val);
-        
-        $.ajax({
-            url: '/delete-wishlist',
-            data: {
-                'id': id
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                console.log('eliminando...');
-                
-            },
+                },
 
-            success: function(response) {
-                $('#wishlist-list').html(response.data)
-                location.reload()
-            }
+                success: function (res) {
+                    this_val.html('Producto agregado')
 
+                    console.log('Producto agreagdo al cart');
+                    $('.cart-items-count').text(res.totalcartitems)
+
+                },
+
+                error: function () {
+                    const errorNotification = $('#error-notification');
+
+                    errorNotification.fadeIn();
+
+                    setTimeout(function () {
+                        errorNotification.fadeOut();
+                    }, 3000);
+                }
+
+            })
         })
 
 
+        $(document).on('click', '.delete-wishlist-product', function () {
+            let id = $(this).attr('data-wishlist-product')
+            let this_val = $(this)
+
+            console.log(id);
+            console.log(this_val);
+
+            $.ajax({
+                url: '/delete-wishlist',
+                data: {
+                    'id': id
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log('eliminando...');
+
+                },
+
+                success: function (response) {
+                    $('#wishlist-list').html(response.data)
+                    location.reload()
+                }
+
+            })
+
+
+        })
+
+
+
     })
-
-
-
-})
 
 
 </script>

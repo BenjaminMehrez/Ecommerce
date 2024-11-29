@@ -1,52 +1,50 @@
 {% load price_filters %}
 
-<div class="space-y-4" id="wishlist-list">
+<div class="flex flex-col sm:flex-row flex-wrap gap-10 mt-10 mb-40" id="wishlist-list">
     {% for w in wishlist %}
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <div class="p-4 sm:p-6">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-96 max-h-96">
+        <div class="p-4 sm:p-6">
+            <a href="{% url 'product-detail' w.product.pid %}"
+                class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
                 <div class="flex flex-col sm:flex-row items-center">
                     <div class="flex-shrink-0 w-full sm:w-32 mb-4 sm:mb-0">
-                        <img class="w-full h-40 sm:h-32 sm:w-32 rounded-lg object-cover" src="{{ w.product.image.url }}" alt="{{ w.product.title }}">
+                        <img class="w-full h-40 sm:h-32 sm:w-32 rounded-lg object-cover"
+                            src="{{ w.product.image.url }}" alt="{{ w.product.title }}">
                     </div>
                     <div class="flex-grow sm:ml-6 text-center sm:text-left">
-                        <a href="{% url 'product-detail' w.product.pid %}" class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
-                            {{ w.product.title }}
-                        </a>
-                        <p class="mt-1 text-xl font-semibold text-gray-900 current-price current-product-price-{{ w.product.id }}">$ {{ w.product.price|formato_precio }}</p>
+                        <h4>{{ w.product.title }}</h4>
+                        <p class="mt-1 text-xl font-semibold text-gray-900 current-price current-product-price-{{ w.product.id }}">
+                            $ {{ w.product.price|formato_precio }}</p>
                         <p class="mt-2">
                             {% if w.product.in_stock %}
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    En stock
-                                </span>
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                En stock
+                            </span>
                             {% else %}
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                    Sin stock
-                                </span>
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                Sin stock
+                            </span>
                             {% endif %}
                         </p>
                     </div>
                 </div>
-                <div class="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
-                    <div class="mb-4 sm:mb-0">
-                        <input type="hidden" value="1" id="product-quantity-{{ w.product.id }}" class="product-quantity-{{ w.product.id }}">
-                        <input type="hidden" class="product-pid-{{ w.product.id }}" value="{{ w.product.pid }}">
-                        <input type="hidden" class="product-image-{{ w.product.id }}" value="{{ w.product.image.url }}">
-                        <input type="hidden" class="product-id-{{ w.product.id }}" value="{{ w.product.id }}">
-                        <input type="hidden" class="product-title-{{ w.product.id }}" value="{{ w.product.title }}">
-                        <button id="add-to-cart-btn-{{ w.product.id }}" data-index="{{ w.product.id }}"
-                            class="add-to-cart-btn w-full inline-flex items-center justify-center p-3 rounded-md bg-gray-600 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200">
-                            Agregar al carrito
-                        </button>
-                    </div>
-                    <button data-wishlist-product="{{ w.id }}" class="delete-wishlist-product inline-flex items-center justify-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110">
-                        <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-5 w-5 mr-2" xmlns="https://www.w3.org/2000/svg">
-                            <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-                        </svg>
-                        Eliminar
-                    </button>
-                </div>
+            </a>
+            <div class="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">
+                <button data-wishlist-product="{{ w.id }}"
+                    class="delete-wishlist-product inline-flex items-center justify-center px-4 py-2 bg-red-600 transition ease-in-out delay-75 hover:bg-red-700 text-white text-sm font-medium rounded-md hover:-translate-y-1 hover:scale-110">
+                    <svg stroke="currentColor" viewBox="0 0 24 24" fill="none" class="h-5 w-5 mr-2"
+                        xmlns="https://www.w3.org/2000/svg">
+                        <path
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                    </svg>
+                    Eliminar
+                </button>
             </div>
         </div>
+    </div>
     {% endfor %}
 </div>
 
