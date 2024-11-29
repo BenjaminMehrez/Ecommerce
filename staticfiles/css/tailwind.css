@@ -142,3 +142,13 @@ input[name="remember"] {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
     filter: brightness(.3);
 }
+
+.imgpx {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+    filter: brightness(.3);
+    height: 800px;
+}
+
+.portadaD{
+    height: 800px;
+}

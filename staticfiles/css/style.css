@@ -1167,6 +1167,14 @@ video {
   width: 100vw;
 }
 
+.w-80 {
+  width: 20rem;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
 .min-w-20 {
   min-width: 5rem;
 }
@@ -1225,6 +1233,11 @@ video {
 
 .max-w-xl {
   max-width: 36rem;
+}
+
+.max-w-max {
+  max-width: -moz-max-content;
+  max-width: max-content;
 }
 
 .flex-1 {
@@ -1394,6 +1407,10 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 .justify-evenly {
@@ -1855,6 +1872,11 @@ video {
   padding-right: 2.5rem;
 }
 
+.px-16 {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1958,6 +1980,10 @@ video {
 
 .pb-4 {
   padding-bottom: 1rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
 }
 
 .pl-10 {
@@ -2692,6 +2718,16 @@ input[name="remember"] {
   filter: brightness(.3);
 }
 
+.imgpx {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  filter: brightness(.3);
+  height: 800px;
+}
+
+.portadaD{
+  height: 800px;
+}
+
 @media (min-width: 1280px) {
   .xl\:container {
     width: 100%;
@@ -3080,6 +3116,10 @@ input[name="remember"] {
     display: grid;
   }
 
+  .sm\:hidden {
+    display: none;
+  }
+
   .sm\:h-32 {
     height: 8rem;
   }
@@ -3387,6 +3427,10 @@ input[name="remember"] {
     justify-content: space-between;
   }
 
+  .md\:justify-evenly {
+    justify-content: space-evenly;
+  }
+
   .md\:gap-1 {
     gap: 0.25rem;
   }
@@ -3562,6 +3606,10 @@ input[name="remember"] {
     width: 20rem;
   }
 
+  .lg\:w-full {
+    width: 100%;
+  }
+
   .lg\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -3582,17 +3630,47 @@ input[name="remember"] {
     flex-direction: row;
   }
 
+  .lg\:items-start {
+    align-items: flex-start;
+  }
+
   .lg\:items-center {
     align-items: center;
+  }
+
+  .lg\:justify-evenly {
+    justify-content: space-evenly;
+  }
+
+  .lg\:gap-0 {
+    gap: 0px;
   }
 
   .lg\:p-6 {
     padding: 1.5rem;
   }
 
+  .lg\:p-16 {
+    padding: 4rem;
+  }
+
+  .lg\:p-12 {
+    padding: 3rem;
+  }
+
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .lg\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 
   .lg\:text-2xl {
@@ -3604,6 +3682,10 @@ input[name="remember"] {
 @media (min-width: 1280px) {
   .xl\:mr-32 {
     margin-right: 8rem;
+  }
+
+  .xl\:block {
+    display: block;
   }
 
   .xl\:hidden {
@@ -3620,5 +3702,14 @@ input[name="remember"] {
 
   .xl\:justify-end {
     justify-content: flex-end;
+  }
+
+  .xl\:p-16 {
+    padding: 4rem;
+  }
+
+  .xl\:px-16 {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 }

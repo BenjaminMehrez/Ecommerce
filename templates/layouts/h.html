@@ -18,10 +18,19 @@
         {% endfor %}
     </section>
     
-    <video autoplay muted class="hidden md:block object-cover portada">
-        <source src="{% static 'images/portada.mp4' %}" type="video/mp4">
-        Tu navegador no soporta reproducción de video.
-    </video>
+    <div class="hidden md:flex max-w-auto">
+        {% for category in categories %}
+        <div class="portadaD">
+            <img class="object-center object-cover bg-no-repeat z-10 imgpx" src="{{ category.image.url }}">
+            <div class="items-center gap-10 justify-center lg:items-start relative flex flex-col lg:justify-evenly lg:gap-0 lg:px-10 xl:px-16 pb-8 bottom-full z-20 h-full">
+                <span class="text-white underline">{{ category.title }}</span>
+                <h1 class="hidden lg:block text-white font-semibold text-3xl">{{ category.description }}</h1>
+                <p class="hidden xl:block text-white text-lg md:text-xl font-semibold">{{ category.detail }}</p>
+                <a href="{% url 'category-product-list' category.cid %}" class="lg:w-full text-center py-2 px-6 bg-transparent border border-white text-white rounded-md hover:bg-white hover:text-black transition transform hover:scale-105">Explorar colección</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
     {% block content %}
     {% endblock %}
