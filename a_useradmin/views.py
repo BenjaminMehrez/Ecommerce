@@ -2,7 +2,7 @@ from django.db.models import Sum
 import datetime
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
+from django.forms import modelformset_factory
 from a_store.models import *
 from .forms import *
 from django.contrib import messages
@@ -77,12 +77,24 @@ def products_filter(request, status):
 def add_product(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES)
-        if form.is_valid():
+        
+        # Crear un formset para los talles
+        ProductSizeFormSet = modelformset_factory(ProductSize, form=ProductSizeForm, extra=5)  # 'extra=1' permite agregar un formulario vacío
+        formsize = ProductSizeFormSet(request.POST)
+        
+        if form.is_valid() and formsize.is_valid():
             # Guardar el producto principal
             new_product = form.save(commit=False)
             new_product.user = request.user
             new_product.save()
 
+            # Guardar todos los talles asociados al producto
+            for size_form in formsize:
+                if size_form.is_valid():
+                    size = size_form.save(commit=False)
+                    size.product = new_product
+                    size.save()
+                    
             # Procesar las imágenes adicionales
             images = request.FILES.getlist('images')  # Obtener la lista de imágenes
             for image in images:
@@ -93,8 +105,10 @@ def add_product(request):
             return redirect('products')
     else:
         form = AddProductForm()
+        ProductSizeFormSet = modelformset_factory(ProductSize, form=ProductSizeForm, extra=5)  # Formulario vacío adicional
+        formsize = ProductSizeFormSet(queryset=ProductSize.objects.none()) 
 
-    context = {'form': form}
+    context = {'form': form, 'formsize': formsize}
     return render(request, 'a_useradmin/add_product.html', context)
 
 

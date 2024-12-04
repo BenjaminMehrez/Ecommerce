@@ -1,5 +1,22 @@
 from django import forms
 from a_store.models import *
+from django.forms import modelformset_factory
+
+
+
+# Formulario para el tamaño del producto
+class ProductSizeForm(forms.ModelForm):
+    class Meta:
+        model = ProductSize
+        fields = ['size', 'stock']
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['size'].widget.attrs.update({
+                'class': "",
+                'placeholder': 'Zapatilla: "36, 37, 38..."  Ropa: "s, m, l ..." '
+            })
 
 class AddProductForm(forms.ModelForm):
     images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'allow_multiple_selected': True}), required=False)
