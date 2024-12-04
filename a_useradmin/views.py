@@ -223,7 +223,7 @@ def change_order_status(request, oid):
         order.save()
         messages.success(request, f'El estado de orden fue cambiado a {status}')
         
-    return redirect('order-detail', order.id)
+    return redirect('order-detail-admin', order.id)
 
 
 

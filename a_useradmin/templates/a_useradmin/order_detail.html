@@ -115,7 +115,7 @@
                         <h2 class="ml-3 text-lg font-medium text-gray-900">Información del orden</h2>
                     </div>
                     <div class="text-sm text-gray-500">
-                        <p><span class="font-medium">Métedo de pago:</span> {{ order.shipping_method }}</p>
+                        <p><span class="font-medium">Métedo de pago:</span> Paypal</p>
                         <p><span class="font-medium">Orden ID:</span> #{{ order.oid }}</p>
                         <p><span class="font-medium">Estado del orden:</span> {{ order.product_status|title }}</p>
                         <p><span class="font-medium">Estado del pago:</span> 
@@ -196,10 +196,10 @@
             <!-- Order Summary -->
             <div class="mt-8">
                 <dl class="space-y-4">
-                    <div class="flex items-center justify-between">
+                    <!-- <div class="flex items-center justify-between">
                         <dt class="text-sm text-gray-600">Costo de envío</dt>
                         <dd class="text-sm font-medium text-gray-900">$ 0</dd>
-                    </div>
+                    </div> -->
                     <div class="flex items-center justify-between">
                         <dt class="text-sm text-gray-600">Descuento</dt>
                         <dd class="text-sm font-medium text-gray-900">$ {{ order.saved|formato_precio }}</dd>
