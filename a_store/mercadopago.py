@@ -35,9 +35,9 @@ def create_preference(order):
     preference_data = {
         "items": items,
         "back_urls": {
-            "success": "http://localhost:8000/payment-success/",
-            "failure": "http://localhost:8000/payment-failed/",
-            "pending": "http://localhost:8000/payment-pending/",
+            "success": "http://ecommercemehrez.up.railway.app/payment-success/",
+            "failure": "http://ecommercemehrez.up.railway.app/payment-failed/",
+            "pending": "http://ecommercemehrez.up.railway.app/payment-pending/",
         },
         "auto_return": "approved",
         "external_reference": str(order.oid),  # ID único para identificar el pedido
