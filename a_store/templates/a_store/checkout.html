@@ -46,9 +46,10 @@
                         <input name="code" type="text" placeholder="Introduzca el código de cupón..." class="flex-1 px-3 py-2 border rounded-md">
                         <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">Apply</button>
                     </form>
-                    <a href="{{ init_point }}" class="block font-bold text-center w-auto py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                    <div id="wallet_container"></div>
+                    <!-- <a href="{{ init_point }}" class="block font-bold text-center w-auto py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600">
                         Pagar con Mercado Pago
-                    </a>
+                    </a> -->
                     <div id="paypal-button-container"></div>
                     <div class="p-10 text-center">
                         <h2 class="text-xl font-semibold text-blue-700 mb-4">¡Gracias por tu apoyo!</h2>
@@ -105,11 +106,19 @@
     
 
     // MERCADO PAGO
-    const mp = new MercadoPago("APP_USR-083d6317-3591-4b42-b601-2e43054c469e", { locale: "es-AR" });
+    const mp = new MercadoPago("APP_USR-9f74549e-bd68-4f3c-9de8-e0ae5b1db41e", { locale: "es-AR" });
 
-    mp.checkout({
-        preference: {
-            id: "{{ preference_id }}"
+    const bricksBuilder = mp.bricks();
+
+
+    mp.bricks().create("wallet", "wallet_container", {
+        initialization: {
+            preferenceId: "{{ preference_id }}",
+        },
+        customization: {
+        texts: {
+        valueProp: 'smart_option',
+        },
         },
     });
 
