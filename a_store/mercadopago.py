@@ -14,9 +14,10 @@ def create_preference(order):
     # Convertir los elementos del pedido a items de Mercado Pago
     items = [
         {
-			"title": item.item,
+			"title": f"{item.qty}x {item.item}",
 			"picture_url": item.image,
 			"quantity": item.qty,
+			"description": item.size,
 			"currency_id": "ARS",
 			"unit_price": float(item.price),
         }
@@ -32,17 +33,31 @@ def create_preference(order):
             "unit_price": -float(order.saved),  # Descuento como valor negativo
         })
 
-    preference_data = {
-        "items": items,
-        "back_urls": {
-            "success": "http://ecommercemehrez.up.railway.app/payment-success/",
-            "failure": "http://ecommercemehrez.up.railway.app/payment-failed/",
-            "pending": "http://ecommercemehrez.up.railway.app/payment-pending/",
-        },
-        "auto_return": "approved",
-        "external_reference": str(order.oid),  # ID único para identificar el pedido
-        "statement_descriptor": "Test Ecommerce",
-    }
+    if settings.ENVIRONMENT == 'production':
+        preference_data = {
+            "items": items,
+            "back_urls": {
+                "success": f"http://ecommercemehrez.up.railway.app/ ent-success/{order.oid}",
+                "failure": "http://ecommercemehrez.up.railway.app/payment-failed/",
+                "pending": "http://ecommercemehrez.up.railway.app/payment-pending/",
+            },
+            "auto_return": "approved",
+            "external_reference": str(order.oid),  # ID único para identificar el pedido
+            "statement_descriptor": "Ecommerce Mehrez",
+        }
+    else:
+        preference_data = {
+            "items": items,
+            "back_urls": {
+                "success": f"http://ff01-2803-9800-9844-7592-f3f5-4e0c-366c-e763.ngrok-free.app/payment-success/{order.oid}",
+                "failure": "http://ff01-2803-9800-9844-7592-f3f5-4e0c-366c-e763.ngrok-free.app/payment-failed/",
+                "pending": "http://ff01-2803-9800-9844-7592-f3f5-4e0c-366c-e763.ngrok-free.app/payment-pending/",
+            },
+            "auto_return": "approved",
+            "external_reference": str(order.oid),  # ID único para identificar el pedido
+            "statement_descriptor": "Ecommerce Mehrez Test",
+        }
+        
 
     preference = sdk.preference().create(preference_data)
     return preference["response"]

@@ -17,6 +17,8 @@ from .forms import *
 from .mercadopago import create_preference
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+import mercadopago
+
 
 
 # Create your views here.
@@ -408,9 +410,9 @@ def save_checkout_info(request):
 
 @login_required
 def checkout(request, oid):
+    public_key = settings.MERCADO_PAGO_PUBLIC_KEY
     order = CartOrder.objects.get(oid=oid)
     order_items = CartOrderItems.objects.filter(order=order)
-    
     
     if request.method == 'POST':
         code = request.POST.get('code')
@@ -437,40 +439,45 @@ def checkout(request, oid):
     context = {
         'order':order,
         'order_items': order_items,
+        'public_key': public_key,
         'preference_id': preference['id'],
         'init_point': preference['init_point']
     }
 
-    print(order.price)
     
     return render(request, 'a_store/checkout.html', context)
 
 
-@csrf_exempt  # Asegúrate de permitir que Mercado Pago haga peticiones sin un token CSRF
+@csrf_exempt
 def payment_notification(request):
+    sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
     if request.method == "POST":
         try:
             # Cargar la notificación enviada por Mercado Pago
             data = json.loads(request.body)
+            payment_id = data.get("data", {}).get("id")  # ID del pago
 
-            # Obtener el ID del pago y el estado del pago
-            payment_id = data["data"]["id"]
-            payment_status = data["data"]["status"]
-            external_reference = data["data"]["external_reference"]  # Aquí se usa el external_reference para obtener la orden
+            # Consultar los detalles del pago usando el SDK de Mercado Pago
+            payment_info = sdk.payment().get(payment_id)
+            payment = payment_info.get("response")
 
-            # Buscar la orden correspondiente
-            order = CartOrder.objects.get(oid=external_reference)
+            if payment:
+                payment_status = payment.get("status")
+                external_reference = payment.get("external_reference")  # Obtener la referencia externa
 
-            # Actualizar el estado de la orden según el estado del pago
-            if payment_status == "approved":
-                order.paid_status = True  # Marcar como pagada
-            elif payment_status == "rejected":
-                order.paid_status = False  # Pagada fallida
-            elif payment_status == "pending":
-                order.paid_status = False  # El pago está pendiente
+                # Buscar la orden correspondiente
+                order = CartOrder.objects.get(oid=external_reference)
 
-            # Guardar la orden con la actualización del estado
-            order.save()
+                # Actualizar el estado de la orden según el estado del pago
+                if payment_status == "approved":
+                    order.paid_status = True
+                elif payment_status in ["rejected", "cancelled"]:
+                    order.paid_status = False
+                elif payment_status == "pending":
+                    order.paid_status = False  # Pendiente
+
+                # Guardar la orden con la actualización del estado
+                order.save()
 
             # Responder con un JSON que confirma la recepción
             return JsonResponse({"status": "success"})
@@ -479,22 +486,45 @@ def payment_notification(request):
             print(f"Error al procesar la notificación: {e}")
             return JsonResponse({"status": "error"}, status=400)
 
-    else:
-        return JsonResponse({"status": "error"}, status=400)
+    return JsonResponse({"status": "error"}, status=400)
 
 
 def payment_success_view(request, oid):
-    order = CartOrder.objects.get(oid=oid)
-    if order.paid_status == False:
-        order.paid_status = True
-        order.save()
-        
-    context = {
-        'order': order,
-    }
+    try:
+        order = CartOrder.objects.get(oid=oid)
 
-    return render(request, 'a_store/payment_success.html', context)
+        # Verificar el estado del pago directamente desde Mercado Pago
+        payment_id = request.GET.get("payment_id")  # Obteniendo el ID del pago
+        if not payment_id:
+            raise ValueError("No se encontró el ID de pago.")
 
+        sdk = mercadopago.SDK(settings.MERCADO_PAGO_ACCESS_TOKEN)
+
+        # Obtener detalles del pago
+        payment_info = sdk.payment().get(payment_id)
+
+        # Aquí podría estar el problema
+        if payment_info["status"] != 200:
+            raise ValueError(f"Error validando el pago: {payment_info}")
+
+        payment_status = payment_info["response"]["status"]
+        if payment_status != "approved":
+            raise ValueError(f"Pago no aprobado: {payment_status}")
+
+        # Actualizar la orden como pagada
+        if not order.paid_status:
+            if 'cart_data_obj' in request.session:
+                del request.session['cart_data_obj']
+            order.paid_status = True
+            order.save()
+            
+
+        return render(request, 'a_store/payment_success.html', {'order': order})
+
+    except Exception as e:
+        print(f"Error validando el pago: {e}")
+        return render(request, 'a_store/payment_failed.html', {'error': str(e)})
+    
 
 def payment_failed_view(request):
     return render(request, 'a_store/payment_failed.html')
