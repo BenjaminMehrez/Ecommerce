@@ -182,18 +182,21 @@ class ProductSize(models.Model):
             ("m", "M"),
             ("l", "L"),
             ("xl", "XL"),
+            ("xxl", "XXL"),
         ),
         "Remeras": (
             ("s", "S"),
             ("m", "M"),
             ("l", "L"),
             ("xl", "XL"),
+            ("xxl", "XXL"),
         ),
         "Buzos": (
             ("s", "S"),
             ("m", "M"),
             ("l", "L"),
             ("xl", "XL"),
+            ("xxl", "XXL"),
         ),
         "Zapatillas": (
             ("36", "36"),

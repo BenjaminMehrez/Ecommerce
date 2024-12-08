@@ -1,7 +1,7 @@
 from django.db.models import Sum
 import datetime
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import modelformset_factory
 from a_store.models import *
 from .forms import *
@@ -115,31 +115,48 @@ def add_product(request):
 
 @user_passes_test(admin_required)
 def edit_product(request, pid):
-    product = Product.objects.get(pid=pid)
+    # Obtener el producto a editar
+    product = get_object_or_404(Product, pid=pid)
+    
     if request.method == 'POST':
+        # Cargar el formulario del producto con los datos POST y los archivos
         form = AddProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
+        
+        # Crear un formset para los talles existentes del producto
+        ProductSizeFormSet = modelformset_factory(ProductSize, form=ProductSizeForm, extra=0)
+        formsize = ProductSizeFormSet(request.POST, queryset=ProductSize.objects.filter(product=product))
+        
+        if form.is_valid() and formsize.is_valid():
             # Guardar el producto principal
-            new_product = form.save(commit=False)
-            new_product.user = request.user
-            new_product.save()
+            updated_product = form.save(commit=False)
+            updated_product.user = request.user
+            updated_product.save()
+            
+            # Guardar o eliminar los talles asociados al producto
+            for size_form in formsize:
+                size = size_form.save(commit=False)
+                size.product = updated_product
+                size.save()
 
             # Procesar las imágenes adicionales
             images = request.FILES.getlist('images')  # Obtener la lista de imágenes
             for image in images:
-                ProductImages.objects.create(product=new_product, images=image)
+                ProductImages.objects.create(product=updated_product, images=image)
 
             form.save_m2m()  # Guardar relaciones Many-to-Many
             messages.success(request, 'Producto actualizado exitosamente')
             return redirect('products')
     else:
+        # Crear el formulario para el producto existente
         form = AddProductForm(instance=product)
+        
+        # Crear un formset para los talles existentes
+        ProductSizeFormSet = modelformset_factory(ProductSize, form=ProductSizeForm, extra=0)
+        formsize = ProductSizeFormSet(queryset=ProductSize.objects.filter(product=product))
     
-    context = {
-        'form': form
-    }
-    
+    context = {'form': form, 'formsize': formsize}
     return render(request, 'a_useradmin/edit_product.html', context)
+
 
 
 

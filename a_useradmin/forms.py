@@ -15,7 +15,7 @@ class ProductSizeForm(forms.ModelForm):
         
         self.fields['size'].widget.attrs.update({
                 'class': "",
-                'placeholder': 'Zapatilla: "36, 37, 38..."  Ropa: "s, m, l ..." '
+                'placeholder': '36, 37, 38 / s, m, l ..." '
             })
 
 class AddProductForm(forms.ModelForm):

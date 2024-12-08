@@ -35,9 +35,9 @@
     </div>
 
     <div class="container mx-auto mt-14 mb-20">
-        <h1 class="text-3xl font-bold text-gray-900 mb-8 ml-4">Crear Nuevo Producto</h1>
+        <h1 class="text-3xl font-bold text-gray-900 mb-8 ml-4">Actualizar Producto</h1>
 
-        <form method="post" enctype="multipart/form-data" class="flex flex-col lg:flex-row px-6 opacity-0" _="on load transition my opacity to 1 over 0.5 seconds">
+        <form method="POST" enctype="multipart/form-data" class="flex flex-col lg:flex-row px-6 opacity-0" _="on load transition my opacity to 1 over 0.5 seconds">
             {% csrf_token %}
             
             <div class="space-y-6 bg-white shadow-lg rounded-lg p-6">
@@ -102,14 +102,6 @@
                 </div>
         
                 <div>
-                    <label for="{{ form.stock.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
-                    {{ form.stock }}
-                    {% if form.stock.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.stock.errors|join:", " }}</p>
-                    {% endif %}
-                </div>
-        
-                <div>
                     <label for="{{ form.specifications.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Especificaciones</label>
                     {{ form.specifications }}
                     {% if form.specifications.errors %}
@@ -135,17 +127,26 @@
             
             </div>
 
-            <div class="space-y-6 bg-white shadow-lg rounded-lg p-6">
+            <div class="space-y-6 bg-white shadow-lg rounded-lg p-6 max-w-md">
                 <div>
-                    <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Imagen de Portada</label>
+                    <label for="{{ form.image.id_for_label }}" class="block text-md font-medium text-gray-700 mb-1">Imagen de Portada</label>
                     {{ form.image }}
                     {% if form.image.errors %}
                         <p class="text-red-500 text-xs mt-1">{{ form.image.errors|join:", " }}</p>
                     {% endif %}
                 </div>
                 <div>
-                    <label for="id_images" class="block text-sm font-medium text-gray-700 mb-1">Agrega Imágenes adicionales:</label>
+                    <label for="id_images" class="block text-md font-medium text-gray-700 mb-1">Imágenes adicionales:</label>
                     <input type="file" name="images" id="id_images" multiple>
+                </div>
+                <div class="space-y-6 w-auto bg-white">
+                    <label class="text-mf font-medium text-gray-700">Talles y Stock</label>
+                    {{ formsize.management_form }}
+                    {% for form in formsize %}
+                    <div class="flex gap-5">
+                        {{ form.as_p }}
+                    </div>
+                    {% endfor %}
                 </div>
                 <div class="pt-6">
                     <button

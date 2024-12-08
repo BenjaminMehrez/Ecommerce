@@ -159,7 +159,7 @@
                 <p class="flex justify-center uppercase text-md">Producto</p>
                 <p class="flex justify-center uppercase text-md">Precio</p>
                 <p class="flex justify-center uppercase text-md">Cantidad</p>
-                <p class="flex justify-center uppercase text-md">Total</p>
+                <p class="flex justify-center uppercase text-md">Subtotal</p>
             </div>
           
               <!-- Mobile-friendly order items -->
@@ -202,7 +202,7 @@
                     </div> -->
                     <div class="flex items-center justify-between">
                         <dt class="text-sm text-gray-600">Descuento</dt>
-                        <dd class="text-sm font-medium text-gray-900">$ {{ order.saved|formato_precio }}</dd>
+                        <dd class="text-sm font-medium text-gray-900">$ - {{ order.saved|formato_precio }}</dd>
                     </div>
                     <div class="flex items-center justify-between border-t border-gray-200 pt-4">
                         <dt class="text-base font-medium text-gray-900">Total</dt>

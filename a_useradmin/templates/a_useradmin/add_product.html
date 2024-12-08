@@ -101,14 +101,6 @@
                 </div>
         
                 <div>
-                    <label for="{{ form.stock.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
-                    {{ form.stock }}
-                    {% if form.stock.errors %}
-                        <p class="text-red-500 text-xs mt-1">{{ form.stock.errors|join:", " }}</p>
-                    {% endif %}
-                </div>
-        
-                <div>
                     <label for="{{ form.specifications.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Especificaciones</label>
                     {{ form.specifications }}
                     {% if form.specifications.errors %}
@@ -134,31 +126,31 @@
             
             </div>
 
-            <div class="space-y-6 bg-white shadow-lg rounded-lg p-6">
+            <div class="space-y-6 bg-white shadow-lg rounded-lg p-6 max-w-md">
                 <div>
-                    <label for="{{ form.image.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">Imagen de Portada</label>
+                    <label for="{{ form.image.id_for_label }}" class="block text-md font-medium text-gray-700 mb-1">Imagen de Portada</label>
                     {{ form.image }}
                     {% if form.image.errors %}
                         <p class="text-red-500 text-xs mt-1">{{ form.image.errors|join:", " }}</p>
                     {% endif %}
                 </div>
                 <div>
-                    <label for="id_images" class="block text-sm font-medium text-gray-700 mb-1">Imágenes adicionales:</label>
+                    <label for="id_images" class="block text-md font-medium text-gray-700 mb-1">Imágenes adicionales:</label>
                     <input type="file" name="images" id="id_images" multiple>
                 </div>
                 <div class="space-y-6 bg-white">
-                    <label class="text-sm font-medium text-gray-700">Talles y Stock</label>
+                    <label class="text-md font-medium text-gray-700">Talles y Stock</label>
                     {{ formsize.management_form }}  <!-- Esto es necesario para manejar el formset -->
                     
                     {% for form in formsize %}
-                        <div class="mb-4 space-y-3">
-                            <div>
+                        <div class="flex items-center justify-between gap-5">
+                            <div class="">
                                 {{ form.size.label }}: {{ form.size }}
                                 {% if form.size.errors %}
                                     <p class="text-red-500 text-xs mt-1">{{ form.size.errors|join:", " }}</p>
                                 {% endif %}
                             </div>
-                            <div>
+                            <div class="">
                                 {{ form.stock.label }}: {{ form.stock }}
                                 {% if form.stock.errors %}
                                     <p class="text-red-500 text-xs mt-1">{{ form.stock.errors|join:", " }}</p>
