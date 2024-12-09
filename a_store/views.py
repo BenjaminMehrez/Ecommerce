@@ -554,7 +554,7 @@ def payment_failed_view(request):
 
 @login_required
 def customer_dashboard(request):
-    orders = CartOrder.objects.annotate(month=ExtractMonth('order_date')).values('month').annotate(count=Count('id')).values('month', 'count')
+    orders = CartOrder.objects.filter(user=request.user).annotate(month=ExtractMonth('order_date')).values('month').annotate(count=Count('id')).values('month', 'count')
     month = []
     total_orders = []
     
