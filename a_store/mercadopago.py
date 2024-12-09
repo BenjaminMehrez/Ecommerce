@@ -49,9 +49,9 @@ def create_preference(order):
         preference_data = {
             "items": items,
             "back_urls": {
-                "success": f"https://3531-2803-9800-9844-7592-a9f2-c806-3651-1c68.ngrok-free.app/payment-success/{order.oid}",
-                "failure": "https://3531-2803-9800-9844-7592-a9f2-c806-3651-1c68.ngrok-free.app/payment-failed/",
-                "pending": "https://3531-2803-9800-9844-7592-a9f2-c806-3651-1c68.ngrok-free.app/payment-pending/",
+                "success": f"https://65f0-2803-9800-9844-7592-65cb-d993-ef4c-c86b.ngrok-free.app/payment-success/{order.oid}",
+                "failure": "https://65f0-2803-9800-9844-7592-65cb-d993-ef4c-c86b.ngrok-free.app/payment-failed/",
+                "pending": "https://65f0-2803-9800-9844-7592-65cb-d993-ef4c-c86b.ngrok-free.app/payment-pending/",
             },
             "auto_return": "approved",
             "external_reference": str(order.oid),  # ID único para identificar el pedido

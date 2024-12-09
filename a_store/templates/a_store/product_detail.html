@@ -65,10 +65,10 @@
                     {% endif %}
                 </div>
                 <label for="size" class="flex flex-col text-lg font-medium text-gray-700">Talle:
-                    <select id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-gray-400 rounded-md w-16" name="size">
+                    <select onchange="updateMaxStock()" id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-gray-400 rounded-md w-16" name="size">
                         {% for size in p_size %}
                         {% if size.stock > 0 %}
-                        <option value="{{size.size}}">{{size.size|upper}}</option>
+                        <option value="{{size.size}}" data-stock="{{ size.stock }}">{{size.size|upper}}</option>
                         {% endif %}
                         {% endfor %}
                     </select>
@@ -89,7 +89,7 @@
                 </div>
                 <label for="cantidad">
                     Cantidad:
-                    <input type="number" inputmode="numeric" pattern="[0-9]*" min="1" value="1" id="product-quantity"
+                    <input type="number" inputmode="numeric" pattern="[0-9]*" min="1" value="1" id="product-quantity" max="{% for size in p_size %}{% if size.stock > 0 %}{{ size.stock }}{% endif %}{% endfor %}"
                     class="ml-2 pl-5 py-2 w-16 sm:w-20 text-lg mb-10 bg-transparent border border-black product-quantity-{{ product.id }}">
                 </label>
                 <div>
@@ -306,6 +306,20 @@
         button.text('Agregar al Carrito')
         
     })
+
+    // Actualizar el valor máximo del campo de cantidad según el tamaño seleccionado
+    function updateMaxStock() {
+        const sizeDropdown = document.getElementById('sizechange');
+        const selectedOption = sizeDropdown.options[sizeDropdown.selectedIndex];
+        const maxStock = selectedOption.getAttribute('data-stock'); // Obtiene el stock máximo
+        
+        const quantityInput = document.getElementById('product-quantity');
+        quantityInput.max = maxStock; // Actualiza el atributo `max`
+        quantityInput.value = Math.min(quantityInput.value, maxStock); // Ajusta el valor actual si excede el nuevo `max`
+    }
+
+    // Inicializar el valor máximo al cargar la página
+    document.addEventListener('DOMContentLoaded', updateMaxStock);
 
 
     $(document).ready(function () {

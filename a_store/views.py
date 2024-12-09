@@ -268,6 +268,11 @@ def add_to_cart(request):
 def cart_view(request):
     cart_total_amount = 0
 
+    if request.user.is_authenticated:
+        pass
+    else:
+        messages.warning(request, 'Recuerda inicia sesión antes de comprar')
+    
     if 'cart_data_obj' in request.session:
         cart_data = request.session['cart_data_obj']
         # Iterar sobre los productos del carrito
@@ -438,7 +443,7 @@ def checkout(request, oid):
                 order.saved += discount
                 order.save()
                 
-                messages.success(request, 'Cupon aplicado')
+                messages.success(request, 'Cupon Aplicado')
                 return redirect('checkout', order.oid)
         else:
             messages.warning(request, 'No existe el cupon')

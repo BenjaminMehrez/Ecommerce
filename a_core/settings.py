@@ -46,13 +46,13 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 CORS_ALLOWED_ORIGINS = [
     'https://ecommercemehrez.up.railway.app',
-    'https://3531-2803-9800-9844-7592-a9f2-c806-3651-1c68.ngrok-free.app'
+    'https://65f0-2803-9800-9844-7592-65cb-d993-ef4c-c86b.ngrok-free.app'
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://ecommercemehrez.up.railway.app",
-    "https://3531-2803-9800-9844-7592-a9f2-c806-3651-1c68.ngrok-free.app",
+    "https://65f0-2803-9800-9844-7592-65cb-d993-ef4c-c86b.ngrok-free.app",
 
 ]
 
