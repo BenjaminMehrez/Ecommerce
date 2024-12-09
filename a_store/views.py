@@ -391,9 +391,19 @@ def save_checkout_info(request):
             
             for p_id, item in request.session['cart_data_obj'].items():
                 cart_total_amount += int(item['qty']) * float(item['price'])
+                # Suponiendo que el p_id es algo como '22-s' donde '22' es el ID y 's' es el tamaño
+                product_id, size = p_id.split('-')  # Separar el ID y el tamaño
+                product_id = int(product_id)  # Convertir el ID a número
+                
+                try:
+                    # Buscar el producto por su ID
+                    product = Product.objects.get(id=product_id)
+                except Product.DoesNotExist:
+                    raise ValueError(f"El producto con ID {product_id} no existe en la base de datos.")
 
                 cart_order_products = CartOrderItems.objects.create(
                     order=order,
+                    product=product,
                     invoice_no='INVOICE_NO-' + str(order.id), # INVOICE NO
                     item=item['title'],
                     image=item['image'],
@@ -515,6 +525,18 @@ def payment_success_view(request, oid):
         if not order.paid_status:
             if 'cart_data_obj' in request.session:
                 del request.session['cart_data_obj']
+                
+            order_items = CartOrderItems.objects.filter(order=order)
+            for item in order_items:
+                print(f"Procesando: Producto={item.product}, Talla={item.size}, Cantidad={item.qty}")
+                try:
+                    product_size = ProductSize.objects.get(product=item.product, size=item.size)
+                    product_size.stock -= item.qty
+                    product_size.save()
+                    print(f"Stock actualizado para {product_size}")
+                except ProductSize.DoesNotExist:
+                    raise ValueError(f"No se encontró el producto {item.product.title} con la talla {item.size}.")
+                
             order.paid_status = True
             order.save()
             

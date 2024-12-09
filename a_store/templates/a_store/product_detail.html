@@ -65,7 +65,7 @@
                     {% endif %}
                 </div>
                 <label for="size" class="flex flex-col text-lg font-medium text-gray-700">Talle:
-                    <select id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-black rounded-sm w-16" name="size">
+                    <select id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-gray-400 rounded-md w-16" name="size">
                         {% for size in p_size %}
                         {% if size.stock > 0 %}
                         <option value="{{size.size}}">{{size.size|upper}}</option>
@@ -241,9 +241,9 @@
     <h3 class="text-2xl font-bold text-gray-700 underline mb-12 text-center">
         Productos Relacionados
     </h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5 gap-6">
+    <div class="flex flex-wrap justify-center gap-6">
         {% for product in products %}
-        <article class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
+        <article class="image-product bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl opacity-0" _="on load transition my opacity to 1 over 0.3 seconds">
             {% if product.image %}
             <a href="{% url 'product-detail' product.pid %}">
                 <div class="aspect-square overflow-hidden">
