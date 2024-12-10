@@ -92,11 +92,14 @@
                     {% endif %}
                 </div>
                 {% if p_size %}
-                    <label for="cantidad">
-                        Cantidad:
-                        <input type="number" inputmode="numeric" pattern="[0-9]*" min="1" value="1" id="product-quantity" max="{% for size in p_size %}{% if size.stock > 0 %}{{ size.stock }}{% endif %}{% endfor %}"
-                        class="ml-2 pl-5 py-2 w-16 sm:w-20 text-lg mb-10 bg-transparent border border-black product-quantity-{{ product.id }}">
-                    </label>
+                <div class="flex items-center gap-5">
+                    <span>Cantidad:</span>
+                    <div class="flex justify-between items-center border border-gray-400 rounded-md h-12 px-3 w-32">
+                        <button class="bg-transparent w-4" id="restar"><img src="{% static 'images/minus.svg' %}" alt="minus"></button>
+                        <span id="product-quantity" class="product-quantity-{{ product.id }} font-bold text-md">1</span>
+                        <button class="bg-transparent w-6" id="sumar"><img src="{% static 'images/plus.svg' %}" alt="minus"></button>
+                    </div>
+                </div>
                 {% endif %}
                 <div>
                     <!-- <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16"> -->
@@ -311,7 +314,7 @@
 
     $('#sizechange').on('change', function() {
         const button = $('#add-to-cart-btn');
-        const qty = $('#product-quantity').val(1)
+        const qty = $('#product-quantity').text(1)
 
         button.text('Agregar al Carrito')
         
@@ -321,15 +324,42 @@
     function updateMaxStock() {
         const sizeDropdown = document.getElementById('sizechange');
         const selectedOption = sizeDropdown.options[sizeDropdown.selectedIndex];
-        const maxStock = selectedOption.getAttribute('data-stock'); // Obtiene el stock máximo
+        const maxStock = parseInt(selectedOption.getAttribute('data-stock')); // Obtiene el stock máximo
         
-        const quantityInput = document.getElementById('product-quantity');
-        quantityInput.max = maxStock; // Actualiza el atributo `max`
-        quantityInput.value = Math.min(quantityInput.value, maxStock); // Ajusta el valor actual si excede el nuevo `max`
+        const quantitySpan = document.getElementById('product-quantity');
+        // Establece una propiedad maxStock en el objeto
+        quantitySpan.maxStock = maxStock;
+        
+        // Ajusta el valor mostrado si excede el nuevo maxStock
+        let currentQuantity = parseInt(quantitySpan.textContent);
+        quantitySpan.textContent = Math.min(currentQuantity, maxStock);
     }
 
     // Inicializar el valor máximo al cargar la página
     document.addEventListener('DOMContentLoaded', updateMaxStock);
+    
+    // Incrementar cantidad con límite de stock máximo
+    $('#sumar').on('click', function() {
+        const quantitySpan = document.getElementById('product-quantity');
+        let num = parseInt(quantitySpan.textContent);
+        
+        // Incrementar solo si no excede el stock máximo
+        if (num < quantitySpan.maxStock) {
+            num++;
+            quantitySpan.textContent = num;
+        }
+    });
+
+    $('#restar').on('click', function() {
+        let this_val = $(this)
+        let num = $('#product-quantity').text()
+        num = parseInt(num)
+        if (num > 1){
+            num = num - 1
+        }
+        $('#product-quantity').text(num)
+        
+    })
 
 
     $(document).ready(function () {
@@ -342,7 +372,7 @@
             let this_val = $(this)
             let index = this_val.attr('data-index')
 
-            let quantity = $('.product-quantity-' + index).val()
+            let quantity = $('.product-quantity-' + index).text()
             let size = $('.product-size-' + index).val()
 
             let product_title = $('.product-title-' + index).val()

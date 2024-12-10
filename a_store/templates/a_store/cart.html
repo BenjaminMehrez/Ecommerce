@@ -49,10 +49,10 @@
                                     <span class="md:hidden font-medium">Subtotal: </span>${{ total|formato_precio }}
                                 </div>
                             </td>
-                            <td class="flex items-center justify-center gap-4 md:block md:mt-6 px-4 md:px-6 py-2 md:py-4">
-                                <span class="md:hidden font-medium">Cantidad: </span>
-                                <input type="number" inputmode="numeric" pattern="[0-9]*" name="quantity" value="{{ item.qty }}" min="1" max="{{ item.stock }}"
-                                    class="product-qty-{{ product_id }} shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-16 sm:w-20 text-sm border-gray-300 rounded-md">
+                            <td class="flex items-center justify-center w-40 mx-auto md:block md:mt-8 px-4 md:px-6 py-2 md:py-4 ">
+                                <button class="px-8 md:px-2 bg-transparent text-black text-xl rounded-none md:text-md restar border md:rounded-full" data-product-id="{{ product_id }}">-</button>
+                                <span class="product-qty-{{ product_id }} px-4 md:px-2 text-xl" data-product-id="{{ product_id }}" data-stock="{{ item.stock }}">{{ item.qty }}</span>
+                                <button class="px-8 md:px-2 bg-transparent text-black text-xl rounded-none md:text-md sumar border md:rounded-full" data-product-id="{{ product_id }}">+</button>
                             </td>
                             <td class="mx-auto md:m-0 px-4 md:px-6 py-6 md:py-4 text-md font-medium">
                                 <div class="flex space-x-4">
@@ -178,13 +178,41 @@
 
 <script>
 
+    // Incrementar cantidad con límite de stock máximo
+    $('.sumar').on('click', function() {
+        let product_id = $(this).data('product-id');  // Obtener el ID del producto
+        let quantityElement = $('.product-qty-' + product_id);  // Seleccionar el elemento correspondiente al producto
+        let num = parseInt(quantityElement.text(), 10);  // Obtener la cantidad actual
+        let stock = parseInt(quantityElement.data('stock'), 10);  // Obtener el stock máximo
+
+        // Verificar si la cantidad es menor que el stock máximo
+        if (num < stock) {
+            num++;
+        }
+
+        quantityElement.text(num);  // Actualizar la cantidad
+    });
+
+    // Decrementar cantidad
+    $('.restar').on('click', function() {
+        let product_id = $(this).data('product-id');  // Obtener el ID del producto
+        let quantityElement = $('.product-qty-' + product_id);  // Seleccionar el elemento correspondiente al producto
+        let num = parseInt(quantityElement.text(), 10);  // Obtener la cantidad actual
+
+        // Verificar si la cantidad es mayor a 1 antes de restar
+        if (num > 1) {
+            num--;
+        }
+
+        quantityElement.text(num);  // Actualizar la cantidad
+    });
+
 $(document).ready(function() {
     
     $(".delete-product").on("click", function () {
         let product_id = $(this).attr('data-product')
         let this_val = $(this)
 
-        console.log(product_id);
 
         $.ajax({
             url: '/delete-from-cart',
@@ -211,10 +239,7 @@ $(document).ready(function() {
     $(".update-product").on("click", function () {
         let product_id = $(this).attr('data-product')
         let this_val = $(this)
-        let product_qty = $('.product-qty-'+ product_id).val()
-
-        console.log('ID',product_id);
-        console.log('QTY', product_qty);
+        let product_qty = $('.product-qty-'+ product_id).text()
 
         $.ajax({
             url: '/update-cart',
@@ -238,7 +263,6 @@ $(document).ready(function() {
     })
 
 })
-
 
 
 </script>
