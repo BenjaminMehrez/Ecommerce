@@ -68,7 +68,7 @@
                 </div>
                 <div class="flex justify-between md:block">
                   <span class="md:hidden font-semibold">Producto:</span>
-                  <span class="text-sm">{{ order.item }}</span>
+                  <span class="text-sm">{{ order.item|truncatechars:13 }}</span>
                   <p class="text-sm">Talle: {{ order.size|title }}</p>
                 </div>
                 <div class="flex justify-between md:block">

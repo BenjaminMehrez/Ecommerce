@@ -64,15 +64,19 @@
                         src="{% static 'images/heart.svg' %}" alt="wishlist"></a>
                     {% endif %}
                 </div>
-                <label for="size" class="flex flex-col text-lg font-medium text-gray-700">Talle:
-                    <select onchange="updateMaxStock()" id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-gray-400 rounded-md w-16" name="size">
-                        {% for size in p_size %}
-                        {% if size.stock > 0 %}
-                        <option value="{{size.size}}" data-stock="{{ size.stock }}">{{size.size|upper}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                </label>
+                {% if p_size|length == 0 %}
+                    <p class="text-red-500 font-bold text-xl underline">Sin stock</p>
+                {% else %}
+                    <label for="size" class="flex flex-col text-lg font-medium text-gray-700">Talle:
+                        <select onchange="updateMaxStock()" id="sizechange" class="product-size-{{ product.id }} pl-3 py-3 bg-transparent border border-gray-400 rounded-md w-16" name="size">
+                            {% for size in p_size %}
+                            {% if size.stock > 0 %}
+                            <option value="{{size.size}}" data-stock="{{ size.stock }}">{{size.size|upper}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </label>
+                {% endif %}
                 <p class="text-gray-700">{{ product.description }}</p>
                 <div class="flex flex-wrap gap-2 items-center">
                     <span class="font-semibold">Categorias:</span>
@@ -87,11 +91,13 @@
                     <span class="text-xl text-gray-400 pl-3 line-through">$ {{ product.old_price|formato_precio }}</span>
                     {% endif %}
                 </div>
-                <label for="cantidad">
-                    Cantidad:
-                    <input type="number" inputmode="numeric" pattern="[0-9]*" min="1" value="1" id="product-quantity" max="{% for size in p_size %}{% if size.stock > 0 %}{{ size.stock }}{% endif %}{% endfor %}"
-                    class="ml-2 pl-5 py-2 w-16 sm:w-20 text-lg mb-10 bg-transparent border border-black product-quantity-{{ product.id }}">
-                </label>
+                {% if p_size %}
+                    <label for="cantidad">
+                        Cantidad:
+                        <input type="number" inputmode="numeric" pattern="[0-9]*" min="1" value="1" id="product-quantity" max="{% for size in p_size %}{% if size.stock > 0 %}{{ size.stock }}{% endif %}{% endfor %}"
+                        class="ml-2 pl-5 py-2 w-16 sm:w-20 text-lg mb-10 bg-transparent border border-black product-quantity-{{ product.id }}">
+                    </label>
+                {% endif %}
                 <div>
                     <!-- <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ product.id }} w-16"> -->
                     <input type="hidden" class="product-pid-{{ product.id }} w-16" value="{{ product.pid }}">
@@ -104,9 +110,13 @@
                         <strong class="font-bold">Error:</strong>
                         <span class="block sm:inline">Producto ya agregado</span>
                     </div>
-                    <button id="add-to-cart-btn" data-index="{{ product.id }}"
-                        class="add-to-cart-btn w-full bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar
-                        al Carrito</button>
+                    {% if p_size|length == 0 %}
+                    <button class="w-full bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">No Disponible</button>
+                    {% else %}
+                        <button id="add-to-cart-btn" data-index="{{ product.id }}"
+                            class="add-to-cart-btn w-full bg-gray-700 text-white py-3 px-4 rounded-lg hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Agregar
+                            al Carrito</button>
+                    {% endif %}
                 </div>
 
                 

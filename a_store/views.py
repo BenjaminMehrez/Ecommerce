@@ -131,7 +131,7 @@ def product_detail_view(request, pid):
     
     
     p_image = product.p_images.all()
-    p_size = product.sizes.all()
+    p_size = product.sizes.filter(stock__gt=0)
     
     context = {
         'product': product,
@@ -267,7 +267,8 @@ def add_to_cart(request):
 
 def cart_view(request):
     cart_total_amount = 0
-
+    cart_items_with_stock = []
+    
     if request.user.is_authenticated:
         pass
     else:
@@ -275,8 +276,19 @@ def cart_view(request):
     
     if 'cart_data_obj' in request.session:
         cart_data = request.session['cart_data_obj']
+        
         # Iterar sobre los productos del carrito
         for p_key, item in cart_data.items():
+            product_id = item.get('pid')
+            product = get_object_or_404(Product, pid=product_id)
+            size = item.get('size')
+            
+            product_size = get_object_or_404(ProductSize, product=product, size=size)
+            stock = product_size.stock
+            
+            item['stock'] = stock
+            cart_items_with_stock.append(item)
+            
             # Sumar precio total basado en cantidad y precio unitario
             cart_total_amount += int(item['qty']) * float(item['price'])
         
